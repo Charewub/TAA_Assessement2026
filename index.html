@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIXMA - Self-Assessment</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+    :root { --primary-color: #E32526; }
+    body { font-family: 'Sarabun', sans-serif; background-color: #f1f5f9; color: #1e293b; overflow-x: hidden; }
+    .bg-primary { background-color: var(--primary-color) !important; }
+    .text-primary { color: var(--primary-color) !important; }
+    .border-primary { border-color: var(--primary-color) !important; }
+    .hover-border-primary:hover { border-color: var(--primary-color) !important; }
+    .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    #white-transition { transition: opacity 0.4s ease-in-out; pointer-events: none; z-index: 99999; }
+</style>
+</head>
+<body class="min-h-screen flex flex-col relative" onload="initApp()">
+
+<div id="white-transition" class="fixed inset-0 bg-white opacity-0 hidden"></div>
+
+<div class="fixed top-4 right-4 z-[100] flex bg-slate-200 rounded-full p-1 cursor-pointer shadow-sm" onclick="toggleLang()">
+    <div id="lang-en" class="px-3 py-1 rounded-full text-[11px] font-black bg-primary text-white shadow-sm transition-all">EN</div>
+    <div id="lang-th" class="px-3 py-1 rounded-full text-[11px] font-black text-slate-500 hover:text-slate-700 transition-all">TH</div>
+</div>
+
+<!-- STEP 1: USER INFO -->
+<div id="view-step1" class="flex-grow flex items-center justify-center p-4 py-8 sm:py-12">
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl p-6 sm:p-10 border-t-8 border-primary fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/AirAsia_New_Logo.svg" class="h-10 sm:h-14 mx-auto mb-6">
+        <h1 class="text-xl sm:text-2xl font-black text-slate-800 uppercase tracking-tight mb-2 text-center" id="ui-main-title">SIXMA SELF-ASSESSMENT</h1>
+        <p class="text-slate-500 text-xs sm:text-sm mb-8 text-center" id="ui-login-sub">Step 1: Your Information</p>
+        <div class="space-y-4">
+            <div>
+                <label class="text-xs font-bold text-slate-500 uppercase" id="ui-label-personal">Personal Details</label>
+                <input type="text" id="login-name" placeholder="Full Name" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 font-bold text-sm outline-none focus:border-primary transition-colors mt-1 mb-2">
+            </div>
+            <button onclick="goToIntro1()" class="w-full bg-slate-900 text-white font-bold py-4 mt-2 rounded-xl hover:bg-black transition-all shadow-md tracking-wider">NEXT</button>
+        </div>
+    </div>
+</div>
+
+<!-- STEP 2: INTRO 1 (Welcome) -->
+<div id="view-intro1" class="hidden flex-grow items-center justify-center p-4 py-8">
+    <div class="max-w-3xl w-full bg-white rounded-3xl shadow-xl p-6 sm:p-12 fade-in text-center">
+        <h2 class="text-2xl sm:text-3xl font-black text-primary uppercase italic tracking-tight mb-4">WELCOME TO SIXMA™ ASSESSMENT</h2>
+        <p class="text-slate-600 text-sm sm:text-base font-bold mb-6 sm:mb-8 leading-relaxed">
+            Discover Your Inner Core. Strengthen the Core of Our Organisation.<br>
+            <span class="text-slate-500 font-medium">ค้นพบแก่นแท้ภายในตัวคุณ เพื่อร่วมสร้างแก่นความแข็งแกร่งให้กับองค์กร</span>
+        </p>
+        <div class="bg-slate-50 p-5 sm:p-8 rounded-2xl border border-slate-200 mb-6 sm:mb-8 space-y-4 text-left">
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+                <strong>SIXMA™ Assessment</strong> คือแบบประเมินพฤติกรรมการทำงานที่พัฒนาขึ้นจาก Core Values ของ AirAsia เพื่อช่วยให้คุณค้นพบจุดแข็ง เข้าใจรูปแบบพฤติกรรมของตนเอง และมองเห็นโอกาสในการพัฒนา เพื่อเติบโตไปพร้อมกับองค์กร
+            </p>
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+                แบบประเมินนี้ไม่มีคำตอบที่ถูกหรือผิด เพราะเราเชื่อว่าทุกคนมีจุดแข็งและศักยภาพที่แตกต่างกัน
+            </p>
+            <p class="text-primary text-base sm:text-lg font-black text-center mt-6 italic">
+                "Discover What Makes You Strong. Together, We Make AirAsia Stronger."
+            </p>
+        </div>
+        <button onclick="triggerWhiteFade(() => switchView('intro2'))" class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-black transition-all shadow-md tracking-wider">NEXT</button>
+    </div>
+</div>
+
+<!-- STEP 3: INTRO 2 (Before You Begin) -->
+<div id="view-intro2" class="hidden flex-grow items-center justify-center p-4 py-8">
+    <div class="max-w-3xl w-full bg-white rounded-3xl shadow-xl p-6 sm:p-12 fade-in">
+        <h2 class="text-2xl sm:text-3xl font-black text-primary uppercase tracking-tight mb-2 text-center">BEFORE YOU BEGIN</h2>
+        <p class="text-slate-500 font-bold mb-6 text-center text-sm sm:text-base">How to Complete Your SIXMA™ Assessment</p>
+        
+        <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 mb-8">
+            <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center">
+                แบบประเมินประกอบด้วยคำถามแบบเลือกตอบระหว่างพฤติกรรมการทำงาน 2 ข้อ โดยให้คุณเลือก <strong>เพียง 1 ข้อที่สะท้อนพฤติกรรมของตนเองมากที่สุด</strong> แม้ว่าทั้งสองข้ออาจใกล้เคียงกับตัวคุณ หรืออาจไม่ตรงกับตัวคุณทั้งหมดก็ตาม
+            </p>
+        </div>
+
+        <h3 class="font-black text-slate-800 mb-5 text-center sm:text-lg">สิ่งสำคัญที่ควรทราบก่อนเริ่มทำแบบประเมิน</h3>
+        
+        <div class="space-y-5 mb-8">
+            <div class="flex gap-4 items-start">
+                <div class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="font-bold text-xs">1</span></div>
+                <div>
+                    <strong class="text-slate-800 block mb-1">Complete in One Sitting — ทำอย่างต่อเนื่อง</strong>
+                    <span class="text-slate-600 text-sm">ควรจัดสรรเวลาและเลือกสถานที่ที่ไม่มีสิ่งรบกวน เพื่อทำแบบประเมินให้เสร็จในครั้งเดียว</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start">
+                <div class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="font-bold text-xs">2</span></div>
+                <div>
+                    <strong class="text-slate-800 block mb-1">No Time Limit — ไม่จำกัดเวลา</strong>
+                    <span class="text-slate-600 text-sm">ไม่มีการจับเวลาหรือจำกัดระยะเวลาในการตอบ แต่แนะนำให้ตอบอย่างเป็นธรรมชาติ โดยไม่ต้องใช้เวลาคิดนานเกินไป</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start">
+                <div class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="font-bold text-xs">3</span></div>
+                <div>
+                    <strong class="text-slate-800 block mb-1">No Going Back — ไม่สามารถย้อนกลับได้</strong>
+                    <span class="text-slate-600 text-sm">เมื่อเลือกคำตอบและไปยังข้อถัดไปแล้ว จะไม่สามารถกลับมาแก้ไขคำตอบก่อนหน้าได้</span>
+                </div>
+            </div>
+            <div class="flex gap-4 items-start">
+                <div class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="font-bold text-xs">4</span></div>
+                <div>
+                    <strong class="text-slate-800 block mb-1">One Attempt Only — ไม่สามารถทำซ้ำได้</strong>
+                    <span class="text-slate-600 text-sm">แบบประเมินสามารถทำได้เพียงครั้งเดียว เมื่อเริ่มแล้วควรทำให้เสร็จสมบูรณ์</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center p-5 bg-red-50 rounded-xl mb-6 border border-red-100">
+            <p class="text-primary font-black text-sm mb-2 uppercase tracking-widest">REMEMBER</p>
+            <p class="text-slate-800 text-sm font-bold mb-1">There are no right or wrong answers. Your most authentic responses are the most valuable.</p>
+            <p class="text-slate-600 text-sm">ไม่มีคำตอบที่ถูกหรือผิด ขอเพียงเลือกสิ่งที่สะท้อนพฤติกรรมการทำงานจริงของคุณมากที่สุด</p>
+        </div>
+
+        <button onclick="triggerWhiteFade(() => switchView('intro3'))" class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-black transition-all shadow-md tracking-wider">NEXT</button>
+    </div>
+</div>
+
+<!-- STEP 4: INTRO 3 (Ready) -->
+<div id="view-intro3" class="hidden flex-grow items-center justify-center p-4 py-8">
+    <div class="max-w-2xl w-full bg-white rounded-3xl shadow-xl p-8 sm:p-14 fade-in text-center border-t-8 border-primary">
+        <h2 class="text-2xl sm:text-3xl font-black text-primary uppercase tracking-tight mb-6">READY TO DISCOVER YOUR INNER CORE?</h2>
+        
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed mb-4">
+            เมื่อคุณกด NEXT ระบบจะเริ่มต้นการประเมินทันที และคุณ<span class="text-primary font-bold">จะไม่สามารถย้อนกลับมายังหน้านี้ หรือกลับไปแก้ไขคำตอบที่ผ่านมาได้</span>
+        </p>
+        <p class="text-slate-800 text-sm sm:text-base leading-relaxed font-bold mb-10">
+            โปรดตรวจสอบว่าคุณพร้อมและมีเวลาทำแบบประเมินอย่างต่อเนื่องจนเสร็จสมบูรณ์
+        </p>
+        
+        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-8">
+            <p class="text-slate-800 font-bold mb-1 text-sm sm:text-base">If you're ready, click NEXT to begin your SIXMA™ journey.</p>
+            <p class="text-slate-500 text-xs sm:text-sm">หากคุณพร้อมแล้ว กด NEXT เพื่อเริ่มต้นค้นพบตัวตนของคุณ</p>
+        </div>
+        
+        <button onclick="startQuiz()" class="w-full bg-primary text-white py-4 rounded-xl font-black text-base sm:text-lg tracking-widest uppercase hover:opacity-90 transition-all shadow-lg">[ NEXT &rarr; ]</button>
+    </div>
+</div>
+
+<!-- STEP 5: QUIZ -->
+<div id="view-quiz" class="hidden max-w-4xl mx-auto p-4 mt-6 mb-12 w-full fade-in">
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+        <div class="bg-primary p-4 sm:p-6 flex justify-between items-center text-white">
+            <div class="font-bold tracking-widest text-sm sm:text-base" id="ui-quiz-head">เลือกพฤติกรรมที่ตรงกับท่านมากกว่า</div>
+            <div class="text-right"><span id="q-idx" class="text-2xl sm:text-3xl font-black italic">01</span><span id="q-total" class="opacity-70 text-xs sm:text-sm">/90</span></div>
+        </div>
+        <div class="w-full bg-slate-100 h-2"><div id="progress-bar" class="bg-primary h-full transition-all duration-300" style="width:0%"></div></div>
+        
+        <div class="p-5 sm:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
+                <button onclick="vote('A')" class="p-6 sm:p-8 border-2 border-slate-200 rounded-2xl text-left bg-white shadow-sm hover-border-primary hover:bg-slate-50 transition-all flex items-center min-h-[160px]">
+                    <p id="text-a" class="text-slate-700 text-sm md:text-lg font-medium leading-relaxed"></p>
+                </button>
+                <button onclick="vote('B')" class="p-6 sm:p-8 border-2 border-slate-200 rounded-2xl text-left bg-white shadow-sm hover-border-primary hover:bg-slate-50 transition-all flex items-center min-h-[160px]">
+                    <p id="text-b" class="text-slate-700 text-sm md:text-lg font-medium leading-relaxed"></p>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- STEP 6: THANK YOU -->
+<div id="view-thank-you" class="hidden flex-grow items-center justify-center p-4 py-8">
+    <div class="max-w-xl w-full bg-white rounded-3xl shadow-xl p-8 sm:p-12 text-center fade-in border-t-8 border-green-500">
+        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-slate-800 uppercase tracking-tight mb-2 leading-snug">THANK YOU FOR COMPLETING<br>SIXMA™ ASSESSMENT</h2>
+        <p class="text-primary font-bold text-sm sm:text-base mb-6 italic">Your Inner Core. Our Collective Strength.</p>
+        
+        <div class="text-slate-600 text-sm sm:text-base leading-relaxed space-y-4 mb-8 text-left bg-slate-50 p-6 rounded-2xl border border-slate-100">
+            <p>ขอบคุณที่สละเวลาและตั้งใจทำแบบประเมิน SIXMA™ จนเสร็จสมบูรณ์</p>
+            <p>ทุกคำตอบของคุณเป็นส่วนสำคัญที่ช่วยให้เราเข้าใจศักยภาพ ความแตกต่าง และคุณค่าที่แต่ละคนสามารถนำมาสร้างให้กับองค์กร</p>
+            <p>ที่ Thai AirAsia เราเชื่อว่า ความแข็งแกร่งขององค์กรเริ่มต้นจากความแข็งแกร่งภายในของทุกคน และเมื่อเราเติบโตไปด้วยกัน เราจะสามารถสร้างสิ่งที่ยิ่งใหญ่กว่าเดิมได้เสมอ</p>
+            <p class="text-center font-bold text-primary mt-4 italic">"Because Stronger Individuals Build a Stronger AirAsia."</p>
+        </div>
+
+        <p class="text-slate-800 font-bold mb-1">ขอบคุณที่เป็นส่วนหนึ่งของการเติบโตไปด้วยกัน</p>
+        <p class="text-slate-500 text-sm mb-8">With Appreciation,<br>Thai AirAsia</p>
+
+        <button onclick="closeApp()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black text-base tracking-widest uppercase hover:bg-black transition-all shadow-md">[ CLOSE ]</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onselectstart = function() { return false; }; 
+    document.onkeydown = function(e) {
+        if(e.keyCode == 123) { return false; } 
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; } 
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } 
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } 
+    }
+
+    const API_URL = "https://script.google.com/macros/s/AKfycbxdV5WtwS4Gv7p2U96d2zjoxPQo7jdgBafNe6-xYkv8d9WxQQzLDXCl7ydH4GYiXYCb/exec";
+
+    // ชุดคำถาม 90 ข้อ
+    const ALL_HARDCODED_QUESTIONS = [{"A": {"EN": "จัดการลำดับความสำคัญที่แข่งขันกันโดยมุ่งองค์กรไปยังทางเลือกสำคัญเพียงไม่กี่เรื่องที่มีผลสูงสุด", "TH": "จัดการลำดับความสำคัญที่แข่งขันกันโดยมุ่งองค์กรไปยังทางเลือกสำคัญเพียงไม่กี่เรื่องที่มีผลสูงสุด", "c": "C2", "band": "ULP", "type": "Positive"}, "B": {"EN": "คาดการณ์ความเสี่ยงด้านความปลอดภัยที่กำลังก่อตัวก่อนจะกลายเป็นภัยต่อการปฏิบัติการ", "TH": "คาดการณ์ความเสี่ยงด้านความปลอดภัยที่กำลังก่อตัวก่อนจะกลายเป็นภัยต่อการปฏิบัติการ", "c": "C6", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "บริหารความสัมพันธ์ของผู้มีส่วนได้ส่วนเสียที่ซับซ้อนโดยไม่ประนีประนอมต่อความซื่อสัตย์สุจริต", "TH": "บริหารความสัมพันธ์ของผู้มีส่วนได้ส่วนเสียที่ซับซ้อนโดยไม่ประนีประนอมต่อความซื่อสัตย์สุจริต", "c": "C3", "band": "RLP", "type": "Positive"}, "B": {"EN": "พัฒนาผู้นำให้สามารถทำงานและตัดสินใจภายใต้ความไม่แน่นอนได้", "TH": "พัฒนาผู้นำให้สามารถทำงานและตัดสินใจภายใต้ความไม่แน่นอนได้", "c": "C1", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "กำหนดลำดับความสำคัญและความคาดหวังที่ชัดเจนสำหรับทีม", "TH": "กำหนดลำดับความสำคัญและความคาดหวังที่ชัดเจนสำหรับทีม", "c": "C5", "band": "RLT", "type": "Positive"}, "B": {"EN": "ระบุขั้นตอนที่ไม่จำเป็นและขจัดความซ้ำซ้อน", "TH": "ระบุขั้นตอนที่ไม่จำเป็นและขจัดความซ้ำซ้อน", "c": "C2", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ปรับจัดสรรขีดความสามารถและทรัพยากรระดับองค์กรอย่างยืดหยุ่นเมื่อกลยุทธ์เปลี่ยน", "TH": "ปรับจัดสรรขีดความสามารถและทรัพยากรระดับองค์กรอย่างยืดหยุ่นเมื่อกลยุทธ์เปลี่ยน", "c": "C5", "band": "ULP", "type": "Positive"}, "B": {"EN": "ท้าทายสมมติฐานหลักที่ฝังรากในองค์กรเมื่อสภาพแวดล้อมเปลี่ยนแปลงอย่างมีนัยสำคัญ", "TH": "ท้าทายสมมติฐานหลักที่ฝังรากในองค์กรเมื่อสภาพแวดล้อมเปลี่ยนแปลงอย่างมีนัยสำคัญ", "c": "C1", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "สร้างโครงสร้างที่ช่วยให้การตัดสินใจเกิดขึ้นได้รวดเร็วขึ้น", "TH": "สร้างโครงสร้างที่ช่วยให้การตัดสินใจเกิดขึ้นได้รวดเร็วขึ้น", "c": "C1", "band": "RLP", "type": "Positive"}, "B": {"EN": "บูรณาการความปลอดภัยอย่างชัดเจนเข้ากับการตัดสินใจและลำดับความสำคัญเชิงกลยุทธ์", "TH": "บูรณาการความปลอดภัยอย่างชัดเจนเข้ากับการตัดสินใจและลำดับความสำคัญเชิงกลยุทธ์", "c": "C6", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "ประเมินผลกระทบด้านความปลอดภัยเมื่อพิจารณาโมเดลธุรกิจ เทคโนโลยี หรือตลาดใหม่", "TH": "ประเมินผลกระทบด้านความปลอดภัยเมื่อพิจารณาโมเดลธุรกิจ เทคโนโลยี หรือตลาดใหม่", "c": "C6", "band": "ULP", "type": "Positive"}, "B": {"EN": "ท้าทายบรรทัดฐานขององค์กรที่ทำให้อำนาจหรือโอกาสกระจุกตัวอย่างเป็นระบบ", "TH": "ท้าทายบรรทัดฐานขององค์กรที่ทำให้อำนาจหรือโอกาสกระจุกตัวอย่างเป็นระบบ", "c": "C4", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "จัดการความเห็นต่างอย่างให้เกียรติและสร้างสรรค์", "TH": "จัดการความเห็นต่างอย่างให้เกียรติและสร้างสรรค์", "c": "C3", "band": "RLT", "type": "Positive"}, "B": {"EN": "จัดการกับแรงต้านต่อการเปลี่ยนแปลงอย่างสร้างสรรค์", "TH": "จัดการกับแรงต้านต่อการเปลี่ยนแปลงอย่างสร้างสรรค์", "c": "C1", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ปล่อยให้แรงกดดันระยะสั้นขององค์กรลดการพิจารณาความชอบธรรมและความไว้วางใจในระยะยาว", "TH": "ปล่อยให้แรงกดดันระยะสั้นขององค์กรลดการพิจารณาความชอบธรรมและความไว้วางใจในระยะยาว", "c": "C3", "band": "ULP", "type": "Counter"}, "B": {"EN": "ปกป้องเสถียรภาพระยะใกล้จนลดการเตรียมความพร้อมต่อ disruption ที่รุนแรงกว่าในอนาคต", "TH": "ปกป้องเสถียรภาพระยะใกล้จนลดการเตรียมความพร้อมต่อ disruption ที่รุนแรงกว่าในอนาคต", "c": "C1", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "รวมการตัดสินใจสำคัญไว้ที่ผู้บริหารระดับสูงจนองค์กรพึ่งคนระดับบนมากเกินไป", "TH": "รวมการตัดสินใจสำคัญไว้ที่ผู้บริหารระดับสูงจนองค์กรพึ่งคนระดับบนมากเกินไป", "c": "C2", "band": "ULP", "type": "Counter"}, "B": {"EN": "ยอมให้ขอบเขตทางจริยธรรมยืดหยุ่นขึ้นเมื่อ partnership มีคุณค่าเชิงกลยุทธ์สูงมาก", "TH": "ยอมให้ขอบเขตทางจริยธรรมยืดหยุ่นขึ้นเมื่อ partnership มีคุณค่าเชิงกลยุทธ์สูงมาก", "c": "C3", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "ปล่อยให้ collaboration ข้ามองค์กรพึ่งผู้นำอาวุโสที่มีอิทธิพลเพียงไม่กี่คนมากเกินไป", "TH": "ปล่อยให้ collaboration ข้ามองค์กรพึ่งผู้นำอาวุโสที่มีอิทธิพลเพียงไม่กี่คนมากเกินไป", "c": "C5", "band": "ULP", "type": "Counter"}, "B": {"EN": "วาง Inclusion เป็นเรื่องค่านิยมเป็นหลัก จนศักยภาพในการสร้างนวัตกรรมและผลลัพธ์ทางธุรกิจถูกใช้ไม่เต็มที่", "TH": "วาง Inclusion เป็นเรื่องค่านิยมเป็นหลัก จนศักยภาพในการสร้างนวัตกรรมและผลลัพธ์ทางธุรกิจถูกใช้ไม่เต็มที่", "c": "C4", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "กำหนดหลักการระดับองค์กรที่ชัดเจนเพื่อให้เกิดการตัดสินใจโดยไม่ต้องยกระดับเรื่องโดยไม่จำเป็น", "TH": "กำหนดหลักการระดับองค์กรที่ชัดเจนเพื่อให้เกิดการตัดสินใจโดยไม่ต้องยกระดับเรื่องโดยไม่จำเป็น", "c": "C2", "band": "ULP", "type": "Positive"}, "B": {"EN": "กำหนดขอบเขตทางจริยธรรมที่ชัดเจนสำหรับพันธมิตรเชิงกลยุทธ์และการตัดสินใจทางธุรกิจที่สำคัญ", "TH": "กำหนดขอบเขตทางจริยธรรมที่ชัดเจนสำหรับพันธมิตรเชิงกลยุทธ์และการตัดสินใจทางธุรกิจที่สำคัญ", "c": "C3", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "คาดการณ์การเปลี่ยนแปลงสำคัญจากภายนอกก่อนที่จะส่งผลกระทบอย่างมีนัยสำคัญต่อธุรกิจ", "TH": "คาดการณ์การเปลี่ยนแปลงสำคัญจากภายนอกก่อนที่จะส่งผลกระทบอย่างมีนัยสำคัญต่อธุรกิจ", "c": "C1", "band": "ULP", "type": "Positive"}, "B": {"EN": "กำหนดปรัชญาและระดับความเสี่ยงที่องค์กรยอมรับได้เพื่อใช้กำกับการตัดสินใจที่มีความสำคัญต่อความปลอดภัย", "TH": "กำหนดปรัชญาและระดับความเสี่ยงที่องค์กรยอมรับได้เพื่อใช้กำกับการตัดสินใจที่มีความสำคัญต่อความปลอดภัย", "c": "C6", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "เน้นความรับผิดชอบรายบุคคลมากจนความรับผิดชอบร่วมของทีมอ่อนลง", "TH": "เน้นความรับผิดชอบรายบุคคลมากจนความรับผิดชอบร่วมของทีมอ่อนลง", "c": "C5", "band": "RLT", "type": "Counter"}, "B": {"EN": "ใช้วิธีสื่อสารแบบเดียวกับสมาชิกทุกคนแม้แต่ละคนจะรับสารต่างกัน", "TH": "ใช้วิธีสื่อสารแบบเดียวกับสมาชิกทุกคนแม้แต่ละคนจะรับสารต่างกัน", "c": "C3", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "แก้ความขัดแย้งข้ามธุรกิจด้วยการประนีประนอมที่ลดคุณค่ารวมขององค์กร", "TH": "แก้ความขัดแย้งข้ามธุรกิจด้วยการประนีประนอมที่ลดคุณค่ารวมขององค์กร", "c": "C5", "band": "ULP", "type": "Counter"}, "B": {"EN": "จัดการ trade-off ที่ยากกับ stakeholder แบบปิด จนผู้ได้รับผลกระทบไม่เข้าใจเหตุผลของการตัดสินใจ", "TH": "จัดการ trade-off ที่ยากกับ stakeholder แบบปิด จนผู้ได้รับผลกระทบไม่เข้าใจเหตุผลของการตัดสินใจ", "c": "C3", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "ลดความซับซ้อนของโครงสร้างการตัดสินใจเมื่อเหมาะสม", "TH": "ลดความซับซ้อนของโครงสร้างการตัดสินใจเมื่อเหมาะสม", "c": "C2", "band": "RLP", "type": "Positive"}, "B": {"EN": "ท้าทายการตัดสินใจที่มีระดับความเสี่ยงที่ไม่สามารถยอมรับได้", "TH": "ท้าทายการตัดสินใจที่มีระดับความเสี่ยงที่ไม่สามารถยอมรับได้", "c": "C6", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "คงทรัพยากรระดับองค์กรไว้กับ priority เดิมแม้เงื่อนไขเชิงกลยุทธ์เปลี่ยนไปอย่างมีนัยสำคัญแล้ว", "TH": "คงทรัพยากรระดับองค์กรไว้กับ priority เดิมแม้เงื่อนไขเชิงกลยุทธ์เปลี่ยนไปอย่างมีนัยสำคัญแล้ว", "c": "C5", "band": "ULP", "type": "Counter"}, "B": {"EN": "ปล่อยให้สมมติฐานที่เคยสร้างความสำเร็จในอดีตกำหนดทางเลือกอนาคตนานกว่าที่บริบทควรจะเป็น", "TH": "ปล่อยให้สมมติฐานที่เคยสร้างความสำเร็จในอดีตกำหนดทางเลือกอนาคตนานกว่าที่บริบทควรจะเป็น", "c": "C1", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "ปกป้องความสัมพันธ์เชิงกลยุทธ์สำคัญแม้ความโปร่งใสมากกว่าจะช่วยรักษาความไว้วางใจต่อองค์กรได้ดีกว่า", "TH": "ปกป้องความสัมพันธ์เชิงกลยุทธ์สำคัญแม้ความโปร่งใสมากกว่าจะช่วยรักษาความไว้วางใจต่อองค์กรได้ดีกว่า", "c": "C3", "band": "ULP", "type": "Counter"}, "B": {"EN": "ขอความคิดเห็นที่หลากหลายหลังทางเลือกเชิงกลยุทธ์เกือบถูกกำหนดแล้ว ทำให้มุมมองเหล่านั้นมีอิทธิพลจริงจำกัด", "TH": "ขอความคิดเห็นที่หลากหลายหลังทางเลือกเชิงกลยุทธ์เกือบถูกกำหนดแล้ว ทำให้มุมมองเหล่านั้นมีอิทธิพลจริงจำกัด", "c": "C4", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "รักษาทางเลือกเชิงกลยุทธ์ไว้สำหรับหลายสถานการณ์ที่อาจเกิดขึ้นในอนาคต", "TH": "รักษาทางเลือกเชิงกลยุทธ์ไว้สำหรับหลายสถานการณ์ที่อาจเกิดขึ้นในอนาคต", "c": "C1", "band": "ULP", "type": "Positive"}, "B": {"EN": "พิจารณาผลกระทบที่แตกต่างกันต่อกลุ่มที่หลากหลายเมื่อตัดสินใจเรื่องสำคัญระดับองค์กร", "TH": "พิจารณาผลกระทบที่แตกต่างกันต่อกลุ่มที่หลากหลายเมื่อตัดสินใจเรื่องสำคัญระดับองค์กร", "c": "C4", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "ทำให้หลายทีมมีทิศทางสอดคล้องกับลำดับความสำคัญระดับองค์กร", "TH": "ทำให้หลายทีมมีทิศทางสอดคล้องกับลำดับความสำคัญระดับองค์กร", "c": "C5", "band": "RLP", "type": "Positive"}, "B": {"EN": "แปลงความซับซ้อนให้เป็นลำดับความสำคัญเชิงกลยุทธ์ที่ชัดเจน", "TH": "แปลงความซับซ้อนให้เป็นลำดับความสำคัญเชิงกลยุทธ์ที่ชัดเจน", "c": "C2", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "ลดความซับซ้อนในโครงสร้างหนึ่งแต่กลับสร้างความซับซ้อนใหม่ระหว่างสายงาน", "TH": "ลดความซับซ้อนในโครงสร้างหนึ่งแต่กลับสร้างความซับซ้อนใหม่ระหว่างสายงาน", "c": "C2", "band": "RLP", "type": "Counter"}, "B": {"EN": "ปล่อยให้โอกาสทางธุรกิจที่น่าสนใจทำให้ระดับความเสี่ยงที่ยอมรับได้สูงขึ้น", "TH": "ปล่อยให้โอกาสทางธุรกิจที่น่าสนใจทำให้ระดับความเสี่ยงที่ยอมรับได้สูงขึ้น", "c": "C6", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "ทำให้ผู้นำรับผิดชอบต่อผลลัพธ์ด้าน Inclusion", "TH": "ทำให้ผู้นำรับผิดชอบต่อผลลัพธ์ด้าน Inclusion", "c": "C4", "band": "RLP", "type": "Positive"}, "B": {"EN": "จัดสรรทรัพยากรให้สอดคล้องกับลำดับความสำคัญที่สร้างคุณค่าสูงสุด", "TH": "จัดสรรทรัพยากรให้สอดคล้องกับลำดับความสำคัญที่สร้างคุณค่าสูงสุด", "c": "C2", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "ปล่อยให้ความเหนื่อยล้าจากการเปลี่ยนแปลงลดแรงขับของทีมนานเกินความจำเป็น", "TH": "ปล่อยให้ความเหนื่อยล้าจากการเปลี่ยนแปลงลดแรงขับของทีมนานเกินความจำเป็น", "c": "C1", "band": "RLT", "type": "Counter"}, "B": {"EN": "คงวิธีทำงานที่มีคุณค่าต่ำไว้เพราะกังวลว่าการเปลี่ยนแปลงอาจทำให้ทีมไม่สบายใจ", "TH": "คงวิธีทำงานที่มีคุณค่าต่ำไว้เพราะกังวลว่าการเปลี่ยนแปลงอาจทำให้ทีมไม่สบายใจ", "c": "C2", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "แปลงการเปลี่ยนแปลงให้เป็นผลกระทบและแนวทางปฏิบัติที่ชัดเจนสำหรับทีม", "TH": "แปลงการเปลี่ยนแปลงให้เป็นผลกระทบและแนวทางปฏิบัติที่ชัดเจนสำหรับทีม", "c": "C1", "band": "RLT", "type": "Positive"}, "B": {"EN": "คาดการณ์ความเสี่ยงที่เกิดจากภาระงาน การเปลี่ยนแปลง และความซับซ้อน", "TH": "คาดการณ์ความเสี่ยงที่เกิดจากภาระงาน การเปลี่ยนแปลง และความซับซ้อน", "c": "C6", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ชะลอการให้ทิศทางเพื่อรอให้ความไม่แน่นอนลดลงจนทีมขาดแนวทางที่เพียงพอ", "TH": "ชะลอการให้ทิศทางเพื่อรอให้ความไม่แน่นอนลดลงจนทีมขาดแนวทางที่เพียงพอ", "c": "C1", "band": "RLT", "type": "Counter"}, "B": {"EN": "มอบหมายงานสำคัญซ้ำ ๆ ให้คนที่พิสูจน์ผลงานแล้ว ทำให้ผู้อื่นมีโอกาสเติบโตจำกัด", "TH": "มอบหมายงานสำคัญซ้ำ ๆ ให้คนที่พิสูจน์ผลงานแล้ว ทำให้ผู้อื่นมีโอกาสเติบโตจำกัด", "c": "C4", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "ขจัดอุปสรรคเชิงระบบที่ขัดขวางผลการดำเนินงานอย่างเชิงรุก", "TH": "ขจัดอุปสรรคเชิงระบบที่ขัดขวางผลการดำเนินงานอย่างเชิงรุก", "c": "C5", "band": "RLP", "type": "Positive"}, "B": {"EN": "เป็นแบบอย่างในการแสดงค่านิยมองค์กรและการดำเนินธุรกิจอย่างมีจริยธรรม", "TH": "เป็นแบบอย่างในการแสดงค่านิยมองค์กรและการดำเนินธุรกิจอย่างมีจริยธรรม", "c": "C3", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "รักษาแรงขับเคลื่อนของทีมในช่วงการเปลี่ยนผ่าน", "TH": "รักษาแรงขับเคลื่อนของทีมในช่วงการเปลี่ยนผ่าน", "c": "C1", "band": "RLT", "type": "Positive"}, "B": {"EN": "ขจัดวิธีปฏิบัติที่ลดความคล่องตัวของทีมโดยไม่สร้างคุณค่า", "TH": "ขจัดวิธีปฏิบัติที่ลดความคล่องตัวของทีมโดยไม่สร้างคุณค่า", "c": "C2", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ติดตามกิจกรรมและ milestone ของ transformation มากกว่าการดูว่าพฤติกรรมและผลงานเปลี่ยนจริงหรือไม่", "TH": "ติดตามกิจกรรมและ milestone ของ transformation มากกว่าการดูว่าพฤติกรรมและผลงานเปลี่ยนจริงหรือไม่", "c": "C5", "band": "RLP", "type": "Counter"}, "B": {"EN": "ใช้ตัวเลข representation เป็นหลักฐานความก้าวหน้าโดยไม่ได้ดูว่าคนมีอิทธิพลหรือโอกาสเท่าเทียมกันจริงหรือไม่", "TH": "ใช้ตัวเลข representation เป็นหลักฐานความก้าวหน้าโดยไม่ได้ดูว่าคนมีอิทธิพลหรือโอกาสเท่าเทียมกันจริงหรือไม่", "c": "C4", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "ขจัดวิธีปฏิบัติที่ชะลอการเปลี่ยนแปลงโดยไม่จำเป็น", "TH": "ขจัดวิธีปฏิบัติที่ชะลอการเปลี่ยนแปลงโดยไม่จำเป็น", "c": "C1", "band": "RLP", "type": "Positive"}, "B": {"EN": "ทำให้ทุกกลุ่มสามารถเข้าถึงโอกาสได้อย่างเป็นธรรม", "TH": "ทำให้ทุกกลุ่มสามารถเข้าถึงโอกาสได้อย่างเป็นธรรม", "c": "C4", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "แก้อุปสรรคที่เห็นชัด แต่ต้นเหตุเชิงระบบที่ลึกกว่ายังคงอยู่", "TH": "แก้อุปสรรคที่เห็นชัด แต่ต้นเหตุเชิงระบบที่ลึกกว่ายังคงอยู่", "c": "C1", "band": "RLP", "type": "Counter"}, "B": {"EN": "ให้โอกาสแบบเดียวกันกับทุกกลุ่มแม้จุดเริ่มต้นของแต่ละกลุ่มไม่เท่ากัน", "TH": "ให้โอกาสแบบเดียวกันกับทุกกลุ่มแม้จุดเริ่มต้นของแต่ละกลุ่มไม่เท่ากัน", "c": "C4", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "เปลี่ยน disruption ครั้งสำคัญให้เป็นโอกาสในการปรับกลยุทธ์และสร้างองค์กรขึ้นใหม่", "TH": "เปลี่ยน disruption ครั้งสำคัญให้เป็นโอกาสในการปรับกลยุทธ์และสร้างองค์กรขึ้นใหม่", "c": "C1", "band": "ULP", "type": "Positive"}, "B": {"EN": "ทำให้ความเรียบง่ายสามารถขยายผลได้แม้องค์กรเติบโตและมีความซับซ้อนเพิ่มขึ้น", "TH": "ทำให้ความเรียบง่ายสามารถขยายผลได้แม้องค์กรเติบโตและมีความซับซ้อนเพิ่มขึ้น", "c": "C2", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "มองความสามารถในการปรับตัวเป็นสิ่งที่ใช้เมื่อมีการเปลี่ยนแปลงใหญ่ มากกว่าจะเป็น capability ประจำขององค์กร", "TH": "มองความสามารถในการปรับตัวเป็นสิ่งที่ใช้เมื่อมีการเปลี่ยนแปลงใหญ่ มากกว่าจะเป็น capability ประจำขององค์กร", "c": "C1", "band": "RLP", "type": "Counter"}, "B": {"EN": "สื่อสารทิศทางกลยุทธ์ในภาพกว้างแต่ปล่อยให้ทางเลือกที่ยากถูกตีความแตกต่างกัน", "TH": "สื่อสารทิศทางกลยุทธ์ในภาพกว้างแต่ปล่อยให้ทางเลือกที่ยากถูกตีความแตกต่างกัน", "c": "C2", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "รับฟังอย่างตั้งใจเพื่อทำความเข้าใจก่อนตอบสนอง", "TH": "รับฟังอย่างตั้งใจเพื่อทำความเข้าใจก่อนตอบสนอง", "c": "C3", "band": "RLT", "type": "Positive"}, "B": {"EN": "สร้างโอกาสอย่างตั้งใจให้เสียงและมุมมองที่แตกต่างได้มีส่วนร่วม", "TH": "สร้างโอกาสอย่างตั้งใจให้เสียงและมุมมองที่แตกต่างได้มีส่วนร่วม", "c": "C4", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "จัดการเรื่องการกีดกันเป็นหลักหลังมีคนยกประเด็นอย่างชัดเจนหรือเป็นทางการ", "TH": "จัดการเรื่องการกีดกันเป็นหลักหลังมีคนยกประเด็นอย่างชัดเจนหรือเป็นทางการ", "c": "C4", "band": "RLT", "type": "Counter"}, "B": {"EN": "ปรับปรุงกระบวนการเมื่อปัญหาเกิดซ้ำจนยากจะมองข้าม", "TH": "ปรับปรุงกระบวนการเมื่อปัญหาเกิดซ้ำจนยากจะมองข้าม", "c": "C2", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "ลงมือกับการเปลี่ยนแปลงภายนอกครั้งใหญ่เมื่อผลกระทบต่อองค์กรเริ่มชัดจนยากจะมองข้าม", "TH": "ลงมือกับการเปลี่ยนแปลงภายนอกครั้งใหญ่เมื่อผลกระทบต่อองค์กรเริ่มชัดจนยากจะมองข้าม", "c": "C1", "band": "ULP", "type": "Counter"}, "B": {"EN": "กำหนดระดับความเสี่ยงที่องค์กรยอมรับได้จากประสบการณ์ในอดีตเป็นหลัก ทำให้ความเสี่ยงรูปแบบใหม่ถูกท้าทายไม่เพียงพอ", "TH": "กำหนดระดับความเสี่ยงที่องค์กรยอมรับได้จากประสบการณ์ในอดีตเป็นหลัก ทำให้ความเสี่ยงรูปแบบใหม่ถูกท้าทายไม่เพียงพอ", "c": "C6", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "ปล่อยให้ความต้องการรักษาความสัมพันธ์เชิงกลยุทธ์ทำให้ขอบเขตทางจริยธรรมอ่อนลง", "TH": "ปล่อยให้ความต้องการรักษาความสัมพันธ์เชิงกลยุทธ์ทำให้ขอบเขตทางจริยธรรมอ่อนลง", "c": "C3", "band": "RLP", "type": "Counter"}, "B": {"EN": "พัฒนาผู้นำให้เหมาะกับรูปแบบธุรกิจปัจจุบันมากกว่าความไม่แน่นอนในอนาคต", "TH": "พัฒนาผู้นำให้เหมาะกับรูปแบบธุรกิจปัจจุบันมากกว่าความไม่แน่นอนในอนาคต", "c": "C1", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "ทุ่มทรัพยากรระดับองค์กรไปกับอนาคตแบบเดียวมากจนเหลือทางเลือกเชิงกลยุทธ์จำกัดหากสถานการณ์เปลี่ยน", "TH": "ทุ่มทรัพยากรระดับองค์กรไปกับอนาคตแบบเดียวมากจนเหลือทางเลือกเชิงกลยุทธ์จำกัดหากสถานการณ์เปลี่ยน", "c": "C1", "band": "ULP", "type": "Counter"}, "B": {"EN": "ประเมินการตัดสินใจระดับองค์กรด้วยผลกระทบเฉลี่ย จนบดบังผลที่แตกต่างมากต่อบางกลุ่ม", "TH": "ประเมินการตัดสินใจระดับองค์กรด้วยผลกระทบเฉลี่ย จนบดบังผลที่แตกต่างมากต่อบางกลุ่ม", "c": "C4", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "ผลักดันความเหมือนกันทางวัฒนธรรมข้ามตลาดจนความแตกต่างท้องถิ่นที่มีคุณค่าถูกลดทอน", "TH": "ผลักดันความเหมือนกันทางวัฒนธรรมข้ามตลาดจนความแตกต่างท้องถิ่นที่มีคุณค่าถูกลดทอน", "c": "C4", "band": "ULP", "type": "Counter"}, "B": {"EN": "ใช้โมเดลร่วมขององค์กรอย่างแข็งตัวเกินไปในตลาดที่มีบริบทแตกต่างอย่างมีนัยสำคัญ", "TH": "ใช้โมเดลร่วมขององค์กรอย่างแข็งตัวเกินไปในตลาดที่มีบริบทแตกต่างอย่างมีนัยสำคัญ", "c": "C2", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "ปกป้องความชอบธรรมและความน่าเชื่อถือระยะยาวขององค์กรเมื่อแรงกดดันทางธุรกิจระยะสั้นขัดกับค่านิยม", "TH": "ปกป้องความชอบธรรมและความน่าเชื่อถือระยะยาวขององค์กรเมื่อแรงกดดันทางธุรกิจระยะสั้นขัดกับค่านิยม", "c": "C3", "band": "ULP", "type": "Positive"}, "B": {"EN": "ตัดสินใจบน trade-off ระดับองค์กรที่ยากเพื่อรักษาความสามารถในการฟื้นตัวและยืดหยุ่นในระยะยาว", "TH": "ตัดสินใจบน trade-off ระดับองค์กรที่ยากเพื่อรักษาความสามารถในการฟื้นตัวและยืดหยุ่นในระยะยาว", "c": "C1", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "มอง disruption ครั้งใหญ่เป็นภัยที่ต้องควบคุมเป็นหลักจนพลาดโอกาสในการสร้างธุรกิจใหม่", "TH": "มอง disruption ครั้งใหญ่เป็นภัยที่ต้องควบคุมเป็นหลักจนพลาดโอกาสในการสร้างธุรกิจใหม่", "c": "C1", "band": "ULP", "type": "Counter"}, "B": {"EN": "ลดความซับซ้อนขององค์กรวันนี้ในแบบที่กลับสร้างความซับซ้อนใหม่เมื่อธุรกิจขยายตัว", "TH": "ลดความซับซ้อนขององค์กรวันนี้ในแบบที่กลับสร้างความซับซ้อนใหม่เมื่อธุรกิจขยายตัว", "c": "C2", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "เปลี่ยนวิธีทำงานตามปัญหาเฉพาะหน้าไปมา จนทีมขาดความสม่ำเสมอ", "TH": "เปลี่ยนวิธีทำงานตามปัญหาเฉพาะหน้าไปมา จนทีมขาดความสม่ำเสมอ", "c": "C5", "band": "RLT", "type": "Counter"}, "B": {"EN": "รวบรวมมุมมองหลากหลายแต่กลับไปใช้วิธีคิดที่คุ้นเคยตอนตัดสินใจสุดท้าย", "TH": "รวบรวมมุมมองหลากหลายแต่กลับไปใช้วิธีคิดที่คุ้นเคยตอนตัดสินใจสุดท้าย", "c": "C4", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "ลดความซับซ้อนในส่วนหนึ่งของกระบวนการแต่ทำให้งานปลายทางเพิ่มขึ้น", "TH": "ลดความซับซ้อนในส่วนหนึ่งของกระบวนการแต่ทำให้งานปลายทางเพิ่มขึ้น", "c": "C2", "band": "RLT", "type": "Counter"}, "B": {"EN": "กำหนดมาตรการควบคุมโดยไม่ได้ตรวจสอบอย่างสม่ำเสมอว่าใช้ได้ผลจริงในการปฏิบัติงาน", "TH": "กำหนดมาตรการควบคุมโดยไม่ได้ตรวจสอบอย่างสม่ำเสมอว่าใช้ได้ผลจริงในการปฏิบัติงาน", "c": "C6", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "รักษาความไว้วางใจต่อองค์กรเมื่อการตัดสินใจสำคัญสร้างความคาดหวังที่ขัดแย้งกันของผู้มีส่วนได้ส่วนเสีย", "TH": "รักษาความไว้วางใจต่อองค์กรเมื่อการตัดสินใจสำคัญสร้างความคาดหวังที่ขัดแย้งกันของผู้มีส่วนได้ส่วนเสีย", "c": "C3", "band": "ULP", "type": "Positive"}, "B": {"EN": "ใช้มุมมองที่หลากหลายเพื่อท้าทายสมมติฐานในการกำหนดกลยุทธ์และการเปลี่ยนแปลงระดับองค์กร", "TH": "ใช้มุมมองที่หลากหลายเพื่อท้าทายสมมติฐานในการกำหนดกลยุทธ์และการเปลี่ยนแปลงระดับองค์กร", "c": "C4", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "จัดบทบาทและความรับผิดชอบให้สอดคล้องกับเป้าหมายของทีม", "TH": "จัดบทบาทและความรับผิดชอบให้สอดคล้องกับเป้าหมายของทีม", "c": "C5", "band": "RLT", "type": "Positive"}, "B": {"EN": "ปรับลำดับความสำคัญและทรัพยากรได้อย่างรวดเร็ว", "TH": "ปรับลำดับความสำคัญและทรัพยากรได้อย่างรวดเร็ว", "c": "C1", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "สร้างกลไกความร่วมมือที่ยังสามารถสร้างผลลัพธ์ได้โดยไม่ขึ้นอยู่กับผู้นำรายบุคคล", "TH": "สร้างกลไกความร่วมมือที่ยังสามารถสร้างผลลัพธ์ได้โดยไม่ขึ้นอยู่กับผู้นำรายบุคคล", "c": "C5", "band": "ULP", "type": "Positive"}, "B": {"EN": "ยกระดับ Inclusion ให้เป็นแหล่งของนวัตกรรม ความสามารถในการปรับตัว และผลการดำเนินงานระดับองค์กร", "TH": "ยกระดับ Inclusion ให้เป็นแหล่งของนวัตกรรม ความสามารถในการปรับตัว และผลการดำเนินงานระดับองค์กร", "c": "C4", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "จัดการความขัดแย้งระหว่างธุรกิจโดยไม่เพิ่มประโยชน์ให้ส่วนหนึ่งจนกระทบต่อองค์กรโดยรวม", "TH": "จัดการความขัดแย้งระหว่างธุรกิจโดยไม่เพิ่มประโยชน์ให้ส่วนหนึ่งจนกระทบต่อองค์กรโดยรวม", "c": "C5", "band": "ULP", "type": "Positive"}, "B": {"EN": "ตัดสินใจบน trade-off ของผู้มีส่วนได้ส่วนเสียอย่างเปิดเผยเมื่อไม่สามารถทำให้ทุกฝ่ายมีผลประโยชน์สอดคล้องกันได้", "TH": "ตัดสินใจบน trade-off ของผู้มีส่วนได้ส่วนเสียอย่างเปิดเผยเมื่อไม่สามารถทำให้ทุกฝ่ายมีผลประโยชน์สอดคล้องกันได้", "c": "C3", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "กำหนดความรับผิดชอบรายบุคคลชัดเจน แต่ความเชื่อมโยงระหว่างบทบาทยังไม่ได้รับการจัดการ", "TH": "กำหนดความรับผิดชอบรายบุคคลชัดเจน แต่ความเชื่อมโยงระหว่างบทบาทยังไม่ได้รับการจัดการ", "c": "C5", "band": "RLT", "type": "Counter"}, "B": {"EN": "คงทรัพยากรไว้แบบเดิมจนปัญหาผลงานทำให้ต้องปรับอย่างหลีกเลี่ยงไม่ได้", "TH": "คงทรัพยากรไว้แบบเดิมจนปัญหาผลงานทำให้ต้องปรับอย่างหลีกเลี่ยงไม่ได้", "c": "C1", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "ให้ความสำคัญกับผลลัพธ์ต่อ stakeholder ในระยะใกล้ ขณะที่ผลกระทบระยะยาวได้รับความสนใจน้อยกว่า", "TH": "ให้ความสำคัญกับผลลัพธ์ต่อ stakeholder ในระยะใกล้ ขณะที่ผลกระทบระยะยาวได้รับความสนใจน้อยกว่า", "c": "C3", "band": "RLP", "type": "Counter"}, "B": {"EN": "จำกัดการเรียนรู้จากเหตุการณ์ Safety ไว้ที่ corrective action ของพื้นที่ที่เกิดเหตุ มากกว่าท้าทายสมมติฐานขององค์กรในวงกว้าง", "TH": "จำกัดการเรียนรู้จากเหตุการณ์ Safety ไว้ที่ corrective action ของพื้นที่ที่เกิดเหตุ มากกว่าท้าทายสมมติฐานขององค์กรในวงกว้าง", "c": "C6", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "พึ่ง governance ด้าน Safety โดยไม่ได้ตรวจสอบว่าผู้นำรู้สึกรับผิดชอบจริงในการทำงานประจำวันหรือไม่", "TH": "พึ่ง governance ด้าน Safety โดยไม่ได้ตรวจสอบว่าผู้นำรู้สึกรับผิดชอบจริงในการทำงานประจำวันหรือไม่", "c": "C6", "band": "RLP", "type": "Counter"}, "B": {"EN": "จัดการความไม่เท่าเทียมที่เห็นชัด แต่โครงสร้างที่สร้างความไม่เท่าเทียมยังคงอยู่", "TH": "จัดการความไม่เท่าเทียมที่เห็นชัด แต่โครงสร้างที่สร้างความไม่เท่าเทียมยังคงอยู่", "c": "C4", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "ทำให้บทบาท การส่งต่องาน และความรับผิดชอบมีความชัดเจน", "TH": "ทำให้บทบาท การส่งต่องาน และความรับผิดชอบมีความชัดเจน", "c": "C2", "band": "RLT", "type": "Positive"}, "B": {"EN": "แสวงหาและพิจารณามุมมองที่แตกต่างอย่างจริงจัง", "TH": "แสวงหาและพิจารณามุมมองที่แตกต่างอย่างจริงจัง", "c": "C3", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "คงลำดับความสำคัญของทีมไว้แม้ความต้องการใหม่ทำให้บางเรื่องมีความสำคัญลดลง", "TH": "คงลำดับความสำคัญของทีมไว้แม้ความต้องการใหม่ทำให้บางเรื่องมีความสำคัญลดลง", "c": "C5", "band": "RLT", "type": "Counter"}, "B": {"EN": "คงขั้นตอนที่ล้าสมัยไว้เพราะกังวลว่าการเปลี่ยนจะสร้างความวุ่นวายในระยะสั้น", "TH": "คงขั้นตอนที่ล้าสมัยไว้เพราะกังวลว่าการเปลี่ยนจะสร้างความวุ่นวายในระยะสั้น", "c": "C2", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "แปลงการเปลี่ยนแปลงเป็นงานใหม่ แต่ทีมยังไม่เข้าใจว่าการเปลี่ยนแปลงนั้นสำคัญอย่างไร", "TH": "แปลงการเปลี่ยนแปลงเป็นงานใหม่ แต่ทีมยังไม่เข้าใจว่าการเปลี่ยนแปลงนั้นสำคัญอย่างไร", "c": "C1", "band": "RLT", "type": "Counter"}, "B": {"EN": "เน้นการหารืออันตรายในการปฏิบัติงานที่เห็นชัด ขณะที่ความเสี่ยงจากภาระงานหรือการเปลี่ยนแปลงได้รับความสนใจน้อยกว่า", "TH": "เน้นการหารืออันตรายในการปฏิบัติงานที่เห็นชัด ขณะที่ความเสี่ยงจากภาระงานหรือการเปลี่ยนแปลงได้รับความสนใจน้อยกว่า", "c": "C6", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "มอบเรื่อง Inclusion ให้หน่วยงานผู้เชี่ยวชาญจนความรับผิดชอบโดยตรงของผู้นำลดลง", "TH": "มอบเรื่อง Inclusion ให้หน่วยงานผู้เชี่ยวชาญจนความรับผิดชอบโดยตรงของผู้นำลดลง", "c": "C4", "band": "RLP", "type": "Counter"}, "B": {"EN": "กระจายทรัพยากรกว้างเกินไปเพื่อรักษาความพึงพอใจของ stakeholder หลายฝ่าย", "TH": "กระจายทรัพยากรกว้างเกินไปเพื่อรักษาความพึงพอใจของ stakeholder หลายฝ่าย", "c": "C2", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "พิจารณาผลกระทบต่อสังคมและ ecosystem ในวงกว้างจากการตัดสินใจสำคัญระดับองค์กร", "TH": "พิจารณาผลกระทบต่อสังคมและ ecosystem ในวงกว้างจากการตัดสินใจสำคัญระดับองค์กร", "c": "C3", "band": "ULP", "type": "Positive"}, "B": {"EN": "สร้างอิทธิพลต่อพันธมิตรและ ecosystem การบินในวงกว้างเพื่อยกระดับมาตรฐานความปลอดภัยให้มากกว่าขอบเขตขององค์กร", "TH": "สร้างอิทธิพลต่อพันธมิตรและ ecosystem การบินในวงกว้างเพื่อยกระดับมาตรฐานความปลอดภัยให้มากกว่าขอบเขตขององค์กร", "c": "C6", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "สนับสนุนให้ทีมพูด แต่ติดตามข้อกังวลที่ถูกยกขึ้นมาไม่เพียงพอ", "TH": "สนับสนุนให้ทีมพูด แต่ติดตามข้อกังวลที่ถูกยกขึ้นมาไม่เพียงพอ", "c": "C6", "band": "RLT", "type": "Counter"}, "B": {"EN": "จัดการอุปสรรคด้านผลงานเมื่อเริ่มส่งผลต่อผลลัพธ์ของทีมแล้ว", "TH": "จัดการอุปสรรคด้านผลงานเมื่อเริ่มส่งผลต่อผลลัพธ์ของทีมแล้ว", "c": "C5", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "สร้างสมดุลระหว่างความเข้าอกเข้าใจกับความรับผิดชอบต่อผลลัพธ์ร่วม", "TH": "สร้างสมดุลระหว่างความเข้าอกเข้าใจกับความรับผิดชอบต่อผลลัพธ์ร่วม", "c": "C3", "band": "RLT", "type": "Positive"}, "B": {"EN": "เรียนรู้จากเหตุการณ์ อุบัติการณ์เกือบเกิด และข้อมูลสะท้อนกลับด้านความปลอดภัย", "TH": "เรียนรู้จากเหตุการณ์ อุบัติการณ์เกือบเกิด และข้อมูลสะท้อนกลับด้านความปลอดภัย", "c": "C6", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ปล่อยจุดส่งต่องานที่ไม่ชัดเจนให้สมาชิกที่มีประสบการณ์จัดการกันเอง", "TH": "ปล่อยจุดส่งต่องานที่ไม่ชัดเจนให้สมาชิกที่มีประสบการณ์จัดการกันเอง", "c": "C2", "band": "RLT", "type": "Counter"}, "B": {"EN": "เปิดรับความคิดเห็นหลากหลายแต่ให้น้ำหนักกับคนที่ตนเชื่อถืออยู่แล้วมากกว่า", "TH": "เปิดรับความคิดเห็นหลากหลายแต่ให้น้ำหนักกับคนที่ตนเชื่อถืออยู่แล้วมากกว่า", "c": "C3", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "ยกประเด็นความเสี่ยงเป็นหลักกับกิจกรรมที่ถูกมองว่าเสี่ยงสูงอยู่แล้ว", "TH": "ยกประเด็นความเสี่ยงเป็นหลักกับกิจกรรมที่ถูกมองว่าเสี่ยงสูงอยู่แล้ว", "c": "C6", "band": "RLT", "type": "Counter"}, "B": {"EN": "สนับสนุนการท้าทายจนกระทั่งสมมติฐานหลักที่ทีมยึดถือถูกตั้งคำถาม", "TH": "สนับสนุนการท้าทายจนกระทั่งสมมติฐานหลักที่ทีมยึดถือถูกตั้งคำถาม", "c": "C4", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "คงโครงสร้างการตัดสินใจเดิมไว้แม้ทำให้องค์กรตอบสนองต่อการเปลี่ยนแปลงช้าลง", "TH": "คงโครงสร้างการตัดสินใจเดิมไว้แม้ทำให้องค์กรตอบสนองต่อการเปลี่ยนแปลงช้าลง", "c": "C1", "band": "RLP", "type": "Counter"}, "B": {"EN": "นำ Safety เข้าสู่การหารือเชิงกลยุทธ์เป็นหลักเมื่อผลกระทบต่อการปฏิบัติการเริ่มเห็นชัดแล้ว", "TH": "นำ Safety เข้าสู่การหารือเชิงกลยุทธ์เป็นหลักเมื่อผลกระทบต่อการปฏิบัติการเริ่มเห็นชัดแล้ว", "c": "C6", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "ใช้อำนาจตามตำแหน่งเพื่อสร้าง alignment ระดับองค์กรจน collaboration ขึ้นกับลำดับชั้นมากกว่าความเป็นเจ้าของร่วม", "TH": "ใช้อำนาจตามตำแหน่งเพื่อสร้าง alignment ระดับองค์กรจน collaboration ขึ้นกับลำดับชั้นมากกว่าความเป็นเจ้าของร่วม", "c": "C5", "band": "ULP", "type": "Counter"}, "B": {"EN": "ปล่อยให้กลยุทธ์ระดับองค์กรยังซับซ้อนเพราะมีหลายเรื่องถูกมองว่าสำคัญเท่า ๆ กัน", "TH": "ปล่อยให้กลยุทธ์ระดับองค์กรยังซับซ้อนเพราะมีหลายเรื่องถูกมองว่าสำคัญเท่า ๆ กัน", "c": "C2", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "ทำให้มั่นใจว่าการเปลี่ยนแปลงสร้างผลลัพธ์ที่ยั่งยืนและวัดผลได้", "TH": "ทำให้มั่นใจว่าการเปลี่ยนแปลงสร้างผลลัพธ์ที่ยั่งยืนและวัดผลได้", "c": "C5", "band": "RLP", "type": "Positive"}, "B": {"EN": "ใช้ความหลากหลายเพื่อเสริมสร้างขีดความสามารถโดยรวมขององค์กร", "TH": "ใช้ความหลากหลายเพื่อเสริมสร้างขีดความสามารถโดยรวมขององค์กร", "c": "C4", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "สร้างและรักษาความสัมพันธ์ที่โปร่งใสและตั้งอยู่บนความไว้วางใจกับผู้มีส่วนได้ส่วนเสียหลัก", "TH": "สร้างและรักษาความสัมพันธ์ที่โปร่งใสและตั้งอยู่บนความไว้วางใจกับผู้มีส่วนได้ส่วนเสียหลัก", "c": "C3", "band": "RLP", "type": "Positive"}, "B": {"EN": "ฝัง Inclusion เข้าไปในแนวปฏิบัติและกระบวนการด้านคนอย่างเป็นระบบ", "TH": "ฝัง Inclusion เข้าไปในแนวปฏิบัติและกระบวนการด้านคนอย่างเป็นระบบ", "c": "C4", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "เลื่อนบทสนทนาที่ยากกับ stakeholder เพื่อรักษาความสัมพันธ์สำคัญ", "TH": "เลื่อนบทสนทนาที่ยากกับ stakeholder เพื่อรักษาความสัมพันธ์สำคัญ", "c": "C3", "band": "RLP", "type": "Counter"}, "B": {"EN": "มอง Inclusion เป็นเรื่องของกระบวนการด้านคนเป็นหลัก มากกว่าเรื่องของผู้นำและธุรกิจ", "TH": "มอง Inclusion เป็นเรื่องของกระบวนการด้านคนเป็นหลัก มากกว่าเรื่องของผู้นำและธุรกิจ", "c": "C4", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "รีบเข้าสู่การแก้ปัญหาก่อนเข้าใจข้อกังวลของอีกฝ่ายอย่างครบถ้วน", "TH": "รีบเข้าสู่การแก้ปัญหาก่อนเข้าใจข้อกังวลของอีกฝ่ายอย่างครบถ้วน", "c": "C3", "band": "RLT", "type": "Counter"}, "B": {"EN": "ปล่อยให้คนที่พูดเก่งครองการสนทนา ขณะที่สมาชิกที่พูดน้อยยังอยู่ขอบวง", "TH": "ปล่อยให้คนที่พูดเก่งครองการสนทนา ขณะที่สมาชิกที่พูดน้อยยังอยู่ขอบวง", "c": "C4", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "พัฒนาวิธีการทำงานของทีมอย่างต่อเนื่อง", "TH": "พัฒนาวิธีการทำงานของทีมอย่างต่อเนื่อง", "c": "C5", "band": "RLT", "type": "Positive"}, "B": {"EN": "เปลี่ยนความแตกต่างให้เป็นการตัดสินใจและผลลัพธ์ของทีมที่ดีขึ้น", "TH": "เปลี่ยนความแตกต่างให้เป็นการตัดสินใจและผลลัพธ์ของทีมที่ดีขึ้น", "c": "C4", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ตั้งคำถามและท้าทายความซับซ้อนขององค์กรที่ไม่จำเป็น", "TH": "ตั้งคำถามและท้าทายความซับซ้อนขององค์กรที่ไม่จำเป็น", "c": "C2", "band": "RLP", "type": "Positive"}, "B": {"EN": "สร้างสมดุลระหว่างผลประโยชน์ของผู้มีส่วนได้ส่วนเสียที่แตกต่างกันอย่างมีจริยธรรมและเป็นธรรม", "TH": "สร้างสมดุลระหว่างผลประโยชน์ของผู้มีส่วนได้ส่วนเสียที่แตกต่างกันอย่างมีจริยธรรมและเป็นธรรม", "c": "C3", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "ตรวจสอบผลกระทบด้าน Safety อย่างลึกเมื่อเทคโนโลยีหรือโมเดลธุรกิจใหม่เดินหน้าไปไกลแล้ว", "TH": "ตรวจสอบผลกระทบด้าน Safety อย่างลึกเมื่อเทคโนโลยีหรือโมเดลธุรกิจใหม่เดินหน้าไปไกลแล้ว", "c": "C6", "band": "ULP", "type": "Counter"}, "B": {"EN": "จัดการอคติที่เห็นชัด แต่โครงสร้างอำนาจที่ฝังลึกยังคงแทบไม่เปลี่ยน", "TH": "จัดการอคติที่เห็นชัด แต่โครงสร้างอำนาจที่ฝังลึกยังคงแทบไม่เปลี่ยน", "c": "C4", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "สื่อสารทิศทางได้อย่างชัดเจนในช่วงความไม่แน่นอน", "TH": "สื่อสารทิศทางได้อย่างชัดเจนในช่วงความไม่แน่นอน", "c": "C1", "band": "RLT", "type": "Positive"}, "B": {"EN": "ใช้จุดแข็งและความแตกต่างของแต่ละบุคคลอย่างมีประสิทธิผลในการทำงานเป็นทีม", "TH": "ใช้จุดแข็งและความแตกต่างของแต่ละบุคคลอย่างมีประสิทธิผลในการทำงานเป็นทีม", "c": "C4", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "กำหนดโครงสร้างการกำกับดูแลและความรับผิดชอบของผู้นำด้านความปลอดภัย", "TH": "กำหนดโครงสร้างการกำกับดูแลและความรับผิดชอบของผู้นำด้านความปลอดภัย", "c": "C6", "band": "RLP", "type": "Positive"}, "B": {"EN": "ระบุความไม่เท่าเทียมและอุปสรรคเชิงระบบต่อการมีส่วนร่วม", "TH": "ระบุความไม่เท่าเทียมและอุปสรรคเชิงระบบต่อการมีส่วนร่วม", "c": "C4", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "สร้าง resilience เน้นสถานการณ์ที่มีโอกาสเกิดมาก จนเหตุการณ์ที่โอกาสต่ำแต่ผลรุนแรงได้รับการเตรียมพร้อมไม่เพียงพอ", "TH": "สร้าง resilience เน้นสถานการณ์ที่มีโอกาสเกิดมาก จนเหตุการณ์ที่โอกาสต่ำแต่ผลรุนแรงได้รับการเตรียมพร้อมไม่เพียงพอ", "c": "C6", "band": "ULP", "type": "Counter"}, "B": {"EN": "สร้าง collaboration รอบโครงการใหญ่ แต่เมื่อโครงการจบ ความเชื่อมโยงที่นำกลับมาใช้ต่อได้มีน้อย", "TH": "สร้าง collaboration รอบโครงการใหญ่ แต่เมื่อโครงการจบ ความเชื่อมโยงที่นำกลับมาใช้ต่อได้มีน้อย", "c": "C5", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "แก้ปัญหาผลงานที่เกิดซ้ำในจุดหนึ่ง แต่สาเหตุเชิงระบบยังคงสร้างปัญหาในส่วนอื่น", "TH": "แก้ปัญหาผลงานที่เกิดซ้ำในจุดหนึ่ง แต่สาเหตุเชิงระบบยังคงสร้างปัญหาในส่วนอื่น", "c": "C5", "band": "RLP", "type": "Counter"}, "B": {"EN": "แสดงค่านิยมองค์กรชัดเจนในสถานการณ์ที่คนมองเห็น แต่ใช้ไม่สม่ำเสมอเท่ากันในการตัดสินใจเบื้องหลัง", "TH": "แสดงค่านิยมองค์กรชัดเจนในสถานการณ์ที่คนมองเห็น แต่ใช้ไม่สม่ำเสมอเท่ากันในการตัดสินใจเบื้องหลัง", "c": "C3", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "ทำให้มั่นใจว่าผลกระทบที่ยั่งยืนและมีความรับผิดชอบได้รับการพิจารณาในความสัมพันธ์เชิงกลยุทธ์", "TH": "ทำให้มั่นใจว่าผลกระทบที่ยั่งยืนและมีความรับผิดชอบได้รับการพิจารณาในความสัมพันธ์เชิงกลยุทธ์", "c": "C3", "band": "RLP", "type": "Positive"}, "B": {"EN": "ส่งเสริมการรายงานด้านความปลอดภัยอย่างโปร่งใสและการเรียนรู้ขององค์กร", "TH": "ส่งเสริมการรายงานด้านความปลอดภัยอย่างโปร่งใสและการเรียนรู้ขององค์กร", "c": "C6", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "ใช้ข้อมูล Safety เป็นหลักเพื่ออธิบายสิ่งที่เกิดขึ้นแล้ว มากกว่าค้นหาความเสี่ยงที่กำลังก่อตัว", "TH": "ใช้ข้อมูล Safety เป็นหลักเพื่ออธิบายสิ่งที่เกิดขึ้นแล้ว มากกว่าค้นหาความเสี่ยงที่กำลังก่อตัว", "c": "C6", "band": "RLP", "type": "Counter"}, "B": {"EN": "ขับเคลื่อน transformation ผ่านโครงการใหญ่ แต่ไม่ได้สร้าง capability ให้คนเพียงพอที่จะรักษาการเปลี่ยนแปลง", "TH": "ขับเคลื่อน transformation ผ่านโครงการใหญ่ แต่ไม่ได้สร้าง capability ให้คนเพียงพอที่จะรักษาการเปลี่ยนแปลง", "c": "C5", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "ส่งเสริมให้สมาชิกในทีมกล้าพูดและแจ้งข้อกังวลด้านความปลอดภัย", "TH": "ส่งเสริมให้สมาชิกในทีมกล้าพูดและแจ้งข้อกังวลด้านความปลอดภัย", "c": "C6", "band": "RLT", "type": "Positive"}, "B": {"EN": "จัดการอุปสรรคที่ส่งผลต่อผลงานเชิงรุก", "TH": "จัดการอุปสรรคที่ส่งผลต่อผลงานเชิงรุก", "c": "C5", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "เร่งหาข้อสรุปของความเห็นต่างก่อนที่ข้อกังวลเบื้องหลังจะถูกเปิดเผยอย่างครบถ้วน", "TH": "เร่งหาข้อสรุปของความเห็นต่างก่อนที่ข้อกังวลเบื้องหลังจะถูกเปิดเผยอย่างครบถ้วน", "c": "C3", "band": "RLT", "type": "Counter"}, "B": {"EN": "มองแรงต้านเป็นปัญหาเรื่องแรงจูงใจหรือการปฏิบัติตาม มากกว่าค้นหาสาเหตุที่แท้จริง", "TH": "มองแรงต้านเป็นปัญหาเรื่องแรงจูงใจหรือการปฏิบัติตาม มากกว่าค้นหาสาเหตุที่แท้จริง", "c": "C1", "band": "RLT", "type": "Counter"}}, {"A": {"EN": "ประสานพลังระหว่างธุรกิจ ตลาด และพันธมิตรภายนอกเพื่อผลลัพธ์ร่วมระดับองค์กร", "TH": "ประสานพลังระหว่างธุรกิจ ตลาด และพันธมิตรภายนอกเพื่อผลลัพธ์ร่วมระดับองค์กร", "c": "C5", "band": "ULP", "type": "Positive"}, "B": {"EN": "กลั่นประเด็นซับซ้อนระดับองค์กรให้เป็นเรื่องราวเชิงกลยุทธ์ที่ชัดเจนและเชื่อมโยงกัน", "TH": "กลั่นประเด็นซับซ้อนระดับองค์กรให้เป็นเรื่องราวเชิงกลยุทธ์ที่ชัดเจนและเชื่อมโยงกัน", "c": "C2", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "ลดความซับซ้อนโดยไม่กระทบต่อคุณภาพหรือความปลอดภัย", "TH": "ลดความซับซ้อนโดยไม่กระทบต่อคุณภาพหรือความปลอดภัย", "c": "C2", "band": "RLT", "type": "Positive"}, "B": {"EN": "กำหนดมาตรการควบคุมและลดความเสี่ยงที่เหมาะสม", "TH": "กำหนดมาตรการควบคุมและลดความเสี่ยงที่เหมาะสม", "c": "C6", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ใช้ข้อมูลด้านความปลอดภัยเพื่อระบุช่องโหว่และแนวโน้มเชิงระบบ", "TH": "ใช้ข้อมูลด้านความปลอดภัยเพื่อระบุช่องโหว่และแนวโน้มเชิงระบบ", "c": "C6", "band": "RLP", "type": "Positive"}, "B": {"EN": "นำการเปลี่ยนแปลงเชิงปฏิรูปที่เพิ่มขีดความสามารถขององค์กร", "TH": "นำการเปลี่ยนแปลงเชิงปฏิรูปที่เพิ่มขีดความสามารถขององค์กร", "c": "C5", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "ยอมรับความซับซ้อนที่ไม่จำเป็นเมื่อการลดความซับซ้อนอาจกระทบเจ้าของงานหรืออำนาจเดิม", "TH": "ยอมรับความซับซ้อนที่ไม่จำเป็นเมื่อการลดความซับซ้อนอาจกระทบเจ้าของงานหรืออำนาจเดิม", "c": "C2", "band": "RLP", "type": "Counter"}, "B": {"EN": "ให้น้ำหนัก stakeholder ที่มีอิทธิพลสูงมากเกินไปเมื่อต้องตัดสินใจท่ามกลางผลประโยชน์ที่แข่งขันกัน", "TH": "ให้น้ำหนัก stakeholder ที่มีอิทธิพลสูงมากเกินไปเมื่อต้องตัดสินใจท่ามกลางผลประโยชน์ที่แข่งขันกัน", "c": "C3", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "สร้างความพร้อมและความสามารถในการรับมือระดับองค์กรต่อเหตุการณ์ที่มีโอกาสเกิดต่ำแต่มีผลกระทบรุนแรง", "TH": "สร้างความพร้อมและความสามารถในการรับมือระดับองค์กรต่อเหตุการณ์ที่มีโอกาสเกิดต่ำแต่มีผลกระทบรุนแรง", "c": "C6", "band": "ULP", "type": "Positive"}, "B": {"EN": "เชื่อมโยงขีดความสามารถข้ามสายงานและตลาดเพื่อสร้างพลังร่วมในระดับองค์กร", "TH": "เชื่อมโยงขีดความสามารถข้ามสายงานและตลาดเพื่อสร้างพลังร่วมในระดับองค์กร", "c": "C5", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "หารือเรื่องความเสี่ยงอย่างชัดเจนก่อนดำเนินกิจกรรมที่ไม่คุ้นเคยหรือมีความเสี่ยงสูง", "TH": "หารือเรื่องความเสี่ยงอย่างชัดเจนก่อนดำเนินกิจกรรมที่ไม่คุ้นเคยหรือมีความเสี่ยงสูง", "c": "C6", "band": "RLT", "type": "Positive"}, "B": {"EN": "สนับสนุนมุมมองที่ท้าทายสมมติฐานอย่างสร้างสรรค์", "TH": "สนับสนุนมุมมองที่ท้าทายสมมติฐานอย่างสร้างสรรค์", "c": "C4", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ขับเคลื่อนทรัพยากรไปยังโครงการหรือความริเริ่มที่สร้างคุณค่าสูง", "TH": "ขับเคลื่อนทรัพยากรไปยังโครงการหรือความริเริ่มที่สร้างคุณค่าสูง", "c": "C5", "band": "RLP", "type": "Positive"}, "B": {"EN": "สนับสนุนการทดลองและการเรียนรู้อย่างมีความรับผิดชอบ", "TH": "สนับสนุนการทดลองและการเรียนรู้อย่างมีความรับผิดชอบ", "c": "C1", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "จัดการกับการกีดกันหรือการมีส่วนร่วมที่ไม่เท่าเทียมอย่างจริงจัง", "TH": "จัดการกับการกีดกันหรือการมีส่วนร่วมที่ไม่เท่าเทียมอย่างจริงจัง", "c": "C4", "band": "RLT", "type": "Positive"}, "B": {"EN": "พัฒนากระบวนการและวิธีการทำงานของทีมอย่างต่อเนื่อง", "TH": "พัฒนากระบวนการและวิธีการทำงานของทีมอย่างต่อเนื่อง", "c": "C2", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ปรับทรัพยากรเมื่อโอกาสเชิงกลยุทธ์ชัดเจนแล้ว ทำให้เสียความได้เปรียบจากการลงมือก่อน", "TH": "ปรับทรัพยากรเมื่อโอกาสเชิงกลยุทธ์ชัดเจนแล้ว ทำให้เสียความได้เปรียบจากการลงมือก่อน", "c": "C5", "band": "RLP", "type": "Counter"}, "B": {"EN": "สนับสนุนการทดลองเป็นหลักในเรื่องที่คาดการณ์ผลลัพธ์ได้มากพอที่จะไม่กระทบผลงานเดิม", "TH": "สนับสนุนการทดลองเป็นหลักในเรื่องที่คาดการณ์ผลลัพธ์ได้มากพอที่จะไม่กระทบผลงานเดิม", "c": "C1", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "ให้ความสำคัญกับผลต่อ stakeholder โดยตรงมากกว่าผลกระทบต่อสังคมในวงกว้าง", "TH": "ให้ความสำคัญกับผลต่อ stakeholder โดยตรงมากกว่าผลกระทบต่อสังคมในวงกว้าง", "c": "C3", "band": "ULP", "type": "Counter"}, "B": {"EN": "มอง Safety เป็นความรับผิดชอบภายในองค์กรเป็นหลัก จนบทบาทในการจัดการความเสี่ยงของ ecosystem ภายนอกมีจำกัด", "TH": "มอง Safety เป็นความรับผิดชอบภายในองค์กรเป็นหลัก จนบทบาทในการจัดการความเสี่ยงของ ecosystem ภายนอกมีจำกัด", "c": "C6", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "สร้างความรับผิดชอบร่วมกันภายในทีม", "TH": "สร้างความรับผิดชอบร่วมกันภายในทีม", "c": "C5", "band": "RLT", "type": "Positive"}, "B": {"EN": "ปรับรูปแบบการสื่อสารให้เหมาะสมกับบริบท", "TH": "ปรับรูปแบบการสื่อสารให้เหมาะสมกับบริบท", "c": "C3", "band": "RLT", "type": "Positive"}}, {"A": {"EN": "ทำให้หลายทีมเห็นเป้าหมายใหญ่ร่วมกัน แต่ยังปล่อยความแตกต่างในการตีความประเด็นสำคัญไว้", "TH": "ทำให้หลายทีมเห็นเป้าหมายใหญ่ร่วมกัน แต่ยังปล่อยความแตกต่างในการตีความประเด็นสำคัญไว้", "c": "C5", "band": "RLP", "type": "Counter"}, "B": {"EN": "เพิ่มลำดับความสำคัญเชิงกลยุทธ์โดยไม่ได้ตัดสินใจชัดเจนเท่า ๆ กันว่าองค์กรควรหยุดทำอะไร", "TH": "เพิ่มลำดับความสำคัญเชิงกลยุทธ์โดยไม่ได้ตัดสินใจชัดเจนเท่า ๆ กันว่าองค์กรควรหยุดทำอะไร", "c": "C2", "band": "RLP", "type": "Counter"}}, {"A": {"EN": "ทำให้ความสามารถในการปรับตัวเป็นความคาดหวังระดับองค์กร", "TH": "ทำให้ความสามารถในการปรับตัวเป็นความคาดหวังระดับองค์กร", "c": "C1", "band": "RLP", "type": "Positive"}, "B": {"EN": "สื่อสารกลยุทธ์อย่างชัดเจนและสามารถนำไปปฏิบัติได้", "TH": "สื่อสารกลยุทธ์อย่างชัดเจนและสามารถนำไปปฏิบัติได้", "c": "C2", "band": "RLP", "type": "Positive"}}, {"A": {"EN": "สร้างสมดุลระหว่างอัตลักษณ์ร่วมขององค์กรกับความแตกต่างด้านท้องถิ่นและวัฒนธรรมในแต่ละตลาด", "TH": "สร้างสมดุลระหว่างอัตลักษณ์ร่วมขององค์กรกับความแตกต่างด้านท้องถิ่นและวัฒนธรรมในแต่ละตลาด", "c": "C4", "band": "ULP", "type": "Positive"}, "B": {"EN": "สร้างสมดุลระหว่างมาตรฐานร่วมขององค์กรกับความยืดหยุ่นที่แต่ละตลาดและธุรกิจต้องการ", "TH": "สร้างสมดุลระหว่างมาตรฐานร่วมขององค์กรกับความยืดหยุ่นที่แต่ละตลาดและธุรกิจต้องการ", "c": "C2", "band": "ULP", "type": "Positive"}}, {"A": {"EN": "คงหลายลำดับความสำคัญที่แข่งขันกันไว้แทนการตัดสินใจเลือกอย่างชัดเจน", "TH": "คงหลายลำดับความสำคัญที่แข่งขันกันไว้แทนการตัดสินใจเลือกอย่างชัดเจน", "c": "C2", "band": "ULP", "type": "Counter"}, "B": {"EN": "มุ่งความสนใจส่วนใหญ่ไปยังความเสี่ยงที่รู้จักอยู่แล้ว ขณะที่สัญญาณอ่อนของภัยใหม่ได้รับความสนใจจำกัด", "TH": "มุ่งความสนใจส่วนใหญ่ไปยังความเสี่ยงที่รู้จักอยู่แล้ว ขณะที่สัญญาณอ่อนของภัยใหม่ได้รับความสนใจจำกัด", "c": "C6", "band": "ULP", "type": "Counter"}}, {"A": {"EN": "รักษาความราบรื่นของทีมด้วยการเลื่อนบทสนทนาที่ยากเรื่องความรับผิดชอบออกไป", "TH": "รักษาความราบรื่นของทีมด้วยการเลื่อนบทสนทนาที่ยากเรื่องความรับผิดชอบออกไป", "c": "C3", "band": "RLT", "type": "Counter"}, "B": {"EN": "มองแต่ละเหตุการณ์แยกจากกันจนพลาดรูปแบบความเสี่ยงที่อาจเชื่อมโยงกัน", "TH": "มองแต่ละเหตุการณ์แยกจากกันจนพลาดรูปแบบความเสี่ยงที่อาจเชื่อมโยงกัน", "c": "C6", "band": "RLT", "type": "Counter"}}];
+
+    let currentLang = 'TH'; // ค่าเริ่มต้นเป็นภาษาไทย
+    let quizQuestions = []; 
+    let currentUser = null; 
+    let currentIdx = 0;
+    
+    let rawEvidence = {
+        C1: { LLS: {P:0, C:0}, RLS: {P:0, C:0}, RLT: {P:0, C:0}, RLP: {P:0, C:0}, ULP: {P:0, C:0} },
+        C2: { LLS: {P:0, C:0}, RLS: {P:0, C:0}, RLT: {P:0, C:0}, RLP: {P:0, C:0}, ULP: {P:0, C:0} },
+        C3: { LLS: {P:0, C:0}, RLS: {P:0, C:0}, RLT: {P:0, C:0}, RLP: {P:0, C:0}, ULP: {P:0, C:0} },
+        C4: { LLS: {P:0, C:0}, RLS: {P:0, C:0}, RLT: {P:0, C:0}, RLP: {P:0, C:0}, ULP: {P:0, C:0} },
+        C5: { LLS: {P:0, C:0}, RLS: {P:0, C:0}, RLT: {P:0, C:0}, RLP: {P:0, C:0}, ULP: {P:0, C:0} },
+        C6: { LLS: {P:0, C:0}, RLS: {P:0, C:0}, RLT: {P:0, C:0}, RLP: {P:0, C:0}, ULP: {P:0, C:0} }
+    };
+    let detailedAnswers = []; 
+
+    function initApp() {
+        checkResume();
+    }
+
+    function saveState() {
+        const state = {
+            currentUser,
+            currentIdx,
+            rawEvidence,
+            detailedAnswers,
+            quizQuestions,
+            currentLang
+        };
+        localStorage.setItem('sixma_state', JSON.stringify(state));
+    }
+
+    function clearState() {
+        localStorage.removeItem('sixma_state');
+    }
+
+    function checkResume() {
+        const savedState = localStorage.getItem('sixma_state');
+        if (savedState) {
+            Swal.fire({
+                title: currentLang === 'TH' ? 'ทำแบบประเมินต่อ?' : 'Resume Assessment?',
+                text: currentLang === 'TH' ? 'คุณมีแบบประเมินที่ทำค้างไว้ ต้องการทำต่อจากจุดเดิมหรือไม่?' : 'You have an unfinished assessment. Would you like to resume where you left off?',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: currentLang === 'TH' ? 'ทำต่อ' : 'Yes, Resume',
+                cancelButtonText: currentLang === 'TH' ? 'เริ่มใหม่' : 'No, Start Over',
+                confirmButtonColor: '#E32526',
+                cancelButtonColor: '#64748b'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const state = JSON.parse(savedState);
+                        currentUser = state.currentUser;
+                        currentIdx = state.currentIdx;
+                        rawEvidence = state.rawEvidence;
+                        detailedAnswers = state.detailedAnswers;
+                        quizQuestions = state.quizQuestions;
+                        if(state.currentLang) {
+                            currentLang = state.currentLang;
+                            updateUILang();
+                        }
+                        
+                        // ข้ามไปหน้าข้อสอบเลย
+                        switchView('quiz');
+                        renderQuestion();
+                    } catch (e) {
+                        clearState();
+                    }
+                } else {
+                    clearState();
+                }
+            });
+        }
+    }
+
+    function switchView(view) {
+        ['view-step1', 'view-intro1', 'view-intro2', 'view-intro3', 'view-quiz', 'view-thank-you'].forEach(id => {
+            document.getElementById(id).classList.add('hidden'); 
+            document.getElementById(id).classList.remove('flex');
+        });
+        document.getElementById('view-' + view).classList.remove('hidden');
+        if(view !== 'quiz') document.getElementById('view-' + view).classList.add('flex');
+    }
+
+    function triggerWhiteFade(callback) {
+        const overlay = document.getElementById('white-transition');
+        overlay.classList.remove('hidden'); void overlay.offsetWidth;
+        overlay.classList.remove('opacity-0'); overlay.classList.add('opacity-100');
+        setTimeout(() => { callback(); overlay.classList.remove('opacity-100'); overlay.classList.add('opacity-0'); setTimeout(() => { overlay.classList.add('hidden'); }, 400); }, 300); 
+    }
+
+    function goToIntro1() {
+        const name = document.getElementById('login-name').value.trim();
+        
+        if(!name) {
+            Swal.fire('Incomplete', 'Please enter your Full Name.', 'warning');
+            return;
+        }
+
+        currentUser = { 
+            name: name, 
+            email: "N/A", 
+            targetRole: "Candidate", 
+            targetLevel: "LeadingPeople", 
+            perspective: "Self" 
+        };
+        
+        triggerWhiteFade(() => { switchView('intro1'); });
+    }
+
+    function startQuiz() {
+        Swal.fire({ title: 'Preparing Survey...', text: 'Loading required behaviors', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+
+        setTimeout(() => {
+            let allowedBands = ["RLT", "RLP", "ULP"]; 
+
+            let filteredQuestions = ALL_HARDCODED_QUESTIONS.filter(q => allowedBands.includes(q.A.band) || allowedBands.includes(q.B.band));
+            
+            // เรียงลำดับตามไฟล์ต้นฉบับ ไม่สุ่ม
+            quizQuestions = filteredQuestions.slice(0, 90);
+            currentIdx = 0;
+            detailedAnswers = []; 
+            
+            saveState(); // บันทึกสถานะเริ่มต้น
+            Swal.close();
+            triggerWhiteFade(() => { switchView('quiz'); renderQuestion(); });
+        }, 500); 
+    }
+
+    function renderQuestion() {
+        if(currentIdx >= quizQuestions.length) { finishQuiz(); return; }
+        document.getElementById('text-a').innerText = quizQuestions[currentIdx].A[currentLang];
+        document.getElementById('text-b').innerText = quizQuestions[currentIdx].B[currentLang];
+        document.getElementById('q-idx').innerText = String(currentIdx+1).padStart(2, '0');
+        document.getElementById('q-total').innerText = `/${quizQuestions.length}`;
+        document.getElementById('progress-bar').style.width = `${((currentIdx)/quizQuestions.length)*100}%`;
+    }
+
+    function vote(choice) {
+        const selected = quizQuestions[currentIdx][choice];
+
+        if(selected && selected.c && selected.band && selected.type) {
+            if(selected.type === 'Positive') {
+                rawEvidence[selected.c][selected.band].P += 1;
+            } else if (selected.type === 'Counter') {
+                rawEvidence[selected.c][selected.band].C += 1;
+            }
+        }
+        
+        detailedAnswers.push(`Choice ${choice} [${selected.c || '?'} | ${selected.band || '?'} | ${selected.type || '?'}]`);
+        currentIdx++; 
+        saveState(); // บันทึกทุกครั้งที่ตอบ
+        renderQuestion(); 
+    }
+
+    function finishQuiz() {
+        document.getElementById('progress-bar').style.width = `100%`;
+        Swal.fire({ title: 'Calculating Results...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+        
+        const cs = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'];
+        let finalProfile = {};
+        
+        let targetBands = ['RLT', 'RLP', 'ULP']; 
+
+        cs.forEach(c => {
+            let maxScore = -1;
+            let currentLevel = targetBands[1]; 
+
+            targetBands.forEach(band => {
+                const evidence = rawEvidence[c][band];
+                const bandScore = evidence.P + (5 - evidence.C);
+                
+                if(bandScore > maxScore) {
+                    maxScore = bandScore;
+                    currentLevel = band;
+                }
+            });
+            finalProfile[c] = currentLevel; 
+        });
+
+        saveResultToDatabase(finalProfile);
+    }
+
+    function saveResultToDatabase(profile) {
+        const payload = {
+            action: "saveCalibration", 
+            name: currentUser.name, 
+            email: currentUser.email,
+            targetRole: currentUser.targetRole,
+            targetLevel: currentUser.targetLevel,
+            perspective: currentUser.perspective,
+            c1_level: profile.C1,
+            c2_level: profile.C2,
+            c3_level: profile.C3,
+            c4_level: profile.C4,
+            c5_level: profile.C5,
+            c6_level: profile.C6,
+            log: detailedAnswers 
+        };
+
+        fetch(API_URL, { 
+            method: 'POST', 
+            mode: 'no-cors', 
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(payload) 
+        })
+        .then(() => { 
+            clearState(); // ล้างข้อมูลที่เซฟไว้เมื่อส่งสำเร็จ
+            Swal.close();
+            triggerWhiteFade(() => { switchView('thank-you'); });
+        })
+        .catch(err => { 
+            console.error('Error saving score:', err);
+            clearState();
+            Swal.close();
+            triggerWhiteFade(() => { switchView('thank-you'); });
+        });
+    }
+
+    function closeApp() {
+        // ลองใช้คำสั่งปิดหน้าต่าง
+        window.close();
+        
+        // กรณี Browser บล็อคสคริปต์ปิดหน้าต่าง (ถ้าไม่ได้เปิดขึ้นมาด้วยสคริปต์)
+        setTimeout(() => {
+            Swal.fire({
+                title: currentLang === 'TH' ? 'ขอบคุณครับ' : 'Thank You',
+                text: currentLang === 'TH' ? 'คุณสามารถปิดแท็บหรือหน้าต่างนี้ได้อย่างปลอดภัย' : 'You can safely close this tab/window now.',
+                icon: 'success',
+                confirmButtonColor: '#E32526'
+            });
+        }, 300);
+    }
+
+    function toggleLang() {
+        currentLang = currentLang === 'EN' ? 'TH' : 'EN';
+        document.getElementById('lang-en').className = currentLang === 'EN' ? "px-3 py-1 rounded-full text-[11px] font-black bg-primary text-white shadow-sm transition-all" : "px-3 py-1 rounded-full text-[11px] font-black text-slate-500 hover:text-slate-700 transition-all";
+        document.getElementById('lang-th').className = currentLang === 'TH' ? "px-3 py-1 rounded-full text-[11px] font-black bg-primary text-white shadow-sm transition-all" : "px-3 py-1 rounded-full text-[11px] font-black text-slate-500 hover:text-slate-700 transition-all";
+        updateUILang();
+        if(!document.getElementById('view-quiz').classList.contains('hidden')) renderQuestion();
+    }
+
+    const ui = {
+        "ui-main-title": { EN: "SIXMA SELF-ASSESSMENT", TH: "แบบประเมินตนเอง SIXMA" },
+        "ui-login-sub": { EN: "Step 1: Your Information", TH: "ขั้นตอนที่ 1: ข้อมูลของคุณ" },
+        "ui-label-personal": { EN: "Full Name", TH: "ชื่อ-นามสกุล" },
+        "ui-quiz-head": { EN: "Which behavior best describes you?", TH: "เลือกพฤติกรรมที่ตรงกับท่านมากกว่า" }
+    };
+
+    function updateUILang() {
+        Object.keys(ui).forEach(id => {
+            const el = document.getElementById(id);
+            if(el) {
+                el.innerHTML = ui[id][currentLang];
+                if(id === 'ui-label-personal') {
+                    document.getElementById('login-name').placeholder = currentLang === 'EN' ? "Full Name" : "ชื่อ-นามสกุล";
+                }
+            }
+        });
+        saveState(); // บันทึกภาษาใหม่ลง Local Storage
+    }
+</script>
+</body>
+</html>
