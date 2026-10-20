@@ -31,7 +31,7 @@
 <div id="view-step1" class="flex-grow flex items-center justify-center p-4 py-8 sm:py-12">
     <div class="max-w-md w-full bg-white rounded-3xl shadow-xl p-6 sm:p-10 border-t-8 border-primary fade-in">
         <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/AirAsia_New_Logo.svg" class="h-10 sm:h-14 mx-auto mb-6">
-        <h1 class="text-xl sm:text-2xl font-black text-slate-800 uppercase tracking-tight mb-2 text-center" id="ui-main-title">SIXMA SELF-ASSESSMENT</h1>
+        <h1 class="text-xl sm:text-2xl font-black text-slate-800 uppercase tracking-tight mb-2 text-center" id="ui-main-title">SIXMA ASSESSMENT</h1>
         <p class="text-slate-500 text-xs sm:text-sm mb-8 text-center" id="ui-login-sub">Step 1: Your Information</p>
         <div class="space-y-4">
             <div>
@@ -359,7 +359,7 @@
 
     function finishQuiz() {
         document.getElementById('progress-bar').style.width = `100%`;
-        Swal.fire({ title: 'Calculating Results...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
+        Swal.fire({ title: 'Submitting result...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
         
         const cs = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6'];
         let finalProfile = {};
@@ -445,7 +445,7 @@
     }
 
     const ui = {
-        "ui-main-title": { EN: "SIXMA SELF-ASSESSMENT", TH: "แบบประเมินตนเอง SIXMA" },
+        "ui-main-title": { EN: "SIXMA ASSESSMENT", TH: "แบบประเมินตนเอง SIXMA" },
         "ui-login-sub": { EN: "Step 1: Your Information", TH: "ขั้นตอนที่ 1: ข้อมูลของคุณ" },
         "ui-label-personal": { EN: "Full Name", TH: "ชื่อ-นามสกุล" },
         "ui-quiz-head": { EN: "Which behavior best describes you?", TH: "เลือกพฤติกรรมที่ตรงกับท่านมากกว่า" }
