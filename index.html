@@ -35,9 +35,10 @@
         <p class="text-slate-500 text-xs sm:text-sm mb-8 text-center" id="ui-login-sub">Step 1: Your Information</p>
         <div class="space-y-4">
             <div>
-                <label class="text-xs font-bold text-slate-500 uppercase" id="ui-label-personal">Personal Details</label>
+                <label class="text-xs font-bold text-slate-500 uppercase" id="ui-label-personal">Full Name</label>
                 <input type="text" id="login-name" placeholder="Full Name" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 font-bold text-sm outline-none focus:border-primary transition-colors mt-1 mb-2">
             </div>
+            <!-- เอา Dropdown เลือกระดับออกแล้ว ตามความต้องการ -->
             <button onclick="goToIntro1()" class="w-full bg-slate-900 text-white font-bold py-4 mt-2 rounded-xl hover:bg-black transition-all shadow-md tracking-wider">NEXT</button>
         </div>
     </div>
@@ -206,19 +207,35 @@
     let currentIdx = 0;
     let questionsLoaded = false;
     
-    let calculationData = {
-        'Resilient Mindset': { RLT: {P:0, N_avoided:0}, RLP: {P:0, N_avoided:0}, ULP: {P:0, N_avoided:0} },
-        'Effective Simplicity': { RLT: {P:0, N_avoided:0}, RLP: {P:0, N_avoided:0}, ULP: {P:0, N_avoided:0} },
-        'Ethical Relationships': { RLT: {P:0, N_avoided:0}, RLP: {P:0, N_avoided:0}, ULP: {P:0, N_avoided:0} },
-        'Inclusive Culture': { RLT: {P:0, N_avoided:0}, RLP: {P:0, N_avoided:0}, ULP: {P:0, N_avoided:0} },
-        'Collaborative Impact': { RLT: {P:0, N_avoided:0}, RLP: {P:0, N_avoided:0}, ULP: {P:0, N_avoided:0} },
-        'Safety Leadership': { RLT: {P:0, N_avoided:0}, RLP: {P:0, N_avoided:0}, ULP: {P:0, N_avoided:0} }
-    };
-    
+    let currentUrlLevel = 'LeadingPeople'; // เก็บค่า Level ซ่อนไว้เป็นค่าเริ่มต้น
+    let targetBands = []; // ตัวแปรเก็บ Level 3 ชั้นที่ผู้ใช้เลือก (สร้างแบบ Dynamic)
+    let calculationData = {}; // ถังเก็บคะแนนที่จะสร้างอัตโนมัติตาม targetBands
     let detailedAnswers = []; 
 
     function initApp() {
+        // ดักอ่านพารามิเตอร์ URL เช่น ?level=LeadingSelf
+        const urlParams = new URLSearchParams(window.location.search);
+        const levelParam = urlParams.get('level');
+        if(levelParam) {
+            currentUrlLevel = levelParam; // ถ้ามีพารามิเตอร์ส่งมา ให้จำค่าไว้ในระบบ
+        }
         checkResume();
+    }
+
+    // ฟังก์ชันสร้างถังคะแนนใหม่ตามระดับ
+    function initializeCalculationData(level) {
+        if (level === 'LeadingSelf') targetBands = ['LLS', 'RLS', 'RLT'];
+        else if (level === 'LeadingTeam') targetBands = ['RLS', 'RLT', 'RLP'];
+        else targetBands = ['RLT', 'RLP', 'ULP']; // LeadingPeople หรืออื่นๆ
+
+        const cs = ['Resilient Mindset', 'Effective Simplicity', 'Ethical Relationships', 'Inclusive Culture', 'Collaborative Impact', 'Safety Leadership'];
+        calculationData = {};
+        cs.forEach(c => {
+            calculationData[c] = {};
+            targetBands.forEach(b => {
+                calculationData[c][b] = { P: 0, N_avoided: 0 };
+            });
+        });
     }
 
     function saveState() {
@@ -226,10 +243,12 @@
             currentUser,
             currentIdx,
             calculationData,
+            targetBands,
             detailedAnswers,
             quizQuestions,
             currentLang,
-            questionsLoaded
+            questionsLoaded,
+            currentUrlLevel
         };
         localStorage.setItem('sixma_state', JSON.stringify(state));
     }
@@ -257,9 +276,11 @@
                         currentUser = state.currentUser;
                         currentIdx = state.currentIdx;
                         calculationData = state.calculationData;
+                        targetBands = state.targetBands || ['RLT', 'RLP', 'ULP'];
                         detailedAnswers = state.detailedAnswers;
                         quizQuestions = state.quizQuestions;
                         questionsLoaded = state.questionsLoaded;
+                        currentUrlLevel = state.currentUrlLevel || 'LeadingPeople';
                         if(state.currentLang) {
                             currentLang = state.currentLang;
                             updateUILang();
@@ -295,6 +316,7 @@
 
     function goToIntro1() {
         const name = document.getElementById('login-name').value.trim();
+        const selectedLevel = currentUrlLevel; // นำค่าที่อ่านจาก URL (หรือค่าตั้งต้น) มาใช้แทนการดึงจาก Dropdown
         
         if(!name) {
             Swal.fire('Incomplete', 'Please enter your Full Name.', 'warning');
@@ -305,9 +327,12 @@
             name: name, 
             email: "N/A", 
             targetRole: "Candidate", 
-            targetLevel: "LeadingPeople", 
+            targetLevel: selectedLevel, 
             perspective: "Self" 
         };
+        
+        // สร้างถังคะแนนใหม่ทุกครั้งที่กดเริ่ม เพื่อให้ตรงกับ Level
+        initializeCalculationData(selectedLevel);
         
         if(!questionsLoaded) {
             fetchQuestionsFromDB();
@@ -320,7 +345,8 @@
         const btnStart = document.getElementById('btn-start-quiz');
         if(btnStart) btnStart.innerText = "Loading Questions...";
         
-        fetch(`${API_URL}?action=getQuestions`)
+        // แนบ &level ไปให้ฝั่ง Backend รู้ว่าต้องเปิด Sheet แท็บไหน
+        fetch(`${API_URL}?action=getQuestions&level=${currentUser.targetLevel}`)
             .then(response => response.json())
             .then(data => {
                 if(data && data.questions && data.questions.length > 0) {
@@ -340,7 +366,7 @@
     function startQuiz() {
         if(!questionsLoaded) {
             Swal.fire({ title: 'Loading...', text: 'กำลังดาวน์โหลดข้อสอบ กรุณารอสักครู่', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            fetch(`${API_URL}?action=getQuestions`)
+            fetch(`${API_URL}?action=getQuestions&level=${currentUser.targetLevel}`)
                 .then(response => response.json())
                 .then(data => {
                     if(data && data.questions && data.questions.length > 0) {
@@ -404,12 +430,10 @@
         const cs = Object.keys(calculationData);
         let finalProfile = {};
         let scoresProfile = {}; 
-        
-        let targetBands = ['RLT', 'RLP', 'ULP']; 
 
         cs.forEach(c => {
             let maxScore = -1;
-            let currentLevel = targetBands[1]; // default fallback
+            let currentLevel = targetBands[1]; // default fallback (ระดับตรงกลาง)
             const internalCode = getInternalCodeFor(c);
             
             scoresProfile[internalCode] = {}; 
