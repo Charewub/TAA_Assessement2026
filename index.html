@@ -1,549 +1,400 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SIXMA - Self-Assessment</title>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E32526">
+<meta name="description" content="SIXMA™ Self-Assessment — Discover Your Inner Core. Strengthen the Core of Our Organisation.">
+<title>SIXMA™ | AirAsia Self-Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-    :root { --primary-color: #E32526; }
-    body { font-family: 'Sarabun', sans-serif; background-color: #f1f5f9; color: #1e293b; overflow-x: hidden; }
-    .bg-primary { background-color: var(--primary-color) !important; }
-    .text-primary { color: var(--primary-color) !important; }
-    .border-primary { border-color: var(--primary-color) !important; }
-    .hover-border-primary:hover { border-color: var(--primary-color) !important; }
-    .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-    #white-transition { transition: opacity 0.4s ease-in-out; pointer-events: none; z-index: 99999; }
+:root {--red:#E32526;--red-dark:#BE151E;--red-deep:#9F0C17;--ink:#1C2535;--muted:#687487;--soft:#F5F6F8;--stroke:#E8EBF0;--white:#FFF;--shadow:0 18px 55px rgba(25,40,62,.075);--soft-shadow:0 7px 30px rgba(30,37,53,.055);--radius:26px;--font:'Sarabun','Noto Sans Thai',system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--soft);font-family:var(--font);color:var(--ink);-webkit-font-smoothing:antialiased}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}button:focus-visible,input:focus-visible{outline:3px solid rgba(227,37,38,.32);outline-offset:3px}a{color:inherit}svg{display:block}.hidden{display:none!important}
+button,.answer-card,.icon-button{touch-action:manipulation} .skip-link{position:absolute;top:-90px;left:16px;z-index:150;background:#fff;color:var(--red);padding:11px 18px;border-radius:12px}.skip-link:focus{top:10px}
+.topbar{position:relative;z-index:10;min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px clamp(20px,5.4vw,96px);border-bottom:1px solid #E9EDF2;background:rgba(255,255,255,.97)}.brand{display:flex;align-items:center;gap:14px;min-width:0}.brand-logo{width:52px;height:52px;border-radius:50%;object-fit:contain;box-shadow:0 6px 20px rgba(227,37,38,.14)}.brand-name{font-size:18px;font-weight:800;line-height:1.08;letter-spacing:-.6px}.brand-sub{font-size:10px;letter-spacing:2px;color:#8D98A8;font-weight:800;margin-top:5px}.top-actions{display:flex;align-items:center;gap:22px}.secure-label{display:flex;align-items:center;gap:8px;color:#6A7788;font-size:12px;font-weight:700}.secure-label svg{width:15px;height:15px;color:#677A83}.language-switch{display:flex;align-items:center;gap:3px;padding:4px;border:1px solid var(--stroke);background:#F5F6F8;border-radius:999px}.language-switch button{border:0;background:transparent;color:#7C8795;min-width:43px;min-height:34px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:800;transition:all .2s}.language-switch button[aria-pressed="true"]{background:var(--red);color:#fff;box-shadow:0 3px 10px rgba(227,37,38,.23)}
+.main{flex:1}.view{display:none;animation:fadeUp .46s both}.view.active{display:block}@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+/* Welcome */
+.welcome-wrap{max-width:1320px;min-height:min(780px,calc(100vh - 155px));margin:0 auto;padding:clamp(18px,3vw,42px);display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,.94fr);gap:20px}
+.hero{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(circle at 75% 70%,#FC4E4A 0%,transparent 36%),linear-gradient(138deg,#E5262D 4%,#CB111D 65%,#AE111F 100%);border-radius:32px;min-height:640px;color:white;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(28px,4.2vw,58px);box-shadow:0 20px 52px rgba(180,11,25,.15)}
+.hero::before{content:"";position:absolute;z-index:-1;width:580px;height:580px;right:-245px;top:-300px;border:1px solid rgba(255,255,255,.2);border-radius:50%;box-shadow:0 0 0 92px rgba(255,255,255,.03),0 0 0 186px rgba(255,255,255,.025)}.hero::after{content:"";position:absolute;z-index:-1;inset:auto -25% -24% -25%;height:56%;background:radial-gradient(ellipse at 60% 100%,rgba(255,255,255,.14),transparent 65%)}.hero-top{display:flex;align-items:center;justify-content:space-between;gap:12px}.hero-tag{border:1px solid rgba(255,255,255,.34);color:#fff;padding:9px 13px;font-size:10px;font-weight:800;letter-spacing:2px;border-radius:100px}.hero-index{font-size:11px;color:rgba(255,255,255,.66);letter-spacing:2px;font-weight:800}.hero-content{z-index:1;position:relative;margin-top:20px}.hero-caption{font-size:12px;font-weight:800;letter-spacing:3px;margin-bottom:16px;color:#FFE6E6}.hero h1{font-size:clamp(46px,5.2vw,82px);line-height:1.03;letter-spacing:-2.8px;margin:0 0 24px;font-weight:800}.hero h1 span{display:block;color:#FFDADA}.hero p{max-width:410px;font-size:clamp(14px,1.25vw,18px);line-height:1.8;color:#FFEDED;margin:0}.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;z-index:1}.hero-bottom p{font-size:12px;color:#FFDFE1;line-height:1.7;max-width:225px}.hero-spark{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid rgba(255,255,255,.4);border-radius:100%;font-size:22px}.plane-art{position:absolute;width:min(72%,475px);right:-7%;bottom:-1%;transform:rotate(-12deg);opacity:.42;z-index:0;filter:drop-shadow(0 22px 20px rgba(114,0,20,.1));pointer-events:none}.orbit-line{position:absolute;border:1px dashed rgba(255,255,255,.24);border-radius:50%;height:380px;width:630px;right:-245px;bottom:-60px;transform:rotate(-24deg);pointer-events:none}
+.entry{display:flex;align-items:center;justify-content:center;padding:clamp(12px,4vw,54px)}.entry-content{width:100%;max-width:420px}.eyebrow{color:var(--red);font-size:11px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;display:flex;align-items:center;gap:10px}.eyebrow::before{content:"";width:22px;height:2px;background:var(--red)}.entry h2{font-size:clamp(29px,3.2vw,43px);line-height:1.18;letter-spacing:-1.4px;margin:18px 0 13px;font-weight:800}.entry .lead{line-height:1.85;color:var(--muted);font-size:15px;margin:0 0 34px}.field-label{display:block;margin-bottom:9px;color:#344053;font-size:13px;font-weight:800}.input-wrap{position:relative}.input-wrap svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:#9199A6}.input{width:100%;min-height:58px;padding:15px 18px 15px 49px;border:1.5px solid #DFE4EB;border-radius:14px;color:var(--ink);font-size:15px;background:white;transition:border-color .2s,box-shadow .2s}.input::placeholder{color:#A1A9B5}.input:focus{border-color:var(--red);box-shadow:0 0 0 4px rgba(227,37,38,.07);outline:0}.level-strip{display:flex;align-items:center;gap:10px;background:#F5F6F8;border:1px solid #E9ECF1;border-radius:14px;margin-top:17px;padding:14px}.level-strip svg{width:19px;height:19px;color:var(--red);flex-shrink:0}.level-meta{font-size:10px;color:#8A96A4;font-weight:700;text-transform:uppercase;letter-spacing:.9px}.level-value{font-size:13px;font-weight:800;color:#384152}.btn{display:inline-flex;justify-content:center;align-items:center;gap:11px;min-height:56px;padding:12px 21px;border:0;border-radius:13px;font-size:14px;font-weight:800;transition:transform .18s,box-shadow .18s,background .18s;text-decoration:none}.btn:hover:not(:disabled){transform:translateY(-2px)}.btn-primary{background:var(--red);color:#fff;box-shadow:0 10px 24px rgba(227,37,38,.2)}.btn-primary:hover:not(:disabled){background:var(--red-dark);box-shadow:0 13px 28px rgba(227,37,38,.27)}.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover:not(:disabled){background:#303D4F}.btn-light{background:#F5F6F8;border:1px solid var(--stroke);color:#4C5767}.btn-block{width:100%}.btn svg{width:17px;height:17px}.btn-space{margin-top:24px}.fineprint{display:flex;align-items:flex-start;gap:9px;color:#919AA8;font-size:11px;line-height:1.6;margin-top:23px}.fineprint svg{width:16px;height:16px;flex:0 0 16px;margin-top:1px}
+/* Shared flow pages */
+.flow-wrap{max-width:1060px;margin:0 auto;padding:clamp(24px,4.8vw,64px) 20px 84px}.breadcrumbs{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:21px}.tiny-title{font-size:11px;color:#8993A2;text-transform:uppercase;letter-spacing:2px;font-weight:800}.step-count{font-size:12px;color:#8792A2;font-weight:800}.stage-track{display:flex;gap:8px;margin-bottom:26px}.stage-track i{height:5px;background:#E6EAF0;flex:1;border-radius:10px;overflow:hidden}.stage-track i.done{background:var(--red)}.stage-track i.current{background:linear-gradient(90deg,var(--red) 60%,#F1BBC0 60%)}.flow-card{background:#fff;border:1px solid #E9EDF1;border-radius:27px;box-shadow:var(--shadow);overflow:hidden}.flow-head{padding:clamp(27px,5vw,52px) clamp(25px,5vw,57px) 18px}.flow-head h2{font-size:clamp(26px,3.6vw,42px);line-height:1.2;letter-spacing:-1px;margin:15px 0 13px;font-weight:800}.flow-head p{font-size:15px;line-height:1.85;color:#687487;max-width:800px;margin:0}.flow-content{padding:15px clamp(25px,5vw,57px) 34px}.feature-panel{background:linear-gradient(135deg,#FFF6F6,#FFF 72%);border:1px solid #FAE4E5;border-radius:19px;padding:clamp(21px,3vw,34px);font-size:15px;color:#4B5567;line-height:1.95}.feature-panel p{margin:0 0 15px}.feature-panel p:last-child{margin-bottom:0}.quote{font-weight:800;font-size:clamp(15px,2vw,19px);color:var(--red);margin:27px 0 0;text-align:center}.flow-actions{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:0 clamp(25px,5vw,57px) clamp(29px,4vw,43px)}.flow-actions .btn{min-width:190px}.info-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.info-card{display:flex;gap:13px;border:1px solid var(--stroke);border-radius:16px;padding:17px;background:#fff}.info-icon{width:40px;height:40px;flex:0 0 40px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--red);background:#FFF0F0}.info-icon svg{width:19px;height:19px}.info-card h3{margin:0 0 4px;font-size:14px}.info-card p{margin:0;font-size:12px;line-height:1.75;color:#768292}.rule-note{margin-top:17px;border-radius:15px;background:#FFF5F5;border:1px solid #FBE1E3;padding:19px;display:flex;gap:13px;align-items:flex-start}.rule-note svg{width:19px;height:19px;color:var(--red);flex:0 0 19px;margin-top:2px}.rule-note p{margin:0;font-size:13px;color:#565D6C;line-height:1.8}.rule-note strong{color:var(--ink)}.ready-visual{background:linear-gradient(135deg,#FFF2F2,#FFFFFF);margin:4px 0 23px;border-radius:20px;border:1px solid #F8E4E6;padding:38px;text-align:center;display:grid;justify-items:center;gap:13px}.ready-visual .symbol{width:75px;height:75px;display:grid;place-items:center;background:var(--red);border-radius:23px;box-shadow:0 14px 26px rgba(227,37,38,.19);color:white;transform:rotate(-5deg)}.ready-visual svg{width:37px;height:37px}.ready-visual h3{font-size:19px;margin:7px 0 0}.ready-visual p{max-width:560px;font-size:14px;color:var(--muted);line-height:1.85;margin:0}
+/* Quiz */
+.quiz-wrap{max-width:1030px;margin:0 auto;padding:clamp(24px,4vw,58px) 20px 90px}.quiz-kicker{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:20px}.quiz-kicker .pill{background:#FFF0F0;color:var(--red);font-size:11px;letter-spacing:1px;font-weight:800;padding:9px 13px;border-radius:100px}.quiz-kicker .quiz-label{color:#8B96A4;font-size:12px;font-weight:800}.quiz-card{background:#fff;border-radius:27px;border:1px solid #E9EDF1;box-shadow:var(--shadow);overflow:hidden}.quiz-top{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;padding:clamp(26px,4vw,48px) clamp(24px,5.2vw,64px) 23px}.quiz-top .eyebrow{font-size:10px}.quiz-top h2{margin:15px 0 0;font-size:clamp(22px,3vw,34px);line-height:1.4;letter-spacing:-.5px;font-weight:800;max-width:720px}.quiz-numbers{text-align:right;line-height:1}.quiz-numbers strong{font-size:38px;font-weight:800;color:var(--red)}.quiz-numbers small{font-size:15px;font-weight:800;color:#9EA7B4}.progress-row{display:flex;align-items:center;gap:15px;padding:0 clamp(24px,5.2vw,64px) 28px}.progress-track{height:8px;flex:1;background:#EEF0F4;border-radius:10px;overflow:hidden}.progress-fill{width:0;height:100%;background:linear-gradient(90deg,var(--red),#FD696B);border-radius:10px;transition:width .25s}.progress-pct{font-size:12px;color:var(--red);font-weight:800;width:36px;text-align:right}.quiz-divider{border-top:1px solid var(--stroke)}.quiz-inner{padding:clamp(24px,4vw,45px) clamp(24px,5.2vw,64px) clamp(27px,4vw,48px)}.choice-intro{font-size:12px;color:#8F9AAB;text-transform:uppercase;letter-spacing:1.4px;font-weight:800;margin:0 0 15px}.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.answer-card{border:1.5px solid #E1E6ED;border-radius:18px;display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:#fff;padding:23px 23px 25px;min-height:200px;transition:border-color .17s,box-shadow .17s,background .17s,transform .17s}.answer-card:hover:not(:disabled),.answer-card:focus-visible{border-color:var(--red);background:#FFF9F9;box-shadow:0 8px 24px rgba(227,37,38,.08);transform:translateY(-2px)}.answer-card:active:not(:disabled){transform:scale(.992)}.answer-head{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:25px}.answer-letter{display:grid;place-items:center;width:41px;height:41px;border-radius:12px;background:#F3F5F8;color:#4A5364;font-weight:800;font-size:17px}.answer-check{width:23px;height:23px;border:2px solid #DCE1E8;border-radius:50%;display:grid;place-items:center}.answer-check::after{content:"";width:9px;height:9px;background:transparent;border-radius:50%}.answer-card:hover .answer-check{border-color:var(--red)}.answer-card:hover .answer-check::after{background:var(--red)}.answer-copy{font-size:clamp(15px,1.4vw,18px);line-height:1.75;font-weight:600;color:#344052;overflow-wrap:anywhere}.quiz-foot{padding:20px clamp(24px,5.2vw,64px) 26px;border-top:1px solid #F0F1F4;display:flex;align-items:center;gap:10px;color:#8993A1;font-size:12px}.quiz-foot svg{width:17px;height:17px;color:var(--red);flex:0 0 17px}
+/* Thank you */
+.complete-wrap{max-width:850px;margin:0 auto;padding:clamp(30px,6vw,90px) 20px 100px}.complete-card{border:1px solid var(--stroke);background:#fff;border-radius:29px;text-align:center;overflow:hidden;box-shadow:var(--shadow)}.complete-top{height:140px;background:radial-gradient(ellipse at 55% -15%,#FB7473,transparent 62%),linear-gradient(120deg,#E32526,#B71120);position:relative;display:grid;place-items:center}.complete-top::before,.complete-top::after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;border:1px solid rgba(255,255,255,.28)}.complete-top::before{left:12%;top:42%}.complete-top::after{right:11%;top:-50%}.complete-mark{position:relative;width:93px;height:93px;margin:-47px auto 20px;background:#fff;border-radius:25px;display:grid;place-items:center;box-shadow:0 14px 32px rgba(30,37,53,.13);transform:rotate(-5deg)}.complete-mark svg{width:46px;height:46px;color:#18A06B;transform:rotate(5deg)}.complete-body{padding:0 clamp(28px,6vw,70px) 50px}.complete-body h2{font-size:clamp(25px,3.7vw,39px);line-height:1.3;letter-spacing:-.8px;margin:12px 0 10px}.complete-body .tagline{font-size:15px;color:var(--red);font-weight:800;margin:0 0 28px}.complete-message{background:#F6F8FA;border:1px solid #E9EDF1;border-radius:17px;padding:25px;color:#556072;line-height:1.9;font-size:14px;margin-bottom:24px;text-align:left}.complete-message p{margin:0 0 11px}.complete-message p:last-child{margin:0}.submission-status{font-size:12px;line-height:1.7;border-radius:12px;background:#FFF8EC;color:#8C6219;text-align:left;padding:14px 17px;margin-bottom:28px;display:flex;gap:10px}.submission-status svg{width:19px;height:19px;flex:0 0 19px;margin-top:1px}.submission-status.error{background:#FFF0F1;color:#9D2533}.complete-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.complete-actions .btn{min-width:210px}.complete-signoff{font-size:12px;color:#939CAB;margin-top:28px}
+.footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:19px clamp(20px,5.4vw,96px);background:#fff;border-top:1px solid #E9EDF2;color:#929CAA;font-size:11px;line-height:1.5}.footer strong{color:var(--red);font-size:14px;letter-spacing:-.2px}.footer small{font-size:11px}.footer .footer-right{display:flex;align-items:center;gap:8px;text-align:right}
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(18,28,44,.56);backdrop-filter:blur(5px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:18px}.modal{background:white;border-radius:23px;padding:30px;max-width:440px;width:100%;box-shadow:0 25px 85px rgba(0,0,0,.23);animation:fadeUp .2s both}.modal-badge{height:50px;width:50px;display:grid;place-items:center;border-radius:15px;background:#FFF0F0;color:var(--red);margin-bottom:18px}.modal-badge svg{width:24px;height:24px}.modal h2{font-size:22px;letter-spacing:-.4px;margin:0 0 10px}.modal p{font-size:14px;color:#6B778A;line-height:1.85;margin:0 0 24px}.modal-actions{display:flex;flex-wrap:wrap;gap:10px}.modal-actions .btn{flex:1;min-width:130px}.loading-ring{height:22px;width:22px;border:3px solid #F8CFD1;border-top-color:var(--red);border-radius:50%;animation:spin .65s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+@media(min-width:1350px){.welcome-wrap{min-height:calc(100vh - 165px)}}
+@media(max-width:850px){.welcome-wrap{min-height:0;grid-template-columns:1fr;padding:17px;gap:0}.hero{min-height:355px;border-radius:24px 24px 0 0;padding:30px}.hero h1{font-size:52px}.hero-content{margin-top:36px}.hero-bottom{margin-top:42px}.plane-art{width:350px;right:-8%;bottom:-5%}.entry{background:white;border-radius:0 0 24px 24px;padding:38px 25px 45px}.entry-content{max-width:580px}.entry h2{font-size:32px}.topbar{min-height:72px;padding:10px 18px}.brand-logo{width:45px;height:45px}.brand-name{font-size:16px}.secure-label{display:none}.footer{padding:19px 24px}}
+@media(max-width:620px){.topbar{gap:8px}.brand-logo{height:40px;width:40px}.brand{gap:9px}.brand-name{font-size:14px}.brand-sub{font-size:8px;letter-spacing:1.35px}.language-switch{gap:0}.language-switch button{min-width:36px;padding:7px 8px}.hero{min-height:320px;padding:26px}.hero h1{font-size:clamp(39px,11vw,54px);letter-spacing:-1.6px;margin-bottom:14px}.hero p{font-size:13px}.hero-caption{font-size:10px}.hero-bottom{margin-top:25px}.plane-art{width:300px;right:-12%;bottom:-7%;opacity:.33}.hero-bottom p{max-width:185px;font-size:11px}.entry{padding:34px 19px 40px}.entry .lead{margin-bottom:25px}.flow-wrap,.quiz-wrap,.complete-wrap{padding-left:13px;padding-right:13px}.flow-card,.quiz-card,.complete-card{border-radius:20px}.flow-head{padding:26px 21px 12px}.flow-head h2{font-size:27px}.flow-content{padding:12px 20px 24px}.flow-actions{padding:0 20px 26px}.flow-actions .btn{min-width:unset;flex:1}.info-cards{grid-template-columns:1fr}.info-card{padding:14px}.quiz-top{padding:28px 22px 18px}.quiz-numbers strong{font-size:32px}.quiz-top h2{font-size:22px}.progress-row{padding:0 22px 22px}.quiz-inner{padding:25px 20px}.choice-grid{grid-template-columns:1fr;gap:11px}.answer-card{min-height:133px;padding:18px}.answer-head{margin-bottom:13px}.answer-letter{width:34px;height:34px}.answer-copy{font-size:16px}.quiz-foot{padding:19px 21px 23px}.complete-body{padding:0 24px 36px}.footer .footer-right{display:none}.breadcrumbs{margin-bottom:13px}.stage-track{margin-bottom:19px}.modal{padding:24px}.modal-actions{flex-direction:column-reverse}.modal-actions .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+/* Presentation refinement only. Assessment and API logic remain unchanged. */
+:root{--ink:#202631;--muted:#626d7c;--soft:#f5f5f4;--stroke:#e3e5e8;--shadow:0 12px 40px rgba(25,32,43,.045);--red:#df2029;--red-dark:#bf1821}
+body{line-height:1.6;display:flex;flex-direction:column;min-height:100svh}
+.topbar{min-height:88px;background:#fff;padding-inline:clamp(22px,5.5vw,88px)}
+.brand{gap:12px}.brand-logo{width:46px;height:46px;box-shadow:none}.brand-name{font-weight:700;letter-spacing:-.5px}.brand-sub{letter-spacing:1.7px;font-size:9px;color:#667181}.secure-label{font-size:11px;letter-spacing:.5px}
+.language-switch{border-radius:8px;padding:3px;background:#f6f6f5}.language-switch button{border-radius:5px;min-height:34px}.language-switch button[aria-pressed="true"]{box-shadow:none;background:var(--ink)}
+.welcome-wrap{max-width:1360px;grid-template-columns:1.05fr 1fr;gap:clamp(24px,5vw,80px);padding:48px 40px;min-height:calc(100svh - 153px);align-items:stretch}
+.hero{min-height:620px;padding:48px;border-radius:14px;box-shadow:none;background:linear-gradient(145deg,#da232d 0%,#c51925 65%,#a91520 100%)}
+.hero::before{opacity:.5;box-shadow:0 0 0 110px rgba(255,255,255,.025)}.hero::after{opacity:.3}.hero-tag{font-size:9px;letter-spacing:1.7px;padding:7px 11px;border-radius:5px;border-color:rgba(255,255,255,.38)}.hero-index{letter-spacing:1.5px;color:#f4bfc3;font-size:10px}
+.hero-caption{font-size:10px;letter-spacing:2.3px;margin-bottom:20px;font-weight:600}.hero h1{font-size:clamp(48px,5.1vw,72px);font-weight:700;line-height:1.08;letter-spacing:-2.7px;margin-bottom:26px}.hero h1 span{color:#f5c3c6}.hero p{font-size:16px;line-height:1.9;max-width:360px}.hero-bottom p{font-size:11px;color:#f3d6d8;max-width:250px}.hero-spark{width:36px;height:36px;font-size:18px;opacity:.65}.plane-art{opacity:.15;width:75%;bottom:0;right:-12%}.orbit-line{opacity:.45}
+.entry{padding:24px 8px}.entry-content{max-width:420px}.eyebrow{font-size:10px;letter-spacing:1.8px;font-weight:700}.eyebrow::before{width:20px;height:1px}.entry h2{font-size:clamp(30px,3vw,40px);line-height:1.4;font-weight:700;letter-spacing:-1px;margin:20px 0 16px}.entry .lead{font-size:15px;line-height:1.95;margin-bottom:36px}.field-label{font-weight:600;font-size:13px;margin-bottom:10px}.input{border-radius:8px;min-height:56px;border-width:1px}.input::placeholder{color:#7c8694}.level-strip{border-radius:8px;background:#efefed;border-color:#e4e5e2;padding:15px 16px;margin-top:16px}.level-meta{color:#626d7c;letter-spacing:.5px;font-size:11px}.level-value{font-weight:600;margin-top:2px}.btn{border-radius:8px;font-weight:600;min-height:54px;transition:background .18s,box-shadow .18s}.btn-primary,.btn-primary:hover:not(:disabled){box-shadow:none}.btn:hover:not(:disabled){transform:none}.btn-space{margin-top:22px}.fineprint{font-size:12px;color:#697585;line-height:1.8;margin-top:20px}
+.flow-wrap{max-width:1000px}.flow-card,.quiz-card,.complete-card{border-radius:14px;border-color:var(--stroke);box-shadow:var(--shadow)}.flow-head h2{font-weight:700;line-height:1.4}.feature-panel{background:#faf9f7;border:1px solid #e7e6e2;border-radius:10px}.quote{font-weight:600;font-size:17px}.info-card{border-radius:9px}.info-icon{border-radius:8px}.info-card h3{font-weight:600}.info-card p{color:#626d7c}.rule-note{border-radius:8px;background:#fff7f7}.ready-visual{border-radius:10px;background:#faf9f7;border-color:#e7e6e2}.ready-visual .symbol{border-radius:14px;box-shadow:none;transform:none}.flow-actions .btn{min-width:160px}
+.quiz-wrap{max-width:1050px;padding-top:42px}.quiz-kicker .pill{background:transparent;padding:0;color:var(--red);font-size:10px;letter-spacing:1.5px}.quiz-kicker .quiz-label{font-weight:600;color:#647080}.quiz-top{padding-top:40px}.quiz-top h2{font-weight:600;font-size:clamp(23px,2.6vw,32px);line-height:1.5}.quiz-numbers strong{font-size:32px;font-weight:600}.quiz-numbers small{color:#697585}.progress-track{height:4px}.progress-fill{background:var(--red)}.choice-intro{color:#647080;font-size:11px;letter-spacing:1px;font-weight:600}.answer-card{border-radius:10px;min-height:190px;padding:24px;border-color:#d9dee4}.answer-card:hover:not(:disabled),.answer-card:focus-visible{transform:none;box-shadow:0 0 0 1px var(--red);background:#fffafa}.answer-letter{border-radius:6px;font-size:14px;width:34px;height:34px;font-weight:600}.answer-copy{font-weight:500;line-height:1.8}.answer-check{width:20px;height:20px}.quiz-foot{color:#667283;font-size:12px}.step-count,.tiny-title{color:#647080}
+.complete-top{height:110px;background:linear-gradient(120deg,#d6222c,#b71924)}.complete-mark{width:76px;height:76px;border-radius:16px;transform:none;box-shadow:0 5px 20px #20263112}.complete-mark svg{transform:none;width:36px;height:36px}.complete-body h2{font-weight:600;line-height:1.5}.complete-message{border-radius:9px;background:#f7f7f5}.submission-status{border-radius:8px}.modal{border-radius:14px;box-shadow:0 24px 80px #10182026}.modal h2{font-weight:600}.modal-badge{border-radius:9px}.modal-overlay{background:rgba(25,31,41,.48);backdrop-filter:blur(3px)}
+.footer{background:#fff;color:#687484;padding-block:20px;font-size:11px}.footer small{font-size:10px}.footer strong{font-weight:600}.complete-signoff{color:#667283}
+@media(min-width:1350px){.welcome-wrap{min-height:calc(100svh - 153px)}}
+@media(max-width:1000px) and (min-width:851px){.welcome-wrap{padding:32px 24px;gap:28px}.hero{padding:32px;min-height:600px}.hero h1{font-size:54px}.hero p{font-size:14px}.entry h2{font-size:31px}}
+@media(max-width:850px){.topbar{min-height:76px;padding:12px 22px}.welcome-wrap{grid-template-columns:1fr;padding:24px;gap:0;min-height:0;max-width:650px}.hero{min-height:430px;padding:34px;border-radius:12px 12px 0 0}.hero-content{margin-top:30px}.hero h1{font-size:56px;letter-spacing:-2px}.hero p{font-size:14px;max-width:370px}.hero-bottom{margin-top:32px}.plane-art{width:340px;opacity:.13;right:-8%;bottom:-4%}.entry{padding:38px 34px 40px;border-radius:0 0 12px 12px;background:#fff;border:1px solid var(--stroke);border-top:0}.entry-content{max-width:none}.entry h2{font-size:32px}.entry .lead{margin-bottom:30px}.brand-logo{width:40px;height:40px}.brand-name{font-size:15px}.brand-sub{font-size:8px}.flow-wrap,.quiz-wrap{padding-top:30px}}
+@media(max-width:620px){.topbar{padding:12px 16px;gap:8px;min-height:72px}.brand-name{font-size:14px}.brand{gap:9px}.brand-logo{width:38px;height:38px}.brand-sub{letter-spacing:1.2px;font-size:7px}.language-switch button{min-width:32px;min-height:32px;padding:5px 7px}.welcome-wrap{padding:16px}.hero{padding:26px;min-height:410px}.hero h1{font-size:48px;line-height:1.08;letter-spacing:-1.8px;margin-bottom:20px}.hero-caption{font-size:9px;letter-spacing:1.9px;margin-bottom:16px}.hero p{font-size:13px}.hero-top{gap:8px}.hero-tag{font-size:8px;letter-spacing:1.3px}.hero-index{font-size:9px}.hero-bottom{margin-top:30px}.hero-bottom p{font-size:10px;max-width:220px}.hero-spark{width:30px;height:30px;font-size:15px}.entry{padding:30px 23px 34px}.entry h2{font-size:29px;letter-spacing:-.7px;line-height:1.45;margin-top:17px}.entry .lead{font-size:14px;line-height:1.9;margin-bottom:28px}.fineprint{font-size:11px}.flow-card,.quiz-card,.complete-card{border-radius:12px}.flow-head h2{font-size:26px}.quiz-top{grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:26px 22px 20px}.quiz-top h2{font-size:22px}.quiz-numbers strong{font-size:27px}.quiz-numbers small{font-size:12px}.quiz-inner{padding:24px 20px}.answer-card{min-height:145px;padding:20px}.answer-head{margin-bottom:17px}.answer-copy{font-size:16px}.quiz-foot{font-size:11px;line-height:1.8}.footer{padding:18px 24px}.modal{padding:24px}}
+@media(prefers-reduced-motion:reduce){.view{animation:none}.btn,.answer-card{transition:none}}
 </style>
 </head>
-<body class="min-h-screen flex flex-col relative" onload="initApp()">
-
-<div id="white-transition" class="fixed inset-0 bg-white opacity-0 hidden"></div>
-
-<div class="fixed top-4 right-4 z-[100] flex bg-slate-200 rounded-full p-1 cursor-pointer shadow-sm" onclick="toggleLang()">
-    <div id="lang-en" class="px-3 py-1 rounded-full text-[11px] font-black bg-primary text-white shadow-sm transition-all">EN</div>
-    <div id="lang-th" class="px-3 py-1 rounded-full text-[11px] font-black text-slate-500 hover:text-slate-700 transition-all">TH</div>
-</div>
-
-<!-- STEP 1: USER INFO -->
-<div id="view-step1" class="flex-grow flex items-center justify-center p-4 py-8 sm:py-12">
-    <div class="max-w-md w-full bg-white rounded-3xl shadow-xl p-6 sm:p-10 border-t-8 border-primary fade-in">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/AirAsia_New_Logo.svg" class="h-10 sm:h-14 mx-auto mb-6">
-        <h1 class="text-xl sm:text-2xl font-black text-slate-800 uppercase tracking-tight mb-2 text-center" id="ui-main-title">SIXMA ASSESSMENT</h1>
-        <p class="text-slate-500 text-xs sm:text-sm mb-8 text-center" id="ui-login-sub">Step 1: Your Information</p>
-        <div class="space-y-4">
-            <div>
-                <label class="text-xs font-bold text-slate-500 uppercase" id="ui-label-personal">Full Name</label>
-                <input type="text" id="login-name" placeholder="Full Name" class="w-full border-2 border-slate-200 rounded-xl px-4 py-3 font-bold text-sm outline-none focus:border-primary transition-colors mt-1 mb-2">
-            </div>
-            <!-- เอา Dropdown เลือกระดับออกแล้ว ตามความต้องการ -->
-            <button onclick="goToIntro1()" class="w-full bg-slate-900 text-white font-bold py-4 mt-2 rounded-xl hover:bg-black transition-all shadow-md tracking-wider">NEXT</button>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="topbar">
+  <div class="brand" aria-label="AirAsia SIXMA assessment">
+    <img class="brand-logo" src="data:image/png;base64,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" alt="AirAsia logo">
+    <div><div class="brand-name">SIXMA<span style="color:var(--red)">™</span> <span data-t="brandAssessment">Assessment</span></div><div class="brand-sub" data-t="brandSub">PEOPLE DEVELOPMENT</div></div>
+  </div>
+  <div class="top-actions">
+    <div class="secure-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span data-t="topSecure">EMPLOYEE EXPERIENCE</span></div>
+    <div class="language-switch" role="group" aria-label="Choose language / เลือกภาษา"><button type="button" id="lang-en" aria-pressed="false" onclick="setLanguage('EN')">EN</button><button type="button" id="lang-th" aria-pressed="true" onclick="setLanguage('TH')">TH</button></div>
+  </div>
+</header>
+<main id="main-content" class="main">
+  <!-- 01: Welcome and employee information -->
+  <section id="view-step1" class="view active" aria-labelledby="welcome-title">
+    <div class="welcome-wrap">
+      <div class="hero">
+        <div class="hero-top"><span class="hero-tag">AIRASIA PEOPLE</span><span class="hero-index">SIXMA™ / 01</span></div>
+        <div class="hero-content">
+          <div class="hero-caption" data-t="heroEyebrow">DISCOVER YOUR INNER CORE</div>
+          <h1>Discover.<span>Grow.</span>Together.</h1>
+          <p data-t="heroIntro">Discover the strengths that make you unique, and the possibilities we can build together.</p>
         </div>
+        <!-- decorative aircraft illustration, not a photograph -->
+        <svg class="plane-art" viewBox="0 0 640 310" fill="none" aria-hidden="true"><path d="M23 227C153 174 299 153 454 125" stroke="white" stroke-opacity=".18" stroke-width="2" stroke-dasharray="8 10"/><path d="M74 183L230 171L375 81C388 73 409 72 425 79L353 174L512 165C551 161 570 169 582 183C592 197 568 211 541 213L346 223L430 280L398 284L248 226L142 232L92 260L73 256L99 225L44 213C33 209 30 198 42 190L74 183Z" fill="#fff"/><path d="M227 173L344 177L372 111" stroke="#E5E9EE" stroke-width="4"/><path d="M352 222L419 266" stroke="#E5E9EE" stroke-width="4"/><path d="M144 227L98 252" stroke="#E5E9EE" stroke-width="3"/><path d="M521 167C546 167 562 171 578 184" stroke="#F0F2F4" stroke-width="5"/><path d="M450 175L543 173" stroke="#E32526" stroke-width="4" stroke-linecap="round"/><path d="M54 188L92 185" stroke="#D91E2D" stroke-width="5"/></svg>
+        <div class="orbit-line"></div>
+        <div class="hero-bottom"><p data-t="heroFoot">Your inner core. Our collective strength.</p><div class="hero-spark" aria-hidden="true">✳</div></div>
+      </div>
+      <div class="entry">
+        <div class="entry-content">
+          <div class="eyebrow" data-t="entryEyebrow">WELCOME TO SIXMA™</div>
+          <h2 id="welcome-title" data-t="entryTitle">เริ่มต้นค้นพบศักยภาพของคุณ</h2>
+          <p class="lead" data-t="entryDesc">ร่วมค้นพบจุดแข็งและพฤติกรรมการทำงานของคุณผ่านแบบประเมินที่พัฒนาจากค่านิยมหลักของ AirAsia</p>
+          <form id="user-form" onsubmit="goToIntro1(event)" novalidate>
+            <label for="login-name" class="field-label" data-t="nameLabel">ชื่อ-นามสกุล</label>
+            <div class="input-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.3 3.5-7 8-7s8 2.7 8 7"/></svg><input id="login-name" name="full-name" class="input" type="text" maxlength="160" autocomplete="name" required data-placeholder="namePlaceholder" placeholder="กรอกชื่อ-นามสกุลของคุณ"></div>
+            <div class="level-strip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><div class="level-meta" data-t="levelLabel">ระดับการประเมินที่กำหนด</div><div id="display-level" class="level-value">LeadingPeople</div></div></div>
+            <button type="submit" class="btn btn-primary btn-block btn-space"><span data-t="startJourney">เริ่มต้นการประเมิน</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </form>
+          <div class="fineprint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 4v6c0 5-3.3 7.9-8 9-4.7-1.1-8-4-8-9V7l8-4Z"/><path d="M9 12l2 2 4-4"/></svg><span data-t="welcomeDisclaimer">โปรดตอบตามพฤติกรรมจริงของคุณ ไม่มีคำตอบที่ถูกหรือผิด</span></div>
+        </div>
+      </div>
     </div>
-</div>
-
-<!-- STEP 2: INTRO 1 (Welcome) -->
-<div id="view-intro1" class="hidden flex-grow items-center justify-center p-4 py-8">
-    <div class="max-w-3xl w-full bg-white rounded-3xl shadow-xl p-6 sm:p-12 fade-in text-center">
-        <h2 class="text-2xl sm:text-3xl font-black text-primary uppercase italic tracking-tight mb-4">WELCOME TO SIXMA™ ASSESSMENT</h2>
-        <p class="text-slate-600 text-sm sm:text-base font-bold mb-6 sm:mb-8 leading-relaxed">
-            Discover Your Inner Core. Strengthen the Core of Our Organisation.<br>
-            <span class="text-slate-500 font-medium">ค้นพบแก่นแท้ภายในตัวคุณ เพื่อร่วมสร้างแก่นความแข็งแกร่งให้กับองค์กร</span>
-        </p>
-        <div class="bg-slate-50 p-5 sm:p-8 rounded-2xl border border-slate-200 mb-6 sm:mb-8 space-y-4 text-left">
-            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
-                <strong>SIXMA™ Assessment</strong> คือแบบประเมินพฤติกรรมการทำงานที่พัฒนาขึ้นจาก Core Values ของ AirAsia เพื่อช่วยให้คุณค้นพบจุดแข็ง เข้าใจรูปแบบพฤติกรรมของตนเอง และมองเห็นโอกาสในการพัฒนา เพื่อเติบโตไปพร้อมกับองค์กร
-            </p>
-            <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
-                แบบประเมินนี้ไม่มีคำตอบที่ถูกหรือผิด เพราะเราเชื่อว่าทุกคนมีจุดแข็งและศักยภาพที่แตกต่างกัน
-            </p>
-            <p class="text-primary text-base sm:text-lg font-black text-center mt-6 italic">
-                "Discover What Makes You Strong. Together, We Make AirAsia Stronger."
-            </p>
-        </div>
-        <button onclick="triggerWhiteFade(() => switchView('intro2'))" class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-black transition-all shadow-md tracking-wider">NEXT</button>
+  </section>
+  <!-- 02: Introduction -->
+  <section id="view-intro1" class="view" aria-labelledby="intro1-title">
+    <div class="flow-wrap"><div class="breadcrumbs"><span class="tiny-title" data-t="journeyLabel">YOUR SIXMA JOURNEY</span><span class="step-count" data-t="stepOne">ขั้นตอน 01 / 03</span></div><div class="stage-track" aria-label="Stage 1 of 3"><i class="current"></i><i></i><i></i></div>
+      <div class="flow-card"><div class="flow-head"><div class="eyebrow" data-t="introEyebrow">ABOUT THE ASSESSMENT</div><h2 id="intro1-title" data-t="introTitle">ยินดีต้อนรับสู่ SIXMA™ Assessment</h2><p data-t="introSubtitle">Discover Your Inner Core. Strengthen the Core of Our Organisation.</p></div>
+        <div class="flow-content"><div class="feature-panel"><p data-t="introPara1">SIXMA™ Assessment คือแบบประเมินพฤติกรรมการทำงานที่พัฒนาขึ้นจาก Core Values ของ AirAsia เพื่อช่วยให้คุณค้นพบจุดแข็ง เข้าใจรูปแบบพฤติกรรมของตนเอง และมองเห็นโอกาสในการพัฒนา เพื่อเติบโตไปพร้อมกับองค์กร</p><p data-t="introPara2">แบบประเมินนี้ไม่มีคำตอบที่ถูกหรือผิด เพราะเราเชื่อว่าทุกคนมีจุดแข็งและศักยภาพที่แตกต่างกัน</p></div><div class="quote" data-t="introQuote">“Discover What Makes You Strong. Together, We Make AirAsia Stronger.”</div></div>
+        <div class="flow-actions"><span class="step-count" data-t="onYourJourney">Discover your potential</span><button type="button" class="btn btn-primary" onclick="switchView('intro2')"><span data-t="nextButton">ถัดไป</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div>
+      </div>
     </div>
-</div>
-
-<!-- STEP 3: INTRO 2 (Before You Begin) -->
-<div id="view-intro2" class="hidden flex-grow items-center justify-center p-4 py-8">
-    <div class="max-w-3xl w-full bg-white rounded-3xl shadow-xl p-6 sm:p-12 fade-in">
-        <h2 class="text-2xl sm:text-3xl font-black text-primary uppercase tracking-tight mb-2 text-center">BEFORE YOU BEGIN</h2>
-        <p class="text-slate-500 font-bold mb-6 text-center text-sm sm:text-base">How to Complete Your SIXMA™ Assessment</p>
-        
-        <div class="bg-slate-50 p-5 sm:p-6 rounded-2xl border border-slate-200 mb-8">
-            <p class="text-slate-700 text-sm sm:text-base leading-relaxed text-center">
-                แบบประเมินประกอบด้วยคำถามแบบเลือกตอบระหว่างพฤติกรรมการทำงาน 2 ข้อ โดยให้คุณเลือก <strong>เพียง 1 ข้อที่สะท้อนพฤติกรรมของตนเองมากที่สุด</strong> แม้ว่าทั้งสองข้ออาจใกล้เคียงกับตัวคุณ หรืออาจไม่ตรงกับตัวคุณทั้งหมดก็ตาม
-            </p>
-        </div>
-
-        <h3 class="font-black text-slate-800 mb-5 text-center sm:text-lg">สิ่งสำคัญที่ควรทราบก่อนเริ่มทำแบบประเมิน</h3>
-        
-        <div class="space-y-5 mb-8">
-            <div class="flex gap-4 items-start">
-                <div class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="font-bold text-xs">1</span></div>
-                <div>
-                    <strong class="text-slate-800 block mb-1">Complete in One Sitting — ทำอย่างต่อเนื่อง</strong>
-                    <span class="text-slate-600 text-sm">ควรจัดสรรเวลาและเลือกสถานที่ที่ไม่มีสิ่งรบกวน เพื่อทำแบบประเมินให้เสร็จในครั้งเดียว</span>
-                </div>
-            </div>
-            <div class="flex gap-4 items-start">
-                <div class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="font-bold text-xs">2</span></div>
-                <div>
-                    <strong class="text-slate-800 block mb-1">No Time Limit — ไม่จำกัดเวลา</strong>
-                    <span class="text-slate-600 text-sm">ไม่มีการจับเวลาหรือจำกัดระยะเวลาในการตอบ แต่แนะนำให้ตอบอย่างเป็นธรรมชาติ โดยไม่ต้องใช้เวลาคิดนานเกินไป</span>
-                </div>
-            </div>
-            <div class="flex gap-4 items-start">
-                <div class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="font-bold text-xs">3</span></div>
-                <div>
-                    <strong class="text-slate-800 block mb-1">No Going Back — ไม่สามารถย้อนกลับได้</strong>
-                    <span class="text-slate-600 text-sm">เมื่อเลือกคำตอบและไปยังข้อถัดไปแล้ว จะไม่สามารถกลับมาแก้ไขคำตอบก่อนหน้าได้</span>
-                </div>
-            </div>
-            <div class="flex gap-4 items-start">
-                <div class="bg-primary text-white w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"><span class="font-bold text-xs">4</span></div>
-                <div>
-                    <strong class="text-slate-800 block mb-1">One Attempt Only — ไม่สามารถทำซ้ำได้</strong>
-                    <span class="text-slate-600 text-sm">แบบประเมินสามารถทำได้เพียงครั้งเดียว เมื่อเริ่มแล้วควรทำให้เสร็จสมบูรณ์</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center p-5 bg-red-50 rounded-xl mb-6 border border-red-100">
-            <p class="text-primary font-black text-sm mb-2 uppercase tracking-widest">REMEMBER</p>
-            <p class="text-slate-800 text-sm font-bold mb-1">There are no right or wrong answers. Your most authentic responses are the most valuable.</p>
-            <p class="text-slate-600 text-sm">ไม่มีคำตอบที่ถูกหรือผิด ขอเพียงเลือกสิ่งที่สะท้อนพฤติกรรมการทำงานจริงของคุณมากที่สุด</p>
-        </div>
-
-        <button onclick="triggerWhiteFade(() => switchView('intro3'))" class="w-full bg-slate-900 text-white font-bold py-4 rounded-xl hover:bg-black transition-all shadow-md tracking-wider">NEXT</button>
-    </div>
-</div>
-
-<!-- STEP 4: INTRO 3 (Ready) -->
-<div id="view-intro3" class="hidden flex-grow items-center justify-center p-4 py-8">
-    <div class="max-w-2xl w-full bg-white rounded-3xl shadow-xl p-8 sm:p-14 fade-in text-center border-t-8 border-primary">
-        <h2 class="text-2xl sm:text-3xl font-black text-primary uppercase tracking-tight mb-6">READY TO DISCOVER YOUR INNER CORE?</h2>
-        
-        <p class="text-slate-700 text-sm sm:text-base leading-relaxed mb-4">
-            เมื่อคุณกด NEXT ระบบจะเริ่มต้นการประเมินทันที และคุณ<span class="text-primary font-bold">จะไม่สามารถย้อนกลับมายังหน้านี้ หรือกลับไปแก้ไขคำตอบที่ผ่านมาได้</span>
-        </p>
-        <p class="text-slate-800 text-sm sm:text-base leading-relaxed font-bold mb-10">
-            โปรดตรวจสอบว่าคุณพร้อมและมีเวลาทำแบบประเมินอย่างต่อเนื่องจนเสร็จสมบูรณ์
-        </p>
-        
-        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-8">
-            <p class="text-slate-800 font-bold mb-1 text-sm sm:text-base">If you're ready, click NEXT to begin your SIXMA™ journey.</p>
-            <p class="text-slate-500 text-xs sm:text-sm">หากคุณพร้อมแล้ว กด NEXT เพื่อเริ่มต้นค้นพบตัวตนของคุณ</p>
-        </div>
-        
-        <button onclick="startQuiz()" class="w-full bg-primary text-white py-4 rounded-xl font-black text-base sm:text-lg tracking-widest uppercase hover:opacity-90 transition-all shadow-lg" id="btn-start-quiz">[ NEXT &rarr; ]</button>
-    </div>
-</div>
-
-<!-- STEP 5: QUIZ -->
-<div id="view-quiz" class="hidden max-w-4xl mx-auto p-4 mt-6 mb-12 w-full fade-in">
-    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
-        <div class="bg-primary p-4 sm:p-6 flex justify-between items-center text-white">
-            <div class="font-bold tracking-widest text-sm sm:text-base" id="ui-quiz-head">เลือกพฤติกรรมที่ตรงกับท่านมากกว่า</div>
-            <div class="text-right"><span id="q-idx" class="text-2xl sm:text-3xl font-black italic">01</span><span id="q-total" class="opacity-70 text-xs sm:text-sm">/90</span></div>
-        </div>
-        <div class="w-full bg-slate-100 h-2"><div id="progress-bar" class="bg-primary h-full transition-all duration-300" style="width:0%"></div></div>
-        
-        <div class="p-5 sm:p-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
-                <button onclick="vote('A')" class="p-6 sm:p-8 border-2 border-slate-200 rounded-2xl text-left bg-white shadow-sm hover-border-primary hover:bg-slate-50 transition-all flex items-center min-h-[160px]">
-                    <p id="text-a" class="text-slate-700 text-sm md:text-lg font-medium leading-relaxed"></p>
-                </button>
-                <button onclick="vote('B')" class="p-6 sm:p-8 border-2 border-slate-200 rounded-2xl text-left bg-white shadow-sm hover-border-primary hover:bg-slate-50 transition-all flex items-center min-h-[160px]">
-                    <p id="text-b" class="text-slate-700 text-sm md:text-lg font-medium leading-relaxed"></p>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- STEP 6: THANK YOU -->
-<div id="view-thank-you" class="hidden flex-grow items-center justify-center p-4 py-8">
-    <div class="max-w-xl w-full bg-white rounded-3xl shadow-xl p-8 sm:p-12 text-center fade-in border-t-8 border-green-500">
-        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-        </div>
-        <h2 class="text-xl sm:text-2xl font-black text-slate-800 uppercase tracking-tight mb-2 leading-snug">THANK YOU FOR COMPLETING<br>SIXMA™ ASSESSMENT</h2>
-        <p class="text-primary font-bold text-sm sm:text-base mb-6 italic">Your Inner Core. Our Collective Strength.</p>
-        
-        <div class="text-slate-600 text-sm sm:text-base leading-relaxed space-y-4 mb-8 text-left bg-slate-50 p-6 rounded-2xl border border-slate-100">
-            <p>ขอบคุณที่สละเวลาและตั้งใจทำแบบประเมิน SIXMA™ จนเสร็จสมบูรณ์</p>
-            <p>ทุกคำตอบของคุณเป็นส่วนสำคัญที่ช่วยให้เราเข้าใจศักยภาพ ความแตกต่าง และคุณค่าที่แต่ละคนสามารถนำมาสร้างให้กับองค์กร</p>
-            <p>ที่ Thai AirAsia เราเชื่อว่า ความแข็งแกร่งขององค์กรเริ่มต้นจากความแข็งแกร่งภายในของทุกคน และเมื่อเราเติบโตไปด้วยกัน เราจะสามารถสร้างสิ่งที่ยิ่งใหญ่กว่าเดิมได้เสมอ</p>
-            <p class="text-center font-bold text-primary mt-4 italic">"Because Stronger Individuals Build a Stronger AirAsia."</p>
-        </div>
-
-        <p class="text-slate-800 font-bold mb-1">ขอบคุณที่เป็นส่วนหนึ่งของการเติบโตไปด้วยกัน</p>
-        <p class="text-slate-500 text-sm mb-8">With Appreciation,<br>Thai AirAsia</p>
-
-        <button onclick="closeApp()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-black text-base tracking-widest uppercase hover:bg-black transition-all shadow-md">[ CLOSE ]</button>
-    </div>
-</div>
-
+  </section>
+  <!-- 03: Rules -->
+  <section id="view-intro2" class="view" aria-labelledby="intro2-title"><div class="flow-wrap"><div class="breadcrumbs"><span class="tiny-title" data-t="journeyLabel">YOUR SIXMA JOURNEY</span><span class="step-count" data-t="stepTwo">ขั้นตอน 02 / 03</span></div><div class="stage-track" aria-label="Stage 2 of 3"><i class="done"></i><i class="current"></i><i></i></div>
+    <div class="flow-card"><div class="flow-head"><div class="eyebrow" data-t="rulesEyebrow">HOW IT WORKS</div><h2 id="intro2-title" data-t="rulesTitle">สิ่งสำคัญก่อนเริ่มทำแบบประเมิน</h2><p data-t="rulesDesc">ในแต่ละข้อ เลือกพฤติกรรม A หรือ B เพียงข้อเดียวที่สะท้อนตัวคุณมากที่สุด แม้ทั้งสองตัวเลือกอาจใกล้เคียงหรือไม่ตรงทั้งหมด</p></div>
+      <div class="flow-content"><div class="info-cards">
+        <div class="info-card"><div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div><div><h3 data-t="ruleOneTitle">ทำอย่างต่อเนื่อง</h3><p data-t="ruleOneDesc">เลือกเวลาสงบและทำแบบประเมินให้เสร็จในครั้งเดียว</p></div></div>
+        <div class="info-card"><div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg></div><div><h3 data-t="ruleTwoTitle">ไม่มีการจำกัดเวลา</h3><p data-t="ruleTwoDesc">ตอบอย่างเป็นธรรมชาติ ไม่จำเป็นต้องรีบร้อน</p></div></div>
+        <div class="info-card"><div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11v-6h6M3 5a9 9 0 1 1-1 9"/><path d="M9 9l6 6m0-6-6 6"/></svg></div><div><h3 data-t="ruleThreeTitle">ไม่สามารถย้อนกลับ</h3><p data-t="ruleThreeDesc">หลังเลือกคำตอบแล้วจะไม่สามารถแก้ไขข้อที่ผ่านมา</p></div></div>
+        <div class="info-card"><div class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></div><div><h3 data-t="ruleFourTitle">ทำแบบประเมินได้เพียงครั้งเดียว</h3><p data-t="ruleFourDesc">เมื่อเริ่มแล้วควรทำให้เสร็จสมบูรณ์</p></div></div>
+      </div><div class="rule-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7h.01"/></svg><p data-t="ruleRemember">จำไว้ว่าไม่มีคำตอบที่ถูกหรือผิด คำตอบที่มีคุณค่าที่สุดคือคำตอบที่สะท้อนพฤติกรรมของคุณจริง ๆ</p></div></div>
+      <div class="flow-actions"><span class="step-count" data-t="readCarefully">Please read carefully</span><button type="button" class="btn btn-primary" onclick="switchView('intro3')"><span data-t="nextButton">ถัดไป</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div>
+    </div></div>
+  </section>
+  <!-- 04: Ready -->
+  <section id="view-intro3" class="view" aria-labelledby="intro3-title"><div class="flow-wrap"><div class="breadcrumbs"><span class="tiny-title" data-t="journeyLabel">YOUR SIXMA JOURNEY</span><span class="step-count" data-t="stepThree">ขั้นตอน 03 / 03</span></div><div class="stage-track" aria-label="Stage 3 of 3"><i class="done"></i><i class="done"></i><i class="current"></i></div>
+    <div class="flow-card"><div class="flow-head"><div class="eyebrow" data-t="readyEyebrow">YOU'RE ALMOST THERE</div><h2 id="intro3-title" data-t="readyTitle">พร้อมค้นพบจุดแข็งในตัวคุณหรือยัง?</h2><p data-t="readyDesc">เมื่อเริ่มแล้วจะไม่สามารถกลับมาที่หน้านี้หรือย้อนแก้ไขคำตอบที่ผ่านมาได้ โปรดจัดสรรเวลาให้พร้อม</p></div>
+      <div class="flow-content"><div class="ready-visual"><div class="symbol"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2v5M4.9 5l3.5 3.5M2 12h5M17 12h5M12 17v5M16 8.5 19.5 5"/><circle cx="12" cy="12" r="3"/></svg></div><h3 data-t="readyPanelTitle">Your journey starts here.</h3><p data-t="readyPanelDesc">ทำแบบประเมินอย่างตั้งใจและเลือกคำตอบที่ตรงกับพฤติกรรมของคุณที่สุด</p></div></div>
+      <div class="flow-actions"><span class="step-count" id="load-status" role="status" aria-live="polite"></span><button id="btn-start-quiz" type="button" class="btn btn-primary" onclick="startQuiz()"><span data-t="beginButton">เริ่มทำแบบประเมิน</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button></div>
+    </div></div>
+  </section>
+  <!-- 05: Question experience -->
+  <section id="view-quiz" class="view" aria-labelledby="quiz-heading"><div class="quiz-wrap"><div class="quiz-kicker"><span class="pill" data-t="quizPill">SIXMA™ SELF-ASSESSMENT</span><span class="quiz-label" id="quiz-level-text">LeadingPeople</span></div>
+    <div class="quiz-card"><div class="quiz-top"><div><div class="eyebrow" data-t="questionLabel">ASSESSMENT QUESTION</div><h2 id="quiz-heading" data-t="quizQuestion">พฤติกรรมข้อใดตรงกับตัวคุณมากกว่า?</h2></div><div class="quiz-numbers" aria-live="polite"><strong id="q-idx">01</strong><small id="q-total"> / 00</small></div></div>
+      <div class="progress-row"><div class="progress-track" role="progressbar" id="progress-track" aria-label="Assessment progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-bar" class="progress-fill"></div></div><span class="progress-pct" id="progress-text">0%</span></div><div class="quiz-divider"></div>
+      <div class="quiz-inner"><p class="choice-intro" data-t="chooseOne">SELECT THE STATEMENT THAT DESCRIBES YOU BEST</p><div class="choice-grid">
+        <button class="answer-card" type="button" onclick="vote('A')" aria-label="Option A" id="choice-a"><span class="answer-head"><span class="answer-letter">A</span><span class="answer-check" aria-hidden="true"></span></span><span class="answer-copy" id="text-a"></span></button>
+        <button class="answer-card" type="button" onclick="vote('B')" aria-label="Option B" id="choice-b"><span class="answer-head"><span class="answer-letter">B</span><span class="answer-check" aria-hidden="true"></span></span><span class="answer-copy" id="text-b"></span></button>
+      </div></div><div class="quiz-foot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-t="quizReminder">ไม่มีคำตอบที่ถูกหรือผิด • ไม่สามารถกลับมาแก้ไขคำตอบได้</span></div>
+    </div></div></section>
+  <!-- 06: Completion, including unverified/failed submission messaging -->
+  <section id="view-thank-you" class="view" aria-labelledby="complete-title"><div class="complete-wrap"><div class="complete-card"><div class="complete-top"></div><div class="complete-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+    <div class="complete-body"><div class="eyebrow" style="justify-content:center" data-t="completeEyebrow">YOUR JOURNEY CONTINUES</div><h2 id="complete-title" data-t="completeTitle">ขอบคุณที่ร่วมทำแบบประเมิน SIXMA™</h2><p class="tagline" data-t="completeTagline">Your Inner Core. Our Collective Strength.</p>
+      <div class="complete-message"><p data-t="completePara1">ขอบคุณที่สละเวลาและตั้งใจทำแบบประเมิน SIXMA™ จนเสร็จสมบูรณ์</p><p data-t="completePara2">ทุกคำตอบของคุณช่วยให้เราเข้าใจศักยภาพ ความแตกต่าง และคุณค่าที่แต่ละคนสร้างให้กับองค์กร</p><p data-t="completePara3">ที่ Thai AirAsia เราเชื่อว่าความแข็งแกร่งขององค์กรเริ่มจากความแข็งแกร่งภายในของทุกคน</p></div>
+      <div id="submission-status" class="submission-status" role="status" aria-live="polite"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5M12 16h.01"/></svg><span id="submission-status-text" data-t="statusUnverified">ระบบส่งคำขอจัดเก็บข้อมูลแล้ว แต่ยังไม่สามารถยืนยันการบันทึกสำเร็จจากเซิร์ฟเวอร์ได้</span></div>
+      <div class="complete-actions"><button type="button" class="btn btn-dark" onclick="closeApp()"><span data-t="closeButton">ปิดหน้าต่าง</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button><button type="button" id="retry-button" class="btn btn-light hidden" onclick="retrySubmission()"><span data-t="retryButton">ส่งข้อมูลอีกครั้ง</span></button></div>
+      <div class="complete-signoff">With Appreciation, <strong>Thai AirAsia</strong></div>
+    </div></div></div></section>
+</main>
+<footer class="footer"><div><strong>AirAsia</strong> <span data-t="footerMotto">— All for a Brighter Tomorrow</span></div><div class="footer-right"><span data-t="footerSub">SIXMA™ • PEOPLE DEVELOPMENT</span> <span aria-hidden="true">✳</span></div></footer>
+<!-- Accessible local dialog: app remains usable without SweetAlert2/CDN dependencies. -->
+<div id="modal-overlay" class="modal-overlay hidden" role="presentation"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description"><div class="modal-badge" id="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5M12 16h.01"/></svg></div><h2 id="modal-title"></h2><p id="modal-description"></p><div id="modal-actions" class="modal-actions"></div></div></div>
 <script>
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    document.onselectstart = function() { return false; }; 
-    document.onkeydown = function(e) {
-        if(e.keyCode == 123) { return false; } 
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; }
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; } 
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } 
-        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } 
-    }
-
-    const API_URL = "https://script.google.com/macros/s/AKfycbxdV5WtwS4Gv7p2U96d2zjoxPQo7jdgBafNe6-xYkv8d9WxQQzLDXCl7ydH4GYiXYCb/exec";
-
-    let currentLang = 'TH';
-    let quizQuestions = []; 
-    let currentUser = null; 
-    let currentIdx = 0;
-    let questionsLoaded = false;
-    
-    let currentUrlLevel = 'LeadingPeople'; // เก็บค่า Level ซ่อนไว้เป็นค่าเริ่มต้น
-    let targetBands = []; // ตัวแปรเก็บ Level 3 ชั้นที่ผู้ใช้เลือก (สร้างแบบ Dynamic)
-    let calculationData = {}; // ถังเก็บคะแนนที่จะสร้างอัตโนมัติตาม targetBands
-    let detailedAnswers = []; 
-
-    function initApp() {
-        // ดักอ่านพารามิเตอร์ URL เช่น ?level=LeadingSelf
-        const urlParams = new URLSearchParams(window.location.search);
-        const levelParam = urlParams.get('level');
-        if(levelParam) {
-            currentUrlLevel = levelParam; // ถ้ามีพารามิเตอร์ส่งมา ให้จำค่าไว้ในระบบ
-        }
-        checkResume();
-    }
-
-    // ฟังก์ชันสร้างถังคะแนนใหม่ตามระดับ
-    function initializeCalculationData(level) {
-        if (level === 'LeadingSelf') targetBands = ['LLS', 'RLS', 'RLT'];
-        else if (level === 'LeadingTeam') targetBands = ['RLS', 'RLT', 'RLP'];
-        else targetBands = ['RLT', 'RLP', 'ULP']; // LeadingPeople หรืออื่นๆ
-
-        const cs = ['Resilient Mindset', 'Effective Simplicity', 'Ethical Relationships', 'Inclusive Culture', 'Collaborative Impact', 'Safety Leadership'];
-        calculationData = {};
-        cs.forEach(c => {
-            calculationData[c] = {};
-            targetBands.forEach(b => {
-                calculationData[c][b] = { P: 0, N_avoided: 0 };
-            });
-        });
-    }
-
-    function saveState() {
-        const state = {
-            currentUser,
-            currentIdx,
-            calculationData,
-            targetBands,
-            detailedAnswers,
-            quizQuestions,
-            currentLang,
-            questionsLoaded,
-            currentUrlLevel
-        };
-        localStorage.setItem('sixma_state', JSON.stringify(state));
-    }
-
-    function clearState() {
-        localStorage.removeItem('sixma_state');
-    }
-
-    function checkResume() {
-        const savedState = localStorage.getItem('sixma_state');
-        if (savedState) {
-            Swal.fire({
-                title: currentLang === 'TH' ? 'ทำแบบประเมินต่อ?' : 'Resume Assessment?',
-                text: currentLang === 'TH' ? 'คุณมีแบบประเมินที่ทำค้างไว้ ต้องการทำต่อจากจุดเดิมหรือไม่?' : 'You have an unfinished assessment. Would you like to resume where you left off?',
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonText: currentLang === 'TH' ? 'ทำต่อ' : 'Yes, Resume',
-                cancelButtonText: currentLang === 'TH' ? 'เริ่มใหม่' : 'No, Start Over',
-                confirmButtonColor: '#E32526',
-                cancelButtonColor: '#64748b'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    try {
-                        const state = JSON.parse(savedState);
-                        currentUser = state.currentUser;
-                        currentIdx = state.currentIdx;
-                        calculationData = state.calculationData;
-                        targetBands = state.targetBands || ['RLT', 'RLP', 'ULP'];
-                        detailedAnswers = state.detailedAnswers;
-                        quizQuestions = state.quizQuestions;
-                        questionsLoaded = state.questionsLoaded;
-                        currentUrlLevel = state.currentUrlLevel || 'LeadingPeople';
-                        if(state.currentLang) {
-                            currentLang = state.currentLang;
-                            updateUILang();
-                        }
-                        
-                        switchView('quiz');
-                        renderQuestion();
-                    } catch (e) {
-                        clearState();
-                    }
-                } else {
-                    clearState();
-                }
-            });
-        }
-    }
-
-    function switchView(view) {
-        ['view-step1', 'view-intro1', 'view-intro2', 'view-intro3', 'view-quiz', 'view-thank-you'].forEach(id => {
-            document.getElementById(id).classList.add('hidden'); 
-            document.getElementById(id).classList.remove('flex');
-        });
-        document.getElementById('view-' + view).classList.remove('hidden');
-        if(view !== 'quiz') document.getElementById('view-' + view).classList.add('flex');
-    }
-
-    function triggerWhiteFade(callback) {
-        const overlay = document.getElementById('white-transition');
-        overlay.classList.remove('hidden'); void overlay.offsetWidth;
-        overlay.classList.remove('opacity-0'); overlay.classList.add('opacity-100');
-        setTimeout(() => { callback(); overlay.classList.remove('opacity-100'); overlay.classList.add('opacity-0'); setTimeout(() => { overlay.classList.add('hidden'); }, 400); }, 300); 
-    }
-
-    function goToIntro1() {
-        const name = document.getElementById('login-name').value.trim();
-        const selectedLevel = currentUrlLevel; // นำค่าที่อ่านจาก URL (หรือค่าตั้งต้น) มาใช้แทนการดึงจาก Dropdown
-        
-        if(!name) {
-            Swal.fire('Incomplete', 'Please enter your Full Name.', 'warning');
-            return;
-        }
-
-        currentUser = { 
-            name: name, 
-            email: "N/A", 
-            targetRole: "Candidate", 
-            targetLevel: selectedLevel, 
-            perspective: "Self" 
-        };
-        
-        // สร้างถังคะแนนใหม่ทุกครั้งที่กดเริ่ม เพื่อให้ตรงกับ Level
-        initializeCalculationData(selectedLevel);
-        
-        if(!questionsLoaded) {
-            fetchQuestionsFromDB();
-        }
-        
-        triggerWhiteFade(() => { switchView('intro1'); });
-    }
-
-    function fetchQuestionsFromDB() {
-        const btnStart = document.getElementById('btn-start-quiz');
-        if(btnStart) btnStart.innerText = "Loading Questions...";
-        
-        // แนบ &level ไปให้ฝั่ง Backend รู้ว่าต้องเปิด Sheet แท็บไหน
-        fetch(`${API_URL}?action=getQuestions&level=${currentUser.targetLevel}`)
-            .then(response => response.json())
-            .then(data => {
-                if(data && data.questions && data.questions.length > 0) {
-                    quizQuestions = data.questions;
-                    questionsLoaded = true;
-                    if(btnStart) btnStart.innerHTML = "[ NEXT &rarr; ]";
-                } else {
-                    Swal.fire('Error', 'ไม่พบข้อมูลข้อสอบ กรุณาติดต่อผู้ดูแลระบบ', 'error');
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching questions:", error);
-                if(btnStart) btnStart.innerHTML = "[ NEXT &rarr; ]";
-            });
-    }
-
-    function startQuiz() {
-        if(!questionsLoaded) {
-            Swal.fire({ title: 'Loading...', text: 'กำลังดาวน์โหลดข้อสอบ กรุณารอสักครู่', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-            fetch(`${API_URL}?action=getQuestions&level=${currentUser.targetLevel}`)
-                .then(response => response.json())
-                .then(data => {
-                    if(data && data.questions && data.questions.length > 0) {
-                        quizQuestions = data.questions;
-                        questionsLoaded = true;
-                        Swal.close();
-                        triggerWhiteFade(() => { switchView('quiz'); renderQuestion(); });
-                    }
-                });
-            return;
-        }
-
-        currentIdx = 0;
-        detailedAnswers = []; 
-        saveState(); 
-        triggerWhiteFade(() => { switchView('quiz'); renderQuestion(); });
-    }
-
-    function renderQuestion() {
-        if(currentIdx >= quizQuestions.length) { finishQuiz(); return; }
-        
-        const textA = quizQuestions[currentIdx].A[currentLang] || quizQuestions[currentIdx].A['TH'];
-        const textB = quizQuestions[currentIdx].B[currentLang] || quizQuestions[currentIdx].B['TH'];
-        
-        document.getElementById('text-a').innerText = textA;
-        document.getElementById('text-b').innerText = textB;
-        document.getElementById('q-idx').innerText = String(currentIdx+1).padStart(2, '0');
-        document.getElementById('q-total').innerText = `/${quizQuestions.length}`;
-        document.getElementById('progress-bar').style.width = `${((currentIdx)/quizQuestions.length)*100}%`;
-    }
-
-    function vote(choice) {
-        const selectedOption = quizQuestions[currentIdx][choice];
-        const unselectedChoice = choice === 'A' ? 'B' : 'A';
-        const unselectedOption = quizQuestions[currentIdx][unselectedChoice];
-
-        if(selectedOption && selectedOption.c && selectedOption.band && selectedOption.type) {
-            
-            if(selectedOption.type === 'Positive') {
-                if(calculationData[selectedOption.c] && calculationData[selectedOption.c][selectedOption.band]) {
-                    calculationData[selectedOption.c][selectedOption.band].P += 1;
-                }
-            } 
-            else if (selectedOption.type === 'Negative') {
-                if(calculationData[unselectedOption.c] && calculationData[unselectedOption.c][unselectedOption.band]) {
-                    calculationData[unselectedOption.c][unselectedOption.band].N_avoided += 1;
-                }
-            }
-        }
-        
-        detailedAnswers.push(`Choice ${choice} [${selectedOption.c || '?'} | ${selectedOption.band || '?'} | ${selectedOption.type || '?'}]`);
-        currentIdx++; 
-        saveState(); 
-        renderQuestion(); 
-    }
-
-    function finishQuiz() {
-        document.getElementById('progress-bar').style.width = `100%`;
-        Swal.fire({ title: 'Calculating Results...', allowOutsideClick: false, didOpen: () => { Swal.showLoading() } });
-        
-        const cs = Object.keys(calculationData);
-        let finalProfile = {};
-        let scoresProfile = {}; 
-
-        cs.forEach(c => {
-            let maxScore = -1;
-            let currentLevel = targetBands[1]; // default fallback (ระดับตรงกลาง)
-            const internalCode = getInternalCodeFor(c);
-            
-            scoresProfile[internalCode] = {}; 
-
-            targetBands.forEach(band => {
-                const evidence = calculationData[c][band];
-                const bandScore = evidence.P + evidence.N_avoided;
-                
-                scoresProfile[internalCode][band] = bandScore;
-                
-                if(bandScore > maxScore) {
-                    maxScore = bandScore;
-                    currentLevel = band;
-                }
-            });
-            
-            finalProfile[internalCode] = currentLevel; 
-        });
-
-        saveResultToDatabase(finalProfile, scoresProfile);
-    }
-    
-    function getInternalCodeFor(competencyName) {
-        const mapping = {
-            'Resilient Mindset': 'C1',
-            'Effective Simplicity': 'C2',
-            'Ethical Relationships': 'C3',
-            'Inclusive Culture': 'C4',
-            'Collaborative Impact': 'C5',
-            'Safety Leadership': 'C6'
-        };
-        return mapping[competencyName] || competencyName;
-    }
-
-    function saveResultToDatabase(profile, scoresProfile) {
-        const payload = {
-            action: "saveCalibration", 
-            name: currentUser.name, 
-            email: currentUser.email,
-            targetRole: currentUser.targetRole,
-            targetLevel: currentUser.targetLevel,
-            perspective: currentUser.perspective,
-            c1_level: profile.C1,
-            c2_level: profile.C2,
-            c3_level: profile.C3,
-            c4_level: profile.C4,
-            c5_level: profile.C5,
-            c6_level: profile.C6,
-            scores: scoresProfile, 
-            log: detailedAnswers 
-        };
-
-        fetch(API_URL, { 
-            method: 'POST', 
-            mode: 'no-cors', 
-            headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(payload) 
-        })
-        .then(() => { 
-            clearState(); 
-            Swal.close();
-            triggerWhiteFade(() => { switchView('thank-you'); });
-        })
-        .catch(err => { 
-            console.error('Error saving score:', err);
-            clearState();
-            Swal.close();
-            triggerWhiteFade(() => { switchView('thank-you'); });
-        });
-    }
-
-    function closeApp() {
-        window.close();
-        setTimeout(() => {
-            Swal.fire({
-                title: currentLang === 'TH' ? 'ขอบคุณครับ' : 'Thank You',
-                text: currentLang === 'TH' ? 'คุณสามารถปิดแท็บหรือหน้าต่างนี้ได้อย่างปลอดภัย' : 'You can safely close this tab/window now.',
-                icon: 'success',
-                confirmButtonColor: '#E32526'
-            });
-        }, 300);
-    }
-
-    function toggleLang() {
-        currentLang = currentLang === 'EN' ? 'TH' : 'EN';
-        document.getElementById('lang-en').className = currentLang === 'EN' ? "px-3 py-1 rounded-full text-[11px] font-black bg-primary text-white shadow-sm transition-all" : "px-3 py-1 rounded-full text-[11px] font-black text-slate-500 hover:text-slate-700 transition-all";
-        document.getElementById('lang-th').className = currentLang === 'TH' ? "px-3 py-1 rounded-full text-[11px] font-black bg-primary text-white shadow-sm transition-all" : "px-3 py-1 rounded-full text-[11px] font-black text-slate-500 hover:text-slate-700 transition-all";
-        updateUILang();
-        if(!document.getElementById('view-quiz').classList.contains('hidden')) renderQuestion();
-    }
-
-    const ui = {
-        "ui-main-title": { EN: "SIXMA ASSESSMENT", TH: "แบบประเมินตนเอง SIXMA" },
-        "ui-login-sub": { EN: "Step 1: Your Information", TH: "ขั้นตอนที่ 1: ข้อมูลของคุณ" },
-        "ui-label-personal": { EN: "Full Name", TH: "ชื่อ-นามสกุล" },
-        "ui-quiz-head": { EN: "Which behavior best describes you?", TH: "เลือกพฤติกรรมที่ตรงกับท่านมากกว่า" }
-    };
-
-    function updateUILang() {
-        Object.keys(ui).forEach(id => {
-            const el = document.getElementById(id);
-            if(el) {
-                el.innerHTML = ui[id][currentLang];
-                if(id === 'ui-label-personal') {
-                    document.getElementById('login-name').placeholder = currentLang === 'EN' ? "Full Name" : "ชื่อ-นามสกุล";
-                }
-            }
-        });
-        saveState(); 
-    }
+'use strict';
+// SIXMA™ AirAsia Experience 2.0
+// UI refactor only: preserves original Google Apps Script API contract and scoring algorithm.
+// IMPORTANT: POST uses no-cors for backwards compatibility; an opaque response cannot
+// confirm a successful save. Production verification requires a backend acknowledgment.
+const API_URL = 'https://script.google.com/macros/s/AKfycbxdV5WtwS4Gv7p2U96d2zjoxPQo7jdgBafNe6-xYkv8d9WxQQzLDXCl7ydH4GYiXYCb/exec';
+const STORAGE_KEY = 'sixma_state';
+const COMPETENCIES = ['Resilient Mindset','Effective Simplicity','Ethical Relationships','Inclusive Culture','Collaborative Impact','Safety Leadership'];
+const CODES = {'Resilient Mindset':'C1','Effective Simplicity':'C2','Ethical Relationships':'C3','Inclusive Culture':'C4','Collaborative Impact':'C5','Safety Leadership':'C6'};
+let currentLang = 'TH';
+let quizQuestions = [];
+let currentUser = null;
+let currentIdx = 0;
+let questionsLoaded = false;
+let currentUrlLevel = 'LeadingPeople';
+let targetBands = [];
+let calculationData = {};
+let detailedAnswers = [];
+let currentView = 'step1';
+let loadPromise = null;
+let voteLocked = false;
+let submitting = false;
+let lastSubmissionPayload = null;
+let submissionOutcome = 'unverified';
+const tr = {
+ TH: {
+  brandAssessment:'Assessment',brandSub:'PEOPLE DEVELOPMENT',topSecure:'EMPLOYEE EXPERIENCE',heroEyebrow:'DISCOVER YOUR INNER CORE',heroIntro:'ค้นพบความเข้มแข็งที่เป็นตัวคุณ และโอกาสที่เราจะเติบโตไปด้วยกัน',heroFoot:'Your inner core. Our collective strength.',entryEyebrow:'WELCOME TO SIXMA™',entryTitle:'เริ่มต้นค้นพบศักยภาพของคุณ',entryDesc:'ร่วมค้นพบจุดแข็งและพฤติกรรมการทำงานของคุณ ผ่านแบบประเมินที่พัฒนาจากค่านิยมหลักของ AirAsia',nameLabel:'ชื่อ-นามสกุล',namePlaceholder:'กรอกชื่อ-นามสกุลของคุณ',levelLabel:'ระดับการประเมินที่กำหนด',startJourney:'เริ่มต้นการประเมิน',welcomeDisclaimer:'โปรดตอบตามพฤติกรรมจริงของคุณ ไม่มีคำตอบที่ถูกหรือผิด',journeyLabel:'YOUR SIXMA JOURNEY',stepOne:'ขั้นตอน 01 / 03',stepTwo:'ขั้นตอน 02 / 03',stepThree:'ขั้นตอน 03 / 03',introEyebrow:'ABOUT THE ASSESSMENT',introTitle:'ยินดีต้อนรับสู่ SIXMA™ Assessment',introSubtitle:'Discover Your Inner Core. Strengthen the Core of Our Organisation.',introPara1:'SIXMA™ Assessment คือแบบประเมินพฤติกรรมการทำงานที่พัฒนาขึ้นจาก Core Values ของ AirAsia เพื่อช่วยให้คุณค้นพบจุดแข็ง เข้าใจรูปแบบพฤติกรรมของตนเอง และมองเห็นโอกาสในการพัฒนา เพื่อเติบโตไปพร้อมกับองค์กร',introPara2:'แบบประเมินนี้ไม่มีคำตอบที่ถูกหรือผิด เพราะเราเชื่อว่าทุกคนมีจุดแข็งและศักยภาพที่แตกต่างกัน',introQuote:'“Discover What Makes You Strong. Together, We Make AirAsia Stronger.”',onYourJourney:'Discover your potential',nextButton:'ถัดไป',rulesEyebrow:'HOW IT WORKS',rulesTitle:'สิ่งสำคัญก่อนเริ่มทำแบบประเมิน',rulesDesc:'ในแต่ละข้อ เลือกพฤติกรรม A หรือ B เพียงข้อเดียวที่สะท้อนตัวคุณมากที่สุด แม้ทั้งสองตัวเลือกอาจใกล้เคียงหรือไม่ตรงทั้งหมด',ruleOneTitle:'ทำอย่างต่อเนื่อง',ruleOneDesc:'เลือกเวลาสงบและทำแบบประเมินให้เสร็จในครั้งเดียว',ruleTwoTitle:'ไม่มีการจำกัดเวลา',ruleTwoDesc:'ตอบอย่างเป็นธรรมชาติ ไม่จำเป็นต้องรีบร้อน',ruleThreeTitle:'ไม่สามารถย้อนกลับ',ruleThreeDesc:'หลังเลือกคำตอบแล้วจะไม่สามารถแก้ไขข้อที่ผ่านมา',ruleFourTitle:'ทำแบบประเมินได้เพียงครั้งเดียว',ruleFourDesc:'เมื่อเริ่มแล้วควรทำให้เสร็จสมบูรณ์',ruleRemember:'จำไว้ว่าไม่มีคำตอบที่ถูกหรือผิด คำตอบที่มีคุณค่าที่สุดคือคำตอบที่สะท้อนพฤติกรรมของคุณจริง ๆ',readCarefully:'โปรดอ่านคำแนะนำอย่างละเอียด',readyEyebrow:"YOU'RE ALMOST THERE",readyTitle:'พร้อมค้นพบจุดแข็งในตัวคุณหรือยัง?',readyDesc:'เมื่อเริ่มแล้วจะไม่สามารถกลับมาที่หน้านี้หรือย้อนแก้ไขคำตอบที่ผ่านมาได้ โปรดจัดสรรเวลาให้พร้อม',readyPanelTitle:'Your journey starts here.',readyPanelDesc:'ทำแบบประเมินอย่างตั้งใจ และเลือกคำตอบที่ตรงกับพฤติกรรมของคุณที่สุด',beginButton:'เริ่มทำแบบประเมิน',quizPill:'SIXMA™ SELF-ASSESSMENT',questionLabel:'ASSESSMENT QUESTION',quizQuestion:'พฤติกรรมข้อใดตรงกับตัวคุณมากกว่า?',chooseOne:'เลือกข้อความที่สะท้อนพฤติกรรมของคุณได้ดีที่สุด',quizReminder:'ไม่มีคำตอบที่ถูกหรือผิด • ไม่สามารถกลับมาแก้ไขคำตอบได้',completeEyebrow:'YOUR JOURNEY CONTINUES',completeTitle:'ขอบคุณที่ร่วมทำแบบประเมิน SIXMA™',completeTagline:'Your Inner Core. Our Collective Strength.',completePara1:'ขอบคุณที่สละเวลาและตั้งใจทำแบบประเมิน SIXMA™ จนเสร็จสมบูรณ์',completePara2:'ทุกคำตอบของคุณช่วยให้เราเข้าใจศักยภาพ ความแตกต่าง และคุณค่าที่แต่ละคนสร้างให้กับองค์กร',completePara3:'ที่ Thai AirAsia เราเชื่อว่าความแข็งแกร่งขององค์กรเริ่มจากความแข็งแกร่งภายในของทุกคน',statusUnverified:'ระบบส่งคำขอจัดเก็บข้อมูลแล้ว แต่ยังไม่สามารถยืนยันการบันทึกสำเร็จจากเซิร์ฟเวอร์ได้ หากต้องการยืนยัน โปรดติดต่อผู้ดูแลระบบ',statusFailed:'ไม่สามารถส่งคำขอจัดเก็บข้อมูลได้ในขณะนี้ ข้อมูลยังอยู่ในเบราว์เซอร์นี้ โปรดติดต่อผู้ดูแลระบบก่อนลองส่งอีกครั้ง เพื่อป้องกันข้อมูลซ้ำ',closeButton:'ปิดหน้าต่าง',retryButton:'ลองส่งข้อมูลอีกครั้ง',footerMotto:'— All for a Brighter Tomorrow',footerSub:'SIXMA™ • PEOPLE DEVELOPMENT',loadingQuestions:'กำลังโหลดข้อคำถาม...',questionsReady:'ข้อคำถามพร้อมแล้ว',nameRequired:'โปรดกรอกชื่อ-นามสกุลเพื่อดำเนินการต่อ',incomplete:'กรอกข้อมูลไม่ครบ',dataErrorTitle:'ไม่สามารถโหลดข้อคำถาม',dataErrorMsg:'ไม่สามารถโหลดคำถามจากระบบได้ โปรดลองอีกครั้ง หรือติดต่อผู้ดูแลระบบ',ok:'ตกลง',tryAgain:'ลองใหม่',loadingTitle:'กำลังโหลดข้อคำถาม',loadingDesc:'กำลังเชื่อมต่อ Google Apps Script เพื่อดึงแบบประเมิน',resumeTitle:'ทำแบบประเมินต่อ?',resumeDesc:'พบแบบประเมินที่ยังทำไม่เสร็จในเบราว์เซอร์นี้ ต้องการกลับไปทำต่อจากข้อเดิมหรือไม่?',resumeYes:'ทำต่อ',resumeNo:'เริ่มใหม่',submitTitle:'กำลังส่งผลการประเมิน',submitDesc:'โปรดอย่าปิดหน้านี้ระหว่างกำลังส่งข้อมูล',closeTitle:'ขอบคุณครับ',closeDesc:'หากเบราว์เซอร์ไม่ปิดหน้าต่างอัตโนมัติ คุณสามารถปิดแท็บนี้ได้',noQuestions:'ไม่พบข้อมูลข้อคำถามสำหรับระดับที่กำหนด',networkRetryWarning:'หากคำขอเดิมอาจถูกบันทึกแล้ว การส่งซ้ำอาจทำให้เกิดข้อมูลซ้ำ คุณยืนยันว่าต้องการลองส่งอีกครั้งหรือไม่?',confirmRetry:'ยืนยันส่งอีกครั้ง',cancel:'ยกเลิก',invalidResume:'ไม่สามารถกู้คืนแบบประเมินที่ค้างไว้ได้ กรุณาเริ่มใหม่',fieldError:'กรุณากรอกชื่อ-นามสกุล',statusInterrupted:'พบการส่งผลประเมินที่ยังไม่ได้รับการยืนยันหลังจากเปิดหน้าใหม่ โปรดตรวจสอบกับผู้ดูแลระบบก่อนส่งซ้ำ เพื่อหลีกเลี่ยงข้อมูลซ้ำ',resumeSubmissionTitle:'กลับสู่สถานะการส่งผล?',resumeSubmissionDesc:'การประเมินเสร็จแล้ว แต่ยังไม่มีการยืนยันการบันทึกผลในเบราว์เซอร์นี้ คุณสามารถตรวจสอบสถานะกับผู้ดูแลระบบได้'
+ },
+ EN: {
+  brandAssessment:'Assessment',brandSub:'PEOPLE DEVELOPMENT',topSecure:'EMPLOYEE EXPERIENCE',heroEyebrow:'DISCOVER YOUR INNER CORE',heroIntro:'Discover the strengths that make you unique, and the possibilities we can build together.',heroFoot:'Your inner core. Our collective strength.',entryEyebrow:'WELCOME TO SIXMA™',entryTitle:'Your journey of self-discovery starts here.',entryDesc:'Explore your workplace strengths and behaviors through an assessment developed around AirAsia Core Values.',nameLabel:'Full name',namePlaceholder:'Enter your full name',levelLabel:'Your assigned assessment level',startJourney:'Start your assessment',welcomeDisclaimer:'There are no right or wrong answers. Respond as your authentic self.',journeyLabel:'YOUR SIXMA JOURNEY',stepOne:'STEP 01 / 03',stepTwo:'STEP 02 / 03',stepThree:'STEP 03 / 03',introEyebrow:'ABOUT THE ASSESSMENT',introTitle:'Welcome to SIXMA™ Assessment',introSubtitle:'Discover Your Inner Core. Strengthen the Core of Our Organisation.',introPara1:'SIXMA™ Assessment is a workplace behavior assessment developed from AirAsia Core Values. It helps you discover your strengths, understand your working style, and identify opportunities to grow alongside the organisation.',introPara2:'There are no right or wrong answers. We believe everyone has different strengths and potential.',introQuote:'“Discover What Makes You Strong. Together, We Make AirAsia Stronger.”',onYourJourney:'Discover your potential',nextButton:'Next',rulesEyebrow:'HOW IT WORKS',rulesTitle:'Before you begin',rulesDesc:'Each question presents two workplace behaviors, A and B. Choose only the one that best reflects you, even if both seem similar or neither is an exact match.',ruleOneTitle:'Complete in one sitting',ruleOneDesc:'Set aside uninterrupted time to finish your assessment.',ruleTwoTitle:'No time limit',ruleTwoDesc:'Respond naturally. There is no need to rush.',ruleThreeTitle:'No going back',ruleThreeDesc:'Once submitted, a previous answer cannot be changed.',ruleFourTitle:'One attempt only',ruleFourDesc:'Once started, you should complete your assessment.',ruleRemember:'Remember: there are no right or wrong answers. Your most authentic responses are the most valuable.',readCarefully:'Please read carefully',readyEyebrow:"YOU'RE ALMOST THERE",readyTitle:'Ready to discover your inner core?',readyDesc:'Once you begin, you cannot return to this page or change earlier answers. Please make sure you have enough time to finish.',readyPanelTitle:'Your journey starts here.',readyPanelDesc:'Reflect on your actual working behavior and select the statement that feels most like you.',beginButton:'Begin assessment',quizPill:'SIXMA™ SELF-ASSESSMENT',questionLabel:'ASSESSMENT QUESTION',quizQuestion:'Which behavior best describes you?',chooseOne:'SELECT THE STATEMENT THAT DESCRIBES YOU BEST',quizReminder:'No right or wrong answers • You cannot revisit previous questions',completeEyebrow:'YOUR JOURNEY CONTINUES',completeTitle:'Thank you for completing SIXMA™',completeTagline:'Your Inner Core. Our Collective Strength.',completePara1:'Thank you for taking the time and care to complete SIXMA™ Assessment.',completePara2:'Each response helps us understand the potential, differences, and contributions that every person brings to the organisation.',completePara3:'At Thai AirAsia, we believe organisational strength begins with the strength within each person.',statusUnverified:'Your submission request was sent for processing, but this browser cannot verify that the server saved it. Please contact the administrator if confirmation is required.',statusFailed:'The submission request could not be sent. Your assessment remains saved in this browser. Contact the administrator before retrying to avoid duplicate records.',closeButton:'Close window',retryButton:'Retry submission',footerMotto:'— All for a Brighter Tomorrow',footerSub:'SIXMA™ • PEOPLE DEVELOPMENT',loadingQuestions:'Loading questions...',questionsReady:'Questions are ready',nameRequired:'Please enter your full name to continue.',incomplete:'Missing information',dataErrorTitle:'Unable to load questions',dataErrorMsg:'Questions could not be loaded. Please try again or contact the administrator.',ok:'OK',tryAgain:'Try again',loadingTitle:'Loading assessment',loadingDesc:'Connecting to Google Apps Script to retrieve your questions.',resumeTitle:'Resume your assessment?',resumeDesc:'We found an unfinished assessment in this browser. Would you like to continue where you left off?',resumeYes:'Resume assessment',resumeNo:'Start over',submitTitle:'Submitting your results',submitDesc:'Please keep this page open while your results are submitted.',closeTitle:'Thank you',closeDesc:'If your browser does not close the window automatically, you can safely close this tab.',noQuestions:'No assessment questions were found for this level.',networkRetryWarning:'If the earlier request was saved, retrying may create a duplicate record. Are you sure you want to retry?',confirmRetry:'Confirm retry',cancel:'Cancel',invalidResume:'Unable to restore the assessment. Please start again.',fieldError:'Please enter your full name.',statusInterrupted:'An earlier submission could not be confirmed after reopening the page. Please ask the administrator to check for a saved record before retrying to avoid duplicates.',resumeSubmissionTitle:'Return to submission status?',resumeSubmissionDesc:'The assessment was completed, but this browser has no confirmed save receipt. You may need the administrator to verify the record.'
+ }
+};
+function t(key){return tr[currentLang][key] || tr.EN[key] || key;}
+function setLanguage(lang){
+ if(lang !== 'TH' && lang !== 'EN') return;
+ currentLang=lang;document.documentElement.lang=lang.toLowerCase();
+ document.querySelectorAll('[data-t]').forEach(el=>{el.textContent=t(el.dataset.t);});
+ document.querySelectorAll('[data-placeholder]').forEach(el=>{el.placeholder=t(el.dataset.placeholder);});
+ document.getElementById('lang-th').setAttribute('aria-pressed',String(lang==='TH'));
+ document.getElementById('lang-en').setAttribute('aria-pressed',String(lang==='EN'));
+ document.title = lang==='TH'?'SIXMA™ | แบบประเมินตนเอง AirAsia':'SIXMA™ | AirAsia Self-Assessment';
+ if(currentView==='quiz' && questionsLoaded && currentIdx<quizQuestions.length) renderQuestion();
+ if(currentView==='thank-you') updateSubmissionStatus();
+ if(document.getElementById('modal-overlay').classList.contains('hidden')) saveStateIfActive();
+}
+function initApp(){
+ const params=new URLSearchParams(window.location.search);
+ const param=params.get('level');
+ if(param) currentUrlLevel=param; // preserves original URL-driven level selection
+ document.getElementById('display-level').textContent=currentUrlLevel;
+ document.getElementById('quiz-level-text').textContent=currentUrlLevel;
+ setLanguage('TH');
+ checkResume();
+}
+function initializeCalculationData(level){
+ if(level==='LeadingSelf') targetBands=['LLS','RLS','RLT'];
+ else if(level==='LeadingTeam') targetBands=['RLS','RLT','RLP'];
+ else targetBands=['RLT','RLP','ULP']; // LeadingPeople or original fallback
+ calculationData={};
+ COMPETENCIES.forEach(c=>{calculationData[c]={};targetBands.forEach(b=>{calculationData[c][b]={P:0,N_avoided:0};});});
+}
+function saveState(){
+ const state={currentUser,currentIdx,calculationData,targetBands,detailedAnswers,quizQuestions,currentLang,questionsLoaded,currentUrlLevel,pendingPayload:lastSubmissionPayload};
+ try {localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(err){console.warn('Unable to save assessment locally:',err);}
+}
+function saveStateIfActive(){if(currentUser && currentView!=='thank-you')saveState();}
+function clearState(){try{localStorage.removeItem(STORAGE_KEY);}catch(err){console.warn('Unable to clear state:',err);}}
+function showModal({title,description,buttons,loading=false}){
+ const overlay=document.getElementById('modal-overlay');
+ document.getElementById('modal-title').textContent=title;
+ document.getElementById('modal-description').textContent=description||'';
+ document.getElementById('modal-icon').innerHTML=loading?'<div class="loading-ring"></div>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5M12 16h.01"/></svg>';
+ const actionArea=document.getElementById('modal-actions');actionArea.replaceChildren();
+ (buttons||[]).forEach(({label,onClick,secondary})=>{const btn=document.createElement('button');btn.type='button';btn.className='btn '+(secondary?'btn-light':'btn-primary');btn.textContent=label;btn.addEventListener('click',()=>{closeModal();if(onClick)onClick();});actionArea.appendChild(btn);});
+ overlay.classList.remove('hidden');
+ const first=actionArea.querySelector('button');if(first) first.focus();
+}
+function closeModal(){document.getElementById('modal-overlay').classList.add('hidden');}
+function checkResume(){
+ let raw;try{raw=localStorage.getItem(STORAGE_KEY);}catch(err){return;}
+ if(!raw)return;
+ let state;
+ try{state=JSON.parse(raw);if(!state || !state.currentUser || !Array.isArray(state.quizQuestions) || !state.quizQuestions.length || !Number.isInteger(state.currentIdx) || state.currentIdx<0 || state.currentIdx>state.quizQuestions.length || (state.currentIdx===state.quizQuestions.length && !state.pendingPayload) || !state.calculationData || !Array.isArray(state.targetBands))throw new Error('Invalid assessment state');}
+ catch(err){clearState();showModal({title:t('dataErrorTitle'),description:t('invalidResume'),buttons:[{label:t('ok')}]});return;}
+ const isSubmissionPending=state.currentIdx===state.quizQuestions.length;
+ showModal({title:t(isSubmissionPending?'resumeSubmissionTitle':'resumeTitle'),description:t(isSubmissionPending?'resumeSubmissionDesc':'resumeDesc'),buttons:[
+  {label:t('resumeNo'),secondary:true,onClick:()=>{clearState();}},
+  {label:t('resumeYes'),onClick:()=>{
+   currentUser=state.currentUser;currentIdx=state.currentIdx;calculationData=state.calculationData;
+   targetBands=state.targetBands;detailedAnswers=Array.isArray(state.detailedAnswers)?state.detailedAnswers:[];
+   quizQuestions=state.quizQuestions;questionsLoaded=true;lastSubmissionPayload=state.pendingPayload||null;
+   currentUrlLevel=state.currentUrlLevel||'LeadingPeople';
+   document.getElementById('display-level').textContent=currentUrlLevel;
+   document.getElementById('quiz-level-text').textContent=currentUrlLevel;
+   setLanguage(state.currentLang==='EN'?'EN':'TH');
+   if(isSubmissionPending){submissionOutcome='interrupted';updateSubmissionStatus();switchView('thank-you');}
+   else{switchView('quiz');renderQuestion();}
+  }}
+ ]});
+}
+function switchView(view){
+ const el=document.getElementById('view-'+view);if(!el)return;
+ document.querySelectorAll('.view').forEach(v=>{v.classList.remove('active');v.setAttribute('aria-hidden','true');});
+ el.classList.add('active');el.setAttribute('aria-hidden','false');currentView=view;
+ window.scrollTo({top:0,behavior:'instant'});
+}
+function goToIntro1(event){
+ if(event)event.preventDefault();
+ const field=document.getElementById('login-name');const name=field.value.trim();
+ if(!name){showModal({title:t('incomplete'),description:t('nameRequired'),buttons:[{label:t('ok'),onClick:()=>field.focus()}]});return;}
+ currentUser={name,email:'N/A',targetRole:'Candidate',targetLevel:currentUrlLevel,perspective:'Self'};
+ currentIdx=0;detailedAnswers=[];quizQuestions=[];questionsLoaded=false;loadPromise=null;
+ initializeCalculationData(currentUrlLevel);
+ switchView('intro1');loadQuestions().catch(()=>{}); // preload, feedback shown only when user starts
+}
+async function loadQuestions(){
+ if(questionsLoaded && quizQuestions.length)return quizQuestions;
+ if(loadPromise)return loadPromise;
+ document.getElementById('load-status').textContent=t('loadingQuestions');
+ loadPromise=(async()=>{
+  try {
+   const url=API_URL+'?action=getQuestions&level='+encodeURIComponent(currentUser.targetLevel);
+   const response=await fetch(url);
+   if(!response.ok)throw new Error('HTTP '+response.status);
+   const data=await response.json();
+   if(!data||!Array.isArray(data.questions)||!data.questions.length)throw new Error(t('noQuestions'));
+   quizQuestions=data.questions;questionsLoaded=true;
+   document.getElementById('load-status').textContent=t('questionsReady');return quizQuestions;
+  }catch(err){document.getElementById('load-status').textContent='';console.error('Question retrieval failed:',err);throw err;}
+  finally{loadPromise=null;}
+ })();
+ return loadPromise;
+}
+async function startQuiz(){
+ if(submitting)return;
+ const btn=document.getElementById('btn-start-quiz');btn.disabled=true;
+ try{
+  if(!questionsLoaded){showModal({title:t('loadingTitle'),description:t('loadingDesc'),loading:true});await loadQuestions();closeModal();}
+  currentIdx=0;detailedAnswers=[]; // original start behavior
+  saveState();switchView('quiz');renderQuestion();
+ }catch(err){closeModal();showModal({title:t('dataErrorTitle'),description:t('dataErrorMsg'),buttons:[{label:t('tryAgain'),onClick:()=>startQuiz()}]});}
+ finally{btn.disabled=false;}
+}
+function renderQuestion(){
+ if(currentIdx>=quizQuestions.length){finishQuiz();return;}
+ const q=quizQuestions[currentIdx];
+ if(!q||!q.A||!q.B){showModal({title:t('dataErrorTitle'),description:t('noQuestions'),buttons:[{label:t('ok')}]});return;}
+ // Same language preference and Thai fallback as the original application.
+ document.getElementById('text-a').textContent=q.A[currentLang]||q.A.TH||q.A.EN||'';
+ document.getElementById('text-b').textContent=q.B[currentLang]||q.B.TH||q.B.EN||'';
+ document.getElementById('q-idx').textContent=String(currentIdx+1).padStart(2,'0');
+ document.getElementById('q-total').textContent=' / '+quizQuestions.length;
+ const pct=Math.round(currentIdx/quizQuestions.length*100);
+ document.getElementById('progress-bar').style.width=pct+'%';
+ document.getElementById('progress-text').textContent=pct+'%';
+ document.getElementById('progress-track').setAttribute('aria-valuenow',String(pct));
+ document.getElementById('choice-a').disabled=false;
+ document.getElementById('choice-b').disabled=false;
+}
+function vote(choice){
+ if(voteLocked || submitting || currentView!=='quiz'||currentIdx>=quizQuestions.length)return;
+ voteLocked=true;
+ // ORIGINAL SIXMA SCORING ALGORITHM — preserved verbatim in meaning.
+ const selectedOption=quizQuestions[currentIdx][choice];
+ const unselectedChoice=choice==='A'?'B':'A';
+ const unselectedOption=quizQuestions[currentIdx][unselectedChoice];
+ if(selectedOption && selectedOption.c && selectedOption.band && selectedOption.type){
+  if(selectedOption.type==='Positive'){
+   if(calculationData[selectedOption.c] && calculationData[selectedOption.c][selectedOption.band]){
+    calculationData[selectedOption.c][selectedOption.band].P+=1;
+   }
+  }else if(selectedOption.type==='Negative'){
+   if(unselectedOption && calculationData[unselectedOption.c] && calculationData[unselectedOption.c][unselectedOption.band]){
+    calculationData[unselectedOption.c][unselectedOption.band].N_avoided+=1;
+   }
+  }
+ }
+ detailedAnswers.push(`Choice ${choice} [${selectedOption?.c||'?'} | ${selectedOption?.band||'?'} | ${selectedOption?.type||'?'}]`);
+ currentIdx++;saveState();
+ // Microtask blocks accidental rapid double-submit while keeping flow immediate.
+ queueMicrotask(()=>{voteLocked=false;renderQuestion();});
+}
+function finishQuiz(){
+ if(submitting)return;
+ document.getElementById('progress-bar').style.width='100%';
+ document.getElementById('progress-text').textContent='100%';
+ document.getElementById('progress-track').setAttribute('aria-valuenow','100');
+ const cs=Object.keys(calculationData);let finalProfile={};let scoresProfile={};
+ cs.forEach(c=>{
+  let maxScore=-1;let currentLevel=targetBands[1];
+  const internalCode=getInternalCodeFor(c);scoresProfile[internalCode]={};
+  targetBands.forEach(band=>{
+   const evidence=calculationData[c][band];const bandScore=evidence.P+evidence.N_avoided;
+   scoresProfile[internalCode][band]=bandScore;
+   if(bandScore>maxScore){maxScore=bandScore;currentLevel=band;}
+  });
+  finalProfile[internalCode]=currentLevel;
+ });
+ saveResultToDatabase(finalProfile,scoresProfile);
+}
+function getInternalCodeFor(competencyName){return CODES[competencyName]||competencyName;}
+function getSubmissionPayload(profile,scoresProfile){
+ return {action:'saveCalibration',name:currentUser.name,email:currentUser.email,targetRole:currentUser.targetRole,targetLevel:currentUser.targetLevel,perspective:currentUser.perspective,c1_level:profile.C1,c2_level:profile.C2,c3_level:profile.C3,c4_level:profile.C4,c5_level:profile.C5,c6_level:profile.C6,scores:scoresProfile,log:detailedAnswers};
+}
+async function saveResultToDatabase(profile,scoresProfile){
+ lastSubmissionPayload=getSubmissionPayload(profile,scoresProfile);
+ saveState(); // Persist a pending submission payload for interrupted sessions.
+ return submitPayload(lastSubmissionPayload);
+}
+async function submitPayload(payload){
+ if(submitting)return;
+ submitting=true;document.getElementById('choice-a').disabled=true;document.getElementById('choice-b').disabled=true;
+ showModal({title:t('submitTitle'),description:t('submitDesc'),loading:true});
+ try {
+  // Backward-compatible POST contract; no-cors response is opaque (NOT proof of save).
+  await fetch(API_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(payload)});
+  submissionOutcome='unverified';
+  clearState(); // matches existing app behavior after resolved POST request
+ }catch(err){
+  console.error('Submission request failed:',err);
+  submissionOutcome='failed';
+  // Preserve local quiz state on network failure so the person can seek assistance.
+ }
+ finally{closeModal();submitting=false;updateSubmissionStatus();switchView('thank-you');}
+}
+function updateSubmissionStatus(){
+ const status=document.getElementById('submission-status');
+ const retry=document.getElementById('retry-button');
+ const failed=submissionOutcome==='failed';const interrupted=submissionOutcome==='interrupted';
+ status.classList.toggle('error',failed||interrupted);
+ document.getElementById('submission-status-text').textContent=t(failed?'statusFailed':interrupted?'statusInterrupted':'statusUnverified');
+ retry.classList.toggle('hidden',!(failed||interrupted));
+}
+function retrySubmission(){
+ if(!lastSubmissionPayload || submitting)return;
+ showModal({title:t('retryButton'),description:t('networkRetryWarning'),buttons:[{label:t('cancel'),secondary:true},{label:t('confirmRetry'),onClick:()=>submitPayload(lastSubmissionPayload)}]});
+}
+function closeApp(){
+ // window.close only works for scripts that opened the current tab in most browsers.
+ window.close();
+ showModal({title:t('closeTitle'),description:t('closeDesc'),buttons:[{label:t('ok')}]});
+}
+// Expose original function names so existing hosting integrations can keep using them.
+function toggleLang(){setLanguage(currentLang==='TH'?'EN':'TH');}
+function updateUILang(){setLanguage(currentLang);}
+window.addEventListener('DOMContentLoaded',initApp);
 </script>
 </body>
 </html>
